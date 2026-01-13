@@ -1,3 +1,3 @@
 # ppol6818-spring2026
-My name is Mehria and I am second year MIDP. 
+ Class repo for PPOL-6818 (Experimental Design and Implementation) at McCourt in Spring 2026
 
