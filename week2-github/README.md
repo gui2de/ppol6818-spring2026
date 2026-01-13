@@ -1,0 +1,1 @@
+This folder is where the week 2 assignments will be saved. Each student will create their own subfolder named after their netid and add files to it. 
