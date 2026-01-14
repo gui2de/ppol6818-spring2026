@@ -11,4 +11,4 @@ This is [my linkedin page](https://www.linkedin.com/in/peiqi-wang-138260247/).
 4. Cooking
 
 ### Picture
-[![Selfie](week2-github/pw553/picture.jpg)]
+[![Selfie](week2-github/pw553/week2-github/pw553/picture.jpg)]
