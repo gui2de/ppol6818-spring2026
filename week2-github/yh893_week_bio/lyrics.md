@@ -6,6 +6,7 @@ And when her youthful world was about to fall in
 
 Each time her slander shoulders
 Bore the weight of all her fears
+And a sorrow no one hears till rings
 in mid-night silence in her ears
 
 Let her cry for she's a lady
