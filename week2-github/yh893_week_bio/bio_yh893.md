@@ -1,6 +1,6 @@
 # Yubing Han
 
-![A photo of me](yubings-photo.jpg)
+![A photo of me](yubings-photo.JPG)
 
 
 ## Background
