@@ -1,1 +1,18 @@
-This folder is where the week 2 assignments will be saved. Each student will create their own subfolder named after their netid and add files to it. 
+# Yi Dou's Bio
+
+## Introduction
+Yi Dou is from Hangzhou, China and is a second-year MPP student at Georgetown University now. He graduated from Fudan University with a bachelor degree in international politics in 2023. He has strong interests and skills in quantitative research methods. He can use various tools to conduct the process of data analysis, from data collection and cleaning to model selection and interpretation. In his spare time, he enjoys watching soccer games and playing bass guitar. ![This is a picture of Yi Dou.](yd285.png)
+
+## Skills
+- Language
+  - Native in Mandarin Chinese
+  - Fluent in English
+- Techniques
+  - Proficient in Stata
+  - Proficient in R
+  - intermediate in SQL
+  - intermediate in SAS
+  - intermediate in Python
+  
+## Github Page
+This is the [Github Page](https://github.com/Yi-Dou-513) of Yi Dou.
