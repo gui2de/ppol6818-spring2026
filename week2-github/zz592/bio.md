@@ -1,0 +1,23 @@
+# About Me
+
+I grew up in Beijing, where I spent six years of middle and high school biking to school every day. That routine shaped how I think about cities, movement, and everyday life in subtle ways.
+
+I would describe myself as someone who enjoys the idea of outdoor activities and loves being outdoors, but does not always enjoy the “exercise” part of sports. I like nature, walking, and being outside more than structured workouts.
+
+## Personal Interests
+
+I enjoy exploring different cultures and learning through experience. One of my most memorable trips was to Lugu Lake in Yunnan, where I learned about the Mosuo people, a matrilineal society with a social structure very different from what I had known before.
+
+That experience strongly shaped how I think about culture, family, and social organization.
+
+You can learn more about the Mosuo people here:  
+https://en.wikipedia.org/wiki/Mosuo
+
+## Things I’m Curious About
+
+- Different cultural and social systems  
+- Storytelling through images and everyday observations  
+- Learning new skills through travel and experience  
+
+## A Picture
+![my photo](IMG_9665.jpeg)
