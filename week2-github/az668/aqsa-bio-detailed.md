@@ -32,4 +32,4 @@ Some of her least favourite lists (in a particular order):
 
 ## This is her
 
-![rare good days during the pandemic](good-day-from-pandemic.jpg)
+<img src="good-day-from-pandemic.jpg" width="200" alt="rare good days during the pandemic">
