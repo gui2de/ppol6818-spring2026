@@ -1,9 +1,9 @@
 # Hello, meet Aqsa.
 
-#### She recently entered her 30s -
+## She recently entered her 30s -
 She really hopes that she can live them such that her are 40s happy(ier) - tips/ tricks are welcome
 
-#### Some things about her
+## Some things about her
 
 She loves making lists and she makes/ adds to at least two lists every day.
 
@@ -16,7 +16,7 @@ Some of her most favourite lists (in no particular order):
         - Indian
         - Non-Indian
     - Books
-        - Check out her [goodreads] (https://www.goodreads.com/user/show/15356990-aqsa)!
+        - Check out her [goodreads](https://www.goodreads.com/user/show/15356990-aqsa)!
 - Restaurants
     - in each (Indian) city (cause she can't afford to eat out in the States)
     - along with people to go to with
@@ -30,6 +30,6 @@ Some of her least favourite lists (in a particular order):
 2. Things to buy
 3. Things to cook
 
-#### This is her
+## This is her
 
-![rare good days during the pandemic]("C:\Users\aqsaz\Documents\Georgetown\Spring 2026\Experimental Design\GitHub\week2-github\az668\good-day-from-pandemic.jpg")
+![rare good days during the pandemic](good-day-from-pandemic.jpg)
