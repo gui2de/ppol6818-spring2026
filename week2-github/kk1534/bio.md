@@ -1,7 +1,7 @@
 # Kenshi's Bio 🤟
 
 ## About Me
-![My Photo](/Users/kkawade/Desktop/Github/ppol6818-spring2026/week2-github/kk1534)
+![My Photo](IMG_0963_3.jpg)
 - Kenshi（堅之）
 - From Tokyo, Japan
 - First year MIDP student
