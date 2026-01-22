@@ -2,7 +2,7 @@
 
 ## 1. Self-introduction
 
-My name is Qingfeng.I am from China. I am a secoond-year MPP graduate at McCourt.
+My name is Qingfeng.I am from China. I am a secoond-year MPP graduate at McCourt. Before I came to Georgetown, I worked as an audit at Deloitte in Beijing. My policy interest lies at the intersection of geopolitics and business. Last semester, I just finished my internship at CSIS, at the Trustee Chair of Chinese Business and Economy.
 
 ## 2. My hobbies
 
