@@ -4,7 +4,7 @@ A “cool” fact about me is that I have a twin, but she’s an art student so 
 
 ## Photo
 ![Photo of my niece and nephew](photo.jpeg)
-This photo shows my niece and nephew’s hand impressions and is very personal to me.
+This photo shows my niece and nephew’s hand impressions and is very personal to me!
 
 ## Interests 
 - Philosphy 
