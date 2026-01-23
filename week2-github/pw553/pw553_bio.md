@@ -7,10 +7,10 @@ I think my life in New York and Arizona is completely different. Life in Arizona
 This is [my linkedin page](https://www.linkedin.com/in/peiqi-wang-138260247/).
 
 ### Interested Thing
-1. Video Games!!!!!!!! Hollow knight!!!!!!!!!
-2. Teaching/Tutoring: TA in many stuff
-3. Playing piano
-4. Cooking
+- Video Games!!!!!!!! Hollow knight!!!!!!!!!
+- Teaching/Tutoring: TA in many stuff
+- Playing piano
+- Cooking
 
 ### Picture
 ![Selfie](picture.jpg)
