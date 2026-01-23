@@ -8,5 +8,7 @@ I'm Puran Dou, currently a second year MPP student at McCourt. My main policy in
   - [The Art of Trader Joe’s (official site)](https://theartoftraderjoes.com/)
 - My two favorite things in my apartment are a fake skeleton I got last Halloween for no particular reason, and a money tree I got from TJ last year. Here is a photo of her taking a bathroom break in a very melancholy fashion:
 ![My money tree](my_money_tree.jpg)
+  - (It is a real living plant, although only 2 of its 5 trunks are still alive. Lucky me… but maybe not so lucky for the tree.) 
 - Here's a link to a DC local shelter **Brandywine Valley SPCA** that follows a no-kill standard. They have a great foster program and host regular adoption events. Go check it out!
   - [Brandywine Valley SPCA (DC)](https://bvspca.org/dc)
+  - - I haven’t made it to Brandywine Valley SPCA adoption events yet, but I’ve completed their full foster training/onboarding process, so I’m officially ready to take in fur babies at any time!
