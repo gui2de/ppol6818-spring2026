@@ -11,4 +11,4 @@ I'm Puran Dou, currently a second year MPP student at McCourt. My main policy in
   - (It is a real living plant, although only 2 of its 5 trunks are still alive. Lucky me… but maybe not so lucky for the tree.) 
 - Here's a link to a DC local shelter **Brandywine Valley SPCA** that follows a no-kill standard. They have a great foster program and host regular adoption events. Go check it out!
   - [Brandywine Valley SPCA (DC)](https://bvspca.org/dc)
-  - - I haven’t made it to Brandywine Valley SPCA adoption events yet, but I’ve completed their full foster training/onboarding process, so I’m officially ready to take in fur babies at any time!
+  - I haven’t made it to Brandywine Valley SPCA adoption events yet, but I’ve completed their full foster training/onboarding process, so I’m officially ready to take in fur babies at any time!
