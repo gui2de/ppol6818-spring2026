@@ -23,3 +23,4 @@ Photo of me: ![alt text](image.png)
 (to access image try command+selecting the image.png link) 
 
 Here's my linkedin profile: https://www.linkedin.com/in/yousra-hussain-4a0ab6182/
+And goodreads profile: https://www.goodreads.com/user/show/187266596-yousra-hussain
