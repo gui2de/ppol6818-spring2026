@@ -1,4 +1,7 @@
-# Lyrics
+# Forever Young
+
+Lyrics：艾怡良 Eve Ai
+Composer：艾怡良 Eve Ai
 
 *This is a Chinese song, and I made an English translation.*
 
@@ -68,3 +71,5 @@ You should learn to love like that, with all you have
 
 Forever young\
 Forever young
+
+Link: <https://www.youtube.com/watch?v=rFj6azCUYrU>
