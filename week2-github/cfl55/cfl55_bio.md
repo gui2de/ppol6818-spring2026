@@ -4,11 +4,11 @@
 
 ### Background
 
-##### Felicity Loveland-Patterson is originally from Southeastern Indiana and is a second year Master of Public Policy student at Georgetown University. She holds a bachelor's degree in Political Science from Brigham Young University and is passionate about making the world a more equitable, sustainable, and beautiful place. Her background includes a variety of work and volunteer experiences, including roles ranging from health insurance agent to paralegal to AI trainer. She currently works as an executive assistant for OPEN Pathology, a non-profit organization focused on increasing access to accurate medical care and diagnosis in developing countries. Felicity's LinkedIn profile cane be viewed [here](www.linkedin.com/in/felicity-loveland-patterson-013348243) In her spare time, she enjoys staying active, exploring the city, and viewing art, music, and theater. She and her husband welcomed their first child in late 2025.
+Felicity Loveland-Patterson is originally from Southeastern Indiana and is a second year Master of Public Policy student at Georgetown University. She holds a bachelor's degree in Political Science from Brigham Young University and is passionate about making the world a more equitable, sustainable, and beautiful place. Her background includes a variety of work and volunteer experiences, including roles ranging from health insurance agent to paralegal to AI trainer. She currently works as an executive assistant for OPEN Pathology, a non-profit organization focused on increasing access to accurate medical care and diagnosis in developing countries. Felicity's LinkedIn profile can be viewed [here](www.linkedin.com/in/felicity-loveland-patterson-013348243) In her spare time, she enjoys staying active, exploring the city, and viewing art, music, and theater. She and her husband welcomed their first child in late 2025.
 
 ### Goals
 
-##### Felicity is expecting to graduate this coming May, and hopes the classes she is taking will help her curate multiple portfolios in experimental design, data vis, and human centered design in order to help her improve her resume and begin her policy career. She hopes to work in local government in the long-term, and would love to find a position that incorporates data analytics with human connection. Felicity and her husband hope to move their family to a house in the near future.
+ Felicity is expecting to graduate this coming May, and hopes the classes she is taking will help her curate multiple portfolios in experimental design, data vis, and human centered design in order to help her improve her resume and begin her policy career. She hopes to work in local government in the long-term, and would love to find a position that incorporates data analytics with human connection. Felicity and her husband hope to move their family to a house in the near future.
 
 ### Felicity's Top 10 Favorite Smells
 
@@ -22,3 +22,7 @@
 - ***Lemons***. Probably not actual lemons, but the lemony scent of lemon flavored candy or a particular kind of hand soap. Sharp and tingly and citrusy.
 - ***Really yeasty bread***. Straight out of the oven or left out to form a thick, chewy crust. Smells like I imagine Europe should smell.
 - ***Justice***. Because I think it will help get me into law school. 
+
+### Question: Out of all the electives you’ve taken at McCourt, which one has been your favorite, and why?
+
+My favorite elective I've taken at McCourt so far was Urban Law and Policy. It was very informative about the history and law that have shaped US cities. I think, however, that the electives I'm taking this semester will be even better. 
