@@ -15,5 +15,5 @@ More personally:
 
 ![Salem](Salem.jpeg)
 
-[Chicken recipe] (https://www.gimmesomeoven.com/easy-lime-chicken/)
+[Chicken recipe](https://www.gimmesomeoven.com/easy-lime-chicken/)
 
