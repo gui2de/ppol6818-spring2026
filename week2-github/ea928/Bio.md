@@ -13,6 +13,7 @@ More personally:
 - I have a twin sister and my cat's name is Salem 
 
 
-   ![Salem](IMG_5544.heic)
+![Salem](Salem.jpeg)
 
-[NYT recipe] (https://www.nytimes.com/subscription/cooking.html?campaignId=8F8HX&ds_c=10042709432&site=google&network=g&campaign_id=10042709432&gclsrc=aw.ds&gad_source=1&gad_campaignid=10042709432&gbraid=0AAAAADwd30i4PLYUSqqn214x0Kw-c0isE&gclid=CjwKCAiA4KfLBhB0EiwAUY7GAQqZrw4MCgo0-KoFhOUSeKfdRvvbUI5Ic_Fc6bGkp2kN7bf0KkbLOxoCYdcQAvD_BwE)
+[Chicken recipe] (https://www.gimmesomeoven.com/easy-lime-chicken/)
+
