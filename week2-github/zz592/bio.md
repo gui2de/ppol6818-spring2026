@@ -19,5 +19,9 @@ https://en.wikipedia.org/wiki/Mosuo
 - Storytelling through images and everyday observations  
 - Learning new skills through travel and experience  
 
+## A place I love in DC
+One of my favorite places to unwind in DC is the Waterfront Park along the Potomac River. It’s usually quiet and calm, and everyone seems to be peacefully doing their own thing — some people are reading, some are fishing, and others are playing with their dogs. I often end up meeting the most interesting puppies there, which always makes my day a little better.
+
+
 ## A Picture
 ![my photo](IMG_9665.jpeg)
