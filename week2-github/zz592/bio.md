@@ -22,6 +22,8 @@ https://en.wikipedia.org/wiki/Mosuo
 ## A place I love in DC
 One of my favorite places to unwind in DC is the Waterfront Park along the Potomac River. It’s usually quiet and calm, and everyone seems to be peacefully doing their own thing — some people are reading, some are fishing, and others are playing with their dogs. I often end up meeting the most interesting puppies there, which always makes my day a little better.
 
+## Music I love
+I’m a huge Taylor Swift fan — definitely a Swiftie. Besides *All Too Well*, one song I’ve been listening to a lot recently is *You Are In Love* from *1989*. I love how it captures that quiet, unexpected moment of realizing you’re falling in love — mysterious, fresh, and full of hope. That feeling of suddenly thinking, “oh, I’m in love,” really resonates with me.
 
 ## A Picture
 ![my photo](IMG_9665.jpeg)
