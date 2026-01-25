@@ -21,3 +21,4 @@ Hello! My name is Arishka, I'm from Mumbai, India. I can speak 5 languages--Engl
     <figcaption> My latest find: Falafel Inc at Georgetown--It really is worth the hype it gets! </figcaption>
 </figure>
 
+For my summer internship, I am planning to work in field evaluations within the education sector--currently I am in the process of emailing professors and academics for opportunities to chat and explore this further. 
