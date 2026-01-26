@@ -1,1 +1,0 @@
-This folder is where the Survey 2 assignments will be saved for the purpose of the peer review. Each student will create a subfolder named after their netid and upload files to it.
