@@ -2,6 +2,7 @@
 
 ## Education
 - McCourt second year MPP student
+- I completed my undergraduate studies at California State University, Long Beach.
 - B.A. in Economics 
 - B.S. in Applied Statistics
 
