@@ -9,7 +9,7 @@
 
 ### PHOTO:
 
-![Photo of me taken in Cleveland during a road trip in 2020]("C:\Github Local\ppol6818-spring2026\week2-github\ad2165\ad2165DP.jpg")
+![Photo of me taken in Cleveland during a road trip in 2020](ad2165DP.jpg)
 
 ### HOBBIES: 
 
@@ -24,5 +24,7 @@
 
 My favorite video of myself is [this clip from a twitch watch party](https://youtu.be/jhyLxz8kh5M?si=Qd5kGvn-wGQe8A_X).
 
+Question asked by reviewer: If you had to pick a 2010's pop song to be the score in a documentary that follows you hiking in your favorite national park in the world, what would the song be, and in which park would you be?
 
+Answer: Amazing question haha! My chosen song would play at the end of the documentary. The park I'm hiking in would be Yosemite National Park, the most beautiful place I've ever been. The 2010s pop song would be Hall of Fame by The Script!
 
