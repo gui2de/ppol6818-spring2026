@@ -1,0 +1,12 @@
+Stand up, all victims of oppression
+For the tyrants fear your might
+Don't cling so hard to your possessions
+For you have nothing, if you have no rights
+Let racist ignorance be ended
+For respect makes the empires fall
+Freedom is merely privilege extended
+Unless enjoyed by one and all.
+So come brothers and sisters
+For the struggle carries on
+The Internationale
+Unites the world in song
