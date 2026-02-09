@@ -2,6 +2,7 @@
 * Assisgnment: STATA 1
 * Author: Yubing Han
 * Date: Jan 31, 2026
+********************************************************************************
 
 clear all
 set more off
