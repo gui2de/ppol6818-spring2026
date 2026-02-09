@@ -1,1 +1,2 @@
-In this folder, we will have one subfolder for each group project.
+Folder for the group project assignments.
+
