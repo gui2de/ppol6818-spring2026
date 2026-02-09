@@ -5,12 +5,12 @@ My name is Fabiha Moin and I am first year MIDP student from Karachi city in Pak
 
 #### Karachi 101 by Fabiha 
 
-* Karachi si the third most unlivable city in the world according to the Economic Intelligence Unit at the Economist -- yet I managed to live there for about 25 years so you know my srvival skills are great 
+* Karachi is the third most unlivable city in the world according to the Economic Intelligence Unit at the Economist -- yet I managed to live there for about 25 years so you know my survival skills are great 
 * In terms of population, Karachi is about 29 times bigger than Washington DC -- which is why DC alienates me 
 * *The first hill the I will die on*: Karachi has THE BEST food in the entire Pakistan 
 * *The second hill that I will die on*: Karachi also has one of the prettiest sunsets in Pakistan 
 
-Anyways, enough about Karachi, here is a picture of me taking a nap when I should have started investing in stocks and bitcons: 
+Anyways, enough about Karachi, here is a picture of me taking a nap when I should have started investing in stocks and bitcoins: 
 
 ![alt text](<childhood pic.jpg>)
 
