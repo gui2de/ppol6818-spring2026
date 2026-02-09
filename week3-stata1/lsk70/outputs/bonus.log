@@ -1,0 +1,265 @@
+-------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/bonus.log
+  log type:  text
+ opened on:   8 Feb 2026, 16:45:52
+
+. 
+. ****************************************************
+. 
+. local htmlfile "$data/shl_ps0101114.html"
+
+. 
+. local raw = fileread("`htmlfile'")
+
+. 
+. *Put raw HTML into a 1-row dataset so we can manipulate with regex
+. clear
+
+. set obs 1
+Number of observations (_N) was 0, now 1.
+
+. gen strL page_raw = `"`raw'"'
+
+. 
+. *Clean HTML into plain text
+. gen strL page = page_raw
+
+. 
+. *Remove tags
+. replace page = ustrregexra(page, "<[^>]+>", " ")
+(1 real change made)
+
+. 
+. *Replace HTML spacing entities
+. replace page = subinstr(page, "&nbsp;", " ", .)
+(0 real changes made)
+
+. 
+. *Normalize whitespace (turn line breaks into spaces, collapse repeats)
+. replace page = ustrregexra(page, "[\r\n\t]+", " ")
+(1 real change made)
+
+. replace page = ustrregexra(page, "\s+", " ")
+(1 real change made)
+
+. replace page = strtrim(page)
+(1 real change made)
+
+. 
+. *Quick check
+. display substr(page, 1, 500)
+NATIONAL EXAMINATIONS COUNCIL OF TANZANIA PSLE 2021 EXAMINATION RESULTS ALBEHIJE PRIMARY SCHOOL - PS010
+> 1114 WALIOFANYA MTIHANI : 16 WASTANI WA SHULE : 217.3750 KUNDI LA SHULE : Wanafunzi chini ya 40 NAFAS
+> I YA SHULE KWENYE KUNDI LAKE KIHALMASHAURI: 22 kati ya 46 NAFASI YA SHULE KWENYE KUNDI LAKE KIMKOA : 
+> 74 kati ya 290 NAFASI YA SHULE KWENYE KUNDI LAKE KITAIFA : 545 kati ya 5664 MADARAJA YA UFAULU WA UJU
+> MLA JINSI A B C D E WASICHANA 2 6 0 0 0 WAVULANA 0 8 0 0 0 JUMLA 2 14 0 0 0 CAND. NO PREM NO S
+
+. 
+. *Split cleaned page into student blocks
+. 
+. *Add a delimiter before each candidate id: PS#######-####
+. 
+. replace page = ustrregexra(page, "(PS[0-9]{7}-[0-9]{4})", "|||$1")
+(1 real change made)
+
+. 
+. *Split into separate variables at the delimiter
+. split page, parse("|||") gen(block)
+variables created as string: 
+block1   block3   block5   block7   block9   block11  block13  block15  block17
+block2   block4   block6   block8   block10  block12  block14  block16
+
+. 
+. *The block1 is everything before the first student
+. drop block1
+
+. 
+. *Reshape blocks wide -> long (16 rows)
+. gen id = 1
+
+. reshape long block, i(id) j(student_index)
+(j = 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17)
+
+Data                               Wide   ->   Long
+-----------------------------------------------------------------------------
+Number of observations                1   ->   16          
+Number of variables                  19   ->   5           
+j variable (16 values)                    ->   student_index
+xij variables:
+              block2 block3 ... block17   ->   block
+-----------------------------------------------------------------------------
+
+. 
+. drop id student_index
+
+. 
+. *Quick check
+. count
+  16
+
+. list block in 1/2, noobs
+
+  +---------------------------------------------------------------------------------------------------+
+  | block                                                                                             |
+  |---------------------------------------------------------------------------------------------------|
+  | PS0101114-0001 20150348195 M DANIEL JAMES KAGUO Kiswahili - B, English - A, Maarifa - C, Hisaba.. |
+  | PS0101114-0002 20156273910 M DAVIS ROBERT LUCAS Kiswahili - A, English - A, Maarifa - C, Hisaba.. |
+  +---------------------------------------------------------------------------------------------------+
+
+. 
+. ****************************************************
+. 
+. *Create student-level variables
+. 
+. gen str20 cand_id = ""
+(16 missing values generated)
+
+. gen str20 prem_number = ""
+(16 missing values generated)
+
+. gen str1  gender = ""
+(16 missing values generated)
+
+. gen str60 name = ""
+(16 missing values generated)
+
+. gen strL  grades = ""
+(16 missing values generated)
+
+. 
+. *Parse each block into components
+. 
+. replace cand_id = ustrregexs(1) if ustrregexm(block, ///        
+>     "^\s*(PS[0-9]{7}-[0-9]{4})\s+([0-9]{8,})\s+([MF])\s+(.+?)\s+(Kiswahili.*)$")        // looks for 
+> pattern given in parenthesis within string, then (1, 2, ..., n) refers to which bit of remebered info
+> rmation it grabs
+(16 real changes made)
+
+.         
+. replace prem_number = ustrregexs(2) if ustrregexm(block, ///
+>     "^\s*(PS[0-9]{7}-[0-9]{4})\s+([0-9]{8,})\s+([MF])\s+(.+?)\s+(Kiswahili.*)$")
+(16 real changes made)
+
+. 
+. replace gender = ustrregexs(3) if ustrregexm(block, ///
+>     "^\s*(PS[0-9]{7}-[0-9]{4})\s+([0-9]{8,})\s+([MF])\s+(.+?)\s+(Kiswahili.*)$")
+(16 real changes made)
+
+. 
+. replace name = strtrim(ustrregexs(4)) if ustrregexm(block, ///
+>     "^\s*(PS[0-9]{7}-[0-9]{4})\s+([0-9]{8,})\s+([MF])\s+(.+?)\s+(Kiswahili.*)$")
+(16 real changes made)
+
+. 
+. replace grades = ustrregexs(5) if ustrregexm(block, ///
+>     "^\s*(PS[0-9]{7}-[0-9]{4})\s+([0-9]{8,})\s+([MF])\s+(.+?)\s+(Kiswahili.*)$")
+(16 real changes made)
+
+. 
+. *Parse school code from cand_id
+. gen str12 schoolcode = substr(cand_id, 1, 9)    // string, start, length (takes 9 didgets starting at
+>  1)
+
+. 
+. *Quick check
+. list schoolcode cand_id prem_number gender name in 1/5, noobs
+
+  +-----------------------------------------------------------------------------+
+  | schoolc~e          cand_id   prem_number   gender                      name |
+  |-----------------------------------------------------------------------------|
+  | PS0101114   PS0101114-0001   20150348195        M        DANIEL JAMES KAGUO |
+  | PS0101114   PS0101114-0002   20156273910        M        DAVIS ROBERT LUCAS |
+  | PS0101114   PS0101114-0003   20150348196        M     ELISANTE GABRIEL NKYA |
+  | PS0101114   PS0101114-0004   20156555361        M   FESTUS RENASTUS CHIMOLA |
+  | PS0101114   PS0101114-0005   20156272958        M      IAN INNOCENT GEOFREY |
+  +-----------------------------------------------------------------------------+
+
+. 
+. ****************************************************
+. 
+. *Extract subject grades
+. 
+. *Creat var placeholders
+. gen str1 kiswahili = ""
+(16 missing values generated)
+
+. gen str1 english   = ""
+(16 missing values generated)
+
+. gen str1 maarifa   = ""
+(16 missing values generated)
+
+. gen str1 hisabati  = ""
+(16 missing values generated)
+
+. gen str1 science   = ""
+(16 missing values generated)
+
+. gen str1 uraia     = ""
+(16 missing values generated)
+
+. gen str1 average   = ""
+(16 missing values generated)
+
+. 
+. *Pull out each letter from respective subjects, mapping to vars
+. replace kiswahili = ustrregexs(1) if ustrregexm(grades, "Kiswahili\s*-\s*([A-E])")
+(16 real changes made)
+
+. replace english   = ustrregexs(1) if ustrregexm(grades, "English\s*-\s*([A-E])")
+(16 real changes made)
+
+. replace maarifa   = ustrregexs(1) if ustrregexm(grades, "Maarifa\s*-\s*([A-E])")
+(16 real changes made)
+
+. replace hisabati  = ustrregexs(1) if ustrregexm(grades, "Hisabati\s*-\s*([A-E])")
+(16 real changes made)
+
+. replace science   = ustrregexs(1) if ustrregexm(grades, "Science\s*-\s*([A-E])")
+(16 real changes made)
+
+. replace uraia     = ustrregexs(1) if ustrregexm(grades, "Uraia\s*-\s*([A-E])")
+(16 real changes made)
+
+. 
+. replace average   = ustrregexs(1) if ustrregexm(grades, "Average\s+Grade\s*-\s*([A-E])")
+(16 real changes made)
+
+. 
+. ****************************************************
+. 
+. *Finalize dataset and save outputs
+. 
+. * Keep only required variables
+. keep schoolcode cand_id gender prem_number name ///
+>      kiswahili english maarifa hisabati science uraia average
+
+. 
+. *Order nicely
+. order schoolcode cand_id gender prem_number name ///
+>       kiswahili english maarifa hisabati science uraia average
+
+. 
+. *Save outputs
+. save "$out/bonus_studentlevel.dta", replace
+(file /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/bonus_studentlevel.dta
+    not found)
+file /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/bonus_studentlevel.dta
+    saved
+
+. export delimited using "$out/bonus_studentlevel.csv", replace
+(file /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/bonus_studentlevel.csv
+    not found)
+file /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/bonus_studentlevel.csv sa
+> ved
+
+. 
+. ****************************************************
+. 
+. log close
+      name:  <unnamed>
+       log:  /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/bonus.log
+  log type:  text
+ closed on:   8 Feb 2026, 16:45:53
+-------------------------------------------------------------------------------------------------------
