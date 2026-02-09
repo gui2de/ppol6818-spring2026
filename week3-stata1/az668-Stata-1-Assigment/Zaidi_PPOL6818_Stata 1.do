@@ -90,10 +90,11 @@ recode pixel_village (1=0) (0=1)
 tab pixel_village
 
 **Part (c)
-gen Value = 1 if pixel_village == 0
-bysort village: egen village_payout_consistent = min(payout == payout[1])
-replace Value = 2 if pixel_village == 1 & village_payout_consistent == 1
-replace Value = 3 if pixel_village == 1 & village_payout_consistent == 0
+bysort pixel: egen pixel_payout = max(payout)
+bysort village: egen village_pixel_payout_var = max(pixel_payout != pixel_payout[1])
+gen Value = 1 if pixel_village==0 
+replace Value = 2 if pixel_village==1 & village_pixel_payout_var==0 
+replace Value = 3 if pixel_village==1 & village_pixel_payout_var==1 
 list hhid if Value == 2
 
 /*
@@ -162,6 +163,10 @@ list hhid if Value == 2
      +-----------+
 */
 
+drop pixel_payout village_pixel_payout_var
+
+save q2_finaldataset.dta, replace
+
 clear
 
 ********************************************************************************
@@ -194,6 +199,8 @@ gen average_stand_score = (Standard_Score1 + Standard_Score2 + Standard_Score3)/
 gsort -average_stand_score
 
 gen Rank = _n
+
+save q3_finaldataset.dta, replace
 
 clear
 
@@ -243,7 +250,21 @@ use `table21', clear
 *fix column width issue so that it's easy to eyeball the data
 format %40s table21 col2 col3 col4 col5 col6 col7 col8 col9 col10 col11 col12 col13 
 
-save q4_Pakistan_district_table21.dta, replace
+rename col2 Total_Pop
+rename col3 CNICard_Obtained
+rename col4 CNICard_Not
+rename col5 Male_Total_Pop
+rename col6 Male_CNICard_Obtained
+rename col7 Male_CNICard_Not
+rename col8 Female_Total_Pop
+rename col9 Female_CNICard_Obtained
+rename col10 Female_CNICard_Not
+rename col11 Trans_Total_Pop
+rename col12 Trans_CNICard_Obtained
+rename col13 Trans_CNICard_Not
+rename table District_No
+
+save q4_finaldataset.dta, replace
 
 clear all
 
@@ -323,6 +344,8 @@ if regexm(html, "KITAIFA\s*:\s*([0-9]+)\s*kati ya\s*([0-9]+)") {
 
 * Keep exactly the requested outputs
 keep school_name school_code n_tested school_avg under40 council_rnk region_rnk national_rnk
+
+save q5_finaldataset.dta, replace
 
 ********************************************************************************
 
