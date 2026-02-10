@@ -8,7 +8,7 @@
 **************
 clear all
 set more off
-global data_dir "/Users/gracehuang/Documents/MPP/PPOL6818 local/Stata 1/q1"
+global data_dir "/Users/gracehuang/Documents/MPP/PPOL6818/Stata 1/q1"
 
 use "$data_dir/student.dta", clear
 
@@ -45,7 +45,7 @@ tabstat attendance if level == "Middle", by(school) stat(mean)
 **************
 clear all
 set more off
-use "/Users/gracehuang/Documents/MPP/PPOL6818 local/Stata 1/q2_village_pixel.dta", clear
+use "/Users/gracehuang/Documents/MPP/PPOL6818/Stata 1/q2_village_pixel.dta", clear
 
 *******
 * (a) *
@@ -119,7 +119,7 @@ list hhid village pixel payout if category == 2
 **************
 clear all
 set more off
-cd "/Users/gracehuang/Documents/MPP/PPOL6818 local/Stata 1"
+cd "/Users/gracehuang/Documents/MPP/PPOL6818/Stata 1"
 use "q3_proposal_review.dta", clear
 
 * Standardize variable names
@@ -167,7 +167,7 @@ list proposal_id average_stand_score rank in 1/10
 **************
 clear all
 set more off
-global excel_t21 "/Users/gracehuang/Documents/MPP/PPOL6818 local/Stata 1/q4_Pakistan_district_table21.xlsx"
+global excel_t21 "/Users/gracehuang/Documents/MPP/PPOL6818/Stata 1/q4_Pakistan_district_table21.xlsx"
 
 * Set up an empty tempfile
 tempfile table21
@@ -255,7 +255,7 @@ br
 * Question 5 *
 **************
 clear all
-use "/Users/gracehuang/Documents/MPP/PPOL6818 local/Stata 1/q5/q5_Tz_student_roster_html.dta", clear
+use "/Users/gracehuang/Documents/MPP/PPOL6818/Stata 1/q5/q5_Tz_student_roster_html.dta", clear
 
 * 1. Split the long string
 * We observe that each row is separated by <br>, so we split using <br>
@@ -340,7 +340,7 @@ list
 *********
 clear all
 set more off
-use "/Users/gracehuang/Documents/MPP/PPOL6818 local/Stata 1/q5/q5_Tz_student_roster_html.dta", clear
+use "/Users/gracehuang/Documents/MPP/PPOL6818/Stata 1/q5/q5_Tz_student_roster_html.dta", clear
 
 * 1) Extract schoolcode (PS#######) from the raw string
 gen schoolcode = ""
@@ -439,4 +439,4 @@ assert kiswahili != "" & english != "" & maarifa != "" & hisabati != "" & scienc
 list, abbrev(24)
 
 * 7) Save cleaned dataset
-save "/Users/gracehuang/Documents/MPP/PPOL6818 local/Stata 1/q5/q5_Tz_student_roster_clean.dta", replace
+save "/Users/gracehuang/Documents/MPP/PPOL6818/Stata 1/q5/q5_Tz_student_roster_clean.dta", replace
