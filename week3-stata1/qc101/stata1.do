@@ -1,41 +1,75 @@
 // Qingyue Chen - Stata1 Assignment
+
+capture log close
+log using "$outroot/pd757_review_run.log", replace text
+
+*	************************************************************************
+*	Reviewer: Puran Dou (pd757)
+*	************************************************************************
+
+global dataroot "/Users/oldfarmerdou/Dropbox/ExperimentalDesign/assignment_stata1"
+global q1 "$dataroot/q1_data"
+global q5 "$dataroot/q5"
+
+global outroot "/Users/oldfarmerdou/Dropbox/ExperimentalDesign/pd757-stata1-review"
+capture mkdir "$outroot"
+
+cd "$dataroot"
+
+*	************************************************************************
+
 clear all
 set more off
-cd "C:/Users/86186/Desktop/Stata1_assignment"
+// cd "C:/Users/86186/Desktop/Stata1_assignment"
+cd "$dataroot"
+
 
 // Q1-data prep
-use subject.dta, clear
+// use subject.dta, clear
+use "$q1/subject.dta", clear
 sort subject
-save "temp_subject.dta", replace
+// save "temp_subject.dta", replace
+save "$outroot/temp_subject.dta", replace
 
-use school.dta, clear
+// use school.dta, clear
+use "$q1/school.dta", clear
 sort school
-save "temp_school.dta", replace
+// save "temp_school.dta", replace
+save "$outroot/temp_school.dta", replace
 
-use teacher.dta, clear
+
+// use teacher.dta, clear
+use "$q1/teacher.dta", clear
 rename teacher primary_teacher
 
 * Merge School info onto Teacher
 sort school
-merge m:1 school using "temp_school.dta"
+// merge m:1 school using "temp_school.dta"
+merge m:1 school using "$outroot/temp_school.dta"
+
 drop if _merge == 2 
 drop _merge
 
 * Merge Subject info onto Teacher
 sort subject
-merge m:1 subject using "temp_subject.dta"
+// merge m:1 subject using "temp_subject.dta"
+merge m:1 subject using "$outroot/temp_subject.dta"
 drop if _merge == 2
 drop _merge
 
 sort primary_teacher
-save "temp_teacher_full.dta", replace
+// save "temp_teacher_full.dta", replace
+save "$outroot/temp_teacher_full.dta", replace
 
 * Create Master Student Dataset
-use student.dta, clear
+// use student.dta, clear
+use "$q1/student.dta", clear
+
 
 * Merge the enriched Teacher/School/Subject data onto the Student data
 sort primary_teacher
-merge m:1 primary_teacher using "temp_teacher_full.dta"
+// merge m:1 primary_teacher using "temp_teacher_full.dta"
+merge m:1 primary_teacher using "$outroot/temp_teacher_full.dta"
 
 * Keep only matched observations (students with valid teachers)
 keep if _merge == 3
@@ -69,8 +103,10 @@ display "Mean attendance for each Middle School:  Joseph Darby Middle School (17
 // Q2
 clear all
 set more off
-cd "C:\Users\86186\Desktop\Stata1_assignment"
-use "q2_village_pixel.dta", clear
+// cd "C:\Users\86186\Desktop\Stata1_assignment"
+cd "$dataroot"
+// use "q2_village_pixel.dta", clear
+use "$dataroot/q2_village_pixel.dta", clear
 describe
 
 // Q2-a Create "pixel_consistent"
@@ -217,8 +253,10 @@ List of Household IDs for Category 2:
 // Q3
 clear all
 set more off
-cd "C:\Users\86186\Desktop\Stata1_assignment"
-use "q3_proposal_review.dta", clear
+// cd "C:\Users\86186\Desktop\Stata1_assignment"
+cd "$dataroot"
+// use "q3_proposal_review.dta", clear
+use "$dataroot/q3_proposal_review.dta", clear
 describe
 
 rename Rewiewer1 netid1
@@ -248,10 +286,12 @@ list proposal_id Department average_stand_score rank stand_r1_score stand_r2_sco
 // Q4
 clear all
 set more off
-cd "C:\Users\86186\Desktop\Stata1_assignment"
+// cd "C:\Users\86186\Desktop\Stata1_assignment"
+cd "$dataroot"
 
 * Define the global for the excel file name (assuming it's in the cd)
-global excel_t21 "q4_Pakistan_district_table21.xlsx"
+// global excel_t21 "q4_Pakistan_district_table21.xlsx"
+global excel_t21 "$dataroot/q4_Pakistan_district_table21.xlsx"
 
 clear
 
@@ -293,8 +333,10 @@ format %40s age_group B C D E F G H I J K L M N O P Q R S T U V W X Y Z AA AB AC
 // Q5
 clear all
 set more off
-cd "C:\Users\86186\Desktop\Stata1_assignment"
-use "q5_Tz_student_roster_html.dta", clear
+// cd "C:\Users\86186\Desktop\Stata1_assignment"
+cd "$dataroot"
+// use "q5_Tz_student_roster_html.dta", clear
+use "$q5/q5_Tz_student_roster_html.dta", clear
 rename s html_line
 replace html_line = ustrtrim(html_line)
 gen strL html = ""
@@ -355,15 +397,17 @@ replace national_total = real(ustrregexs(2)) if ustrregexm(html, "KITAIFA\s*:\s*
 keep school_name school_code took_test avg_score group_under40 ///
      council_rank council_total region_rank region_total national_rank national_total
 list, noobs
-save "q5_school_level_summary.dta", replace
-
+// save "q5_school_level_summary.dta", replace
+save "$outroot/q5_school_level_summary.dta", replace
 
 // Bonus question
 clear all
 set more off
-cd "C:\Users\86186\Desktop\Stata1_assignment"
+// cd "C:\Users\86186\Desktop\Stata1_assignment"
+cd "$dataroot"
 
-use "q5_Tz_student_roster_html.dta", clear
+// use "q5_Tz_student_roster_html.dta", clear
+use "$q5/q5_Tz_student_roster_html.dta", clear
 rename s html_line
 replace html_line = ustrtrim(html_line)
 
@@ -442,4 +486,8 @@ order schoolcode cand_id gender prem_number name kiswahili english maarifa hisab
 count
 list, noobs
 
-save "bonus_q5_student_level.dta", replace
+// save "bonus_q5_student_level.dta", replace
+save "$outroot/bonus_q5_student_level.dta", replace
+
+
+log close
