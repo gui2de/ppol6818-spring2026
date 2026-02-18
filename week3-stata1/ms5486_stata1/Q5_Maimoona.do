@@ -3,10 +3,23 @@
 *PS1_ Question5 
 *Please see word for answers 
 
-new 
+if c(username) == "maimo" {
+	
+	global wd "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment"
+	
+}
+else if c(username) == "kkawade"{
+	global wd "/Users/kkawade/GU_Class/ppol6818ex/week_3"
+}
+else if c(username) == ""{
+	global wd ""
+}
+else {
+	display as error "Define user specific file path"
+}
 
-cd "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment"
-use q5_Tz_student_roster_html
+cd "$wd/02_data"
+use q5_Tz_student_roster_html, clear
 
 
 

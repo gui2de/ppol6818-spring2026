@@ -2,22 +2,46 @@
 *Experimental Design_ PS1* 
 *Please see word for answers 
 
+**Note: add global to manage file path
+if c(username) == "ac2221" {
+	
+	global wd "C:\Users\ac2221\Box\2026 PPOL 6818\week_3\02_classwork"
+	
+}
+else if c(username) == "kkawade"{
+	global wd "/Users/kkawade/GU_Class/ppol6818ex/week_3"
+}
+else if c(username) == ""{
+	global wd ""
+}
+else {
+	display as error "Define user specific file path"
+}
+
+**Note: add file pathway 
+global teachers "$wd/02_data/teacher.dta"
+global students "$wd/02_data/student.dta"
+global schools "$wd/02_data/school.dta"
+global subjects "$wd/02_data/subject.dta"
+global q2_village_pixel "$wd/02_data/q2_village_pixel.dta"
+global q3_proposal_review "$wd/02_data/q3_proposal_review"
+
 
 *Question 1 
-cd "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment"
-use "teacher.dta" 
+*cd "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment"
+use $teachers, clear 
 rename teacher primary_teacher
-save teacher.dta, replace 
-use student.dta, clear
-merge m:1 primary_teacher using teacher.dta
+save "$wd/03_output/teacher.dta", replace //Note: you should store any outputs in different place to keep original file the same
+use $students, clear
+merge m:1 primary_teacher using "$wd/03_output/teacher.dta"
 tab _merge 
 drop _merge
 
-merge m:1 school using school.dta
+merge m:1 school using $schools
 tab _merge
 drop _merge
 
-merge m:1 subject using subject.dta
+merge m:1 subject using $subjects
 drop _merge
 
 describe attendance level loc tested subject
@@ -44,7 +68,7 @@ sum gpa
  
  * Part a 
  
- use q2_village_pixel, clear 
+ use $q2_village_pixel, clear 
  describe village pixel
 list pixel payout in 1/20
 bysort pixel: egen payout_min = min(payout)
@@ -82,7 +106,7 @@ tab village_type
 
 *Question 3 
 
-use q3_proposal_review, clear  
+use $q3_proposal_review, clear  
 *Part 1 
 *Reviewer 1 steps 
 bysort Rewiewer1: egen r1_mean = mean(Review1Score)

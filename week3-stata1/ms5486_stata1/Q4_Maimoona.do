@@ -5,17 +5,34 @@
 clear all 
 set more off 
 
-global wd "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment"
+**Note: edit global commands 
+if c(username) == "maimo" {
+	
+	global wd "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment"
+	
+}
+else if c(username) == "kkawade"{
+	global wd "/Users/kkawade/GU_Class/ppol6818ex/week_3"
+}
+else if c(username) == ""{
+	global wd ""
+}
+else {
+	display as error "Define user specific file path"
+}
+
+
 cd "$wd"
-global excel_t21_Maimoona "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment\q4_Pakistan_district_table21.xlsx"
 
-display "$excel_t21_Maimoona"
+global excel_t21_Maimoona "$wd/02_data/q4_Pakistan_district_table21.xlsx"
 
-import excel "$excel_t21_Maimoona", sheet("Table 1") firstrow clear allstring
+//display "$excel_t21_Maimoona"
+
+import excel $excel_t21_Maimoona, sheet("Table 1") firstrow clear allstring
 
 dir "*.xlsx"
 
-import excel "$excel_t21_Maimoona", sheet("Table 1") firstrow clear allstring
+import excel $excel_t21_Maimoona, sheet("Table 1") firstrow clear allstring
 
 describe 
 
@@ -51,9 +68,9 @@ forvalues i = 1/135 {
 	 save `table21', replace
 }
 
-save "q4_table21_18andabove.dta", replace
+save "$wd/03_output/q4_table21_18andabove.dta", replace
 
-use "q4_table21_18andabove.dta", clear
+use "$wd/03_output/q4_table21_18andabove.dta", clear
 count
 
 duplicates list table
@@ -115,7 +132,7 @@ foreach v in all_total all_obtained all_not ///
 gen check_all = all_total - (all_obtained + all_not)
 list table all_total all_obtained all_not if check_all != 0 & !missing(check_all)
 
-
+//I wasn't able to get a complete table (TT)
 
 
 
