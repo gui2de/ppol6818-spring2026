@@ -105,7 +105,7 @@ label values pixel_c payout
 tab pixel_c
 	
 	
-/*Method 2: shortcut
+//Method 2: shortcut
 bysort pixel payout: gen payout_consistent = (payout[1] == payout[_N])
 list pixel payout if payout_consistent == 0
 **here its saying that if max payout is equal to min payout, then 1
