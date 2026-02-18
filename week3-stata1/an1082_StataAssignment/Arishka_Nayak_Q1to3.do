@@ -3,8 +3,10 @@
 ***************************************
 *QUESTION 1*
 clear all
-cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1\q1_data"
+//cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1\q1_data"
+cd "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3/q1_data_export"
 
+use "student.dta", clear // you haven't loaded a dataset into memory
 rename primary_teacher teacher
 merge m:1 teacher using teacher.dta
 save stdtea_merge.dta, replace
@@ -33,7 +35,6 @@ summarize attendance if loc=="South"
 
 Thus, the average student attendance this year in the Southern schools is 177.48 days
 */
-
 
 ***Question 1(b)***
 tab tested if level=="High" 
@@ -89,7 +90,8 @@ Answer: the average attendance by school is as follows
 ******************************************
 *QUESTION 2*
 clear all
-cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1"
+//cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1"
+cd "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3"
 use q2_village_pixel.dta
 
 *Question 2(a)
@@ -139,7 +141,8 @@ list hhid village pixel if villagetype == 2
 *****************************************
 *Question 3
 clear all
-cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1"
+//cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1"
+cd "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3"
 use q3_proposal_review.dta
 
 rename Rewiewer1 Reviewer1

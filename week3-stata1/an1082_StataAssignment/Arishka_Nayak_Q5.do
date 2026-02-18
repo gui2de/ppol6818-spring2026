@@ -1,5 +1,6 @@
 clear all
-cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1\q5"
+//cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1\q5"
+cd "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3/q5"
 use q5_Tz_student_roster_html.dta
 
 *Number of test takers*
@@ -105,7 +106,8 @@ order schoolname scode
 *Bonus Question 
 
 clear
-cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1\q5"
+//cd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3\assignment_ Stata 1\q5"
+cd "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3/q5"
 use q5_Tz_student_roster_html.dta
 
 split s, parse("<TR><TD") gen(st)

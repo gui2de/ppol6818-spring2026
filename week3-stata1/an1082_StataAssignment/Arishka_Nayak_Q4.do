@@ -1,8 +1,10 @@
 	clear all
-	global wd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3"
+	//global wd "C:\Users\arish\Desktop\McCourt\Spring 2026\Experimental Design\Assignment 3"
 	*update the wd global so that it refers to the Box folder filepath on your machine
 
-	global excel_t21 "C:/Users/arish/Desktop/McCourt/Spring 2026/Experimental Design/Assignment 3/assignment_ Stata 1/q4_Pakistan_district_table21.xlsx"
+	//global excel_t21 "C:/Users/arish/Desktop/McCourt/Spring 2026/Experimental Design/Assignment 3/assignment_ Stata 1/q4_Pakistan_district_table21.xlsx"
+global wd "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3/"
+	global excel_t21 "$wd//01_data/q4_Pakistan_district_table21.xlsx"
 
 	clear
 
