@@ -2,8 +2,7 @@
 * ---------------------------------------------------------
 * Stata 1
 * ---------------------------------------------------------
-cd "C:\Users\24547\Desktop\stata1\q1_data"
-
+cd "/Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/zs352-stata1/stata1.data"
 
 use "student.dta", clear
 rename primary_teacher teacher  
@@ -58,7 +57,7 @@ Malala Yousafzai |  177.5478
 * Question 2
 * ---------------------------------------------------------
 
-use "C:\Users\24547\Desktop\stata1\q2_village_pixel.dta", clear
+use "/Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/zs352-stata1/stata1.data/q2_village_pixel.dta", clear
 
 * (a) 
 bysort pixel: egen max_payout = max(payout)
@@ -180,7 +179,7 @@ drop v_max_pay v_min_pay v_pay_consistent
 * ---------------------------------------------------------
 * Question 3
 * ---------------------------------------------------------
-cd "C:\Users\24547\Desktop\stata1"
+cd "/Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/zs352-stata1/stata1.data"
 use "q3_proposal_review.dta", clear
 
 * (1)
@@ -381,7 +380,7 @@ list proposal_id average_stand_score Rank in 1/128
 * ---------------------------------------------------------
 clear all
 
-global wd "C:\Users\24547\Desktop\stata1" 
+global wd "/Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/zs352-stata1/stata1.data" 
 global excel_t21 "$wd/q4_Pakistan_district_table21.xlsx"
 
 * Set up the tempfile
@@ -448,7 +447,7 @@ browse
 * ---------------------------------------------------------
 clear all
 
-local file_path "C:\Users\24547\Desktop\stata1\q5\shl_ps0101114.html"
+local file_path "/Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/zs352-stata1/stata1.data/shl_ps0101114 (1).html"
 
 import delimited "`file_path'", clear varnames(nonames) delimiters("$$$") encoding("utf-8")
 rename v1 raw_data
@@ -498,7 +497,7 @@ list, clean noobs
 * ---------------------------------------------------------
 clear all
 
-local file_path "C:\Users\24547\Desktop\stata1\q5\shl_ps0101114.html"
+local file_path "/Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/zs352-stata1/stata1.data/shl_ps0101114 (1).html"
 
 import delimited "`file_path'", clear varnames(nonames) delimiters("$$$") 
 rename v1 raw_data
