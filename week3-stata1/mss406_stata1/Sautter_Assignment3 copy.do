@@ -1,3 +1,14 @@
+************************
+* Class: Guide Class
+* Topic: Assignment 1
+* Author: Maren Sauter
+* Date: ?
+* Editor: Catherine Morris
+* Edit Date: Feb 18, 2026
+***************
+
+*** Note for Maren: Apparently we are supposed to include the file identification info as shown above on every dofile for this class
+
 *****************************************************
 * ASSIGNMENT 3: STATA 1 (LOOPS, MACROS, EGEN, BYSORT)
 *****************************************************
@@ -5,9 +16,21 @@
 ***************
 ** Question 1A
 ***************
+
+
+
 cd "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3/q1_data_export"
+
+*** Adding my directory for the purposes of reviewing code
+clear all
+cd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment/q1_data"
+
 use "student.dta", clear
 rename primary_teacher teacher
+
+**Checking to be sure this worked
+
+br
 
 * Merging students w/ teachers 
 merge m:1 teacher using "teacher.dta"
@@ -67,7 +90,18 @@ save "$wd/03_output/school_full.dta", replace
 ***************
 ** Question 2A
 ***************
-use "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3/q2_village_pixel.dta", clear
+use "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3/q2_village_pixel.dta", 
+
+***************
+* Reviewer code to bring in the files from reviewer directory
+
+clear all
+cd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment"
+
+use "q2_village_pixel.dta"
+br
+
+*****
 
 tabulate pixel 
 bysort pixel: summarize payout 
@@ -117,6 +151,17 @@ list hhid if village_classification == 2
 ***************
 use "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3/q3_proposal_review.dta", clear
 
+***************
+* Reviewer code to bring in the files from reviewer directory
+
+clear all
+cd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment"
+
+use "q3_proposal_review.dta"
+br
+
+*****
+
 * Renaming variables 
 rename Rewiewer1 Reviewer1
 rename Review1Score ReviewerScore1
@@ -155,6 +200,23 @@ global wd "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 
 *update the wd global so that it refers to the Box folder filepath on your machine
 
 global excel_t21 "$wd//01_data/q4_Pakistan_district_table21.xlsx"
+
+***************
+* Reviewer code to bring in the files from reviewer directory and do other things
+
+clear all
+
+global wd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment"
+
+global excel_t21 "q4_Pakistan_district_table21.xlsx"
+
+dir "$excel_t21"
+
+br
+
+save "$wd/pakistan_district_table21.dta", replace
+
+*****
 
 clear
 
@@ -233,6 +295,20 @@ save "$wd/03_output/pakistan_district_table21.dta", replace
 ***************
 cd "/Users/maren/Desktop/Experimental Design & Implementation/Assignment 3/q5"
 use "q5_Tz_student_roster_html.dta", clear
+
+
+***************
+* Reviewer code to bring in the files from reviewer directory 
+
+clear all
+
+cd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment/q5"
+
+pwd
+
+use "q5_Tz_student_roster_html.dta"
+
+*****
 
 * Extracting school name and code
 generate school_name = ""
