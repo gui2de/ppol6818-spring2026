@@ -1,5 +1,7 @@
 //Abhinav Dutt Experimental Design STATA assignment 1 February 8
 
+cd"/Users/PJ/Documents/Georgetown/MPPSemestre2/ExperimentalDesign/Github/ppol6818-spring2026/week3-stata1/ad2165-STATA1"
+
 //Question 1
 
 use school.dta //starting with dataset that has variables school, level, gpa, and loc as the master data set (school.dta)
@@ -131,20 +133,21 @@ forvalues i=1/135 {
 	import excel "$excel_t21", sheet("Table `i'") firstrow clear allstring //importing and making sure we clear the first row since we are importing from excel 
 	display as error `i' //this displays the loop number 
 	keep if regexm(TABLE21PAKISTANICITIZEN, "18 AND") == 1 //this keeps only the rows that have "18 AND". regexm is allowing us to keep only the rows we want by hunting for a particular text. 
+
 	keep in 1 //we want the first out of three as second/third are urban/rural
 	
-	foreach var of varlist_all{
+	foreach var of varlist * {
 		//we are now looping through every variable in the data set within the initial loop 
-		quietly count if missing(`var') //Counts missing rows without printing
+		quietly count if !missing(`var') //Counts missing rows without printing
 		
-		if r(N) == 1{ 
+		if r(N) == 1 {
 			//this if condition is only entered if variable is empty
-			display "Dropping variable `var' as it is empty" //print message
-			drop `var' //drops the variable
+			di "Dropping variable `var' as it is empty" //print message
+			//drop `var' //drops the variable
 		}
 	}
 	
-	rename * var#, addnumber //this line of code allows us to rename every variable WITH a number, in order, so that we can append smoothly 
+	capture rename * var#, addnumber //this line of code allows us to rename every variable WITH a number, in order, so that we can append smoothly 
 	rename var1 table21 
 	
 	replace table21 = "18 AND ABOVE" if regexm(table21, "18 AND") | regexm(table21, "OVERALL") //we are correcting for any naming differences 
@@ -156,7 +159,7 @@ forvalues i=1/135 {
 
 use `table21', clear //loading the data 
 
-format %40s table21 var* //fixing to ideal column width 
+capture format var %40s //fixing to ideal column width 
 
 rename var2 all_totalpop
 rename var3 all_CNI
