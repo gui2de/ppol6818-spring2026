@@ -159,6 +159,13 @@ use `table21', clear
 br
 
 * Q5
+
+**********************************************************************************
+**********Qingfeng's Comment******************************************************
+**********************************************************************************
+**It seems that you manually coded rather than extracting the messy HTML string. Since the prompt explicitly frames Q5 as string cleaning/data wrangling and ask to "extract" school-level variables from the provided HTML, this approach is not generalizable (won't work for another school) and doesn't demonstrate the intended parsing steps.
+**Therefore, I'd recommend reading the HTML/source text and programmatically parsing out the counts/avg score/under40 indicator and the council/region/national rank (including denominators) before saving the one-row dataset.
+
 use "Q5\q5_Tz_student_roster_html.dta", clear
 set obs 1
 
