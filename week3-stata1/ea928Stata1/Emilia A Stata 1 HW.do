@@ -19,7 +19,7 @@ use subject.dta
 
 /* Order the key identifier in the using dataset, and change its name so it's the same as in the master dataset*/
 
-use student.dta
+use student.dta, clear
 
 rename primary_teacher teacher
 
@@ -100,7 +100,7 @@ summarize gpa
 
 
 D) What is the mean attendance for each middle school?*/
-gen school_tag = tag(school)
+egen school_tag = tag(school)
 bysort level: list school if school_tag == 1
 tabstat atten if level=="Middle", by(school)
 
@@ -365,11 +365,11 @@ Note: This is a school level dataset, and should only contain one row with all t
 
 cd "/Users/PJ/Documents/Georgetown/MPPSemestre2/ExperimentalDesign/Stata1HW"
 
-use q5_Tz_student_roster_html.dta
+use q5_Tz_student_roster_html.dta, clear
 
 net install readhtml, from(https://ssc.wisc.edu/sscc/stata/)
 
-net install htmltab2stata.pkg
+net install htmltab2stata, from("http://fmwww.bc.edu/RePEc/bocode/h")
 
 htmltab2stata , url(shl_ps0101114.html)
 
