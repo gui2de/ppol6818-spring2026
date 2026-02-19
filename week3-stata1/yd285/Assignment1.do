@@ -1,19 +1,18 @@
 clear all
-cd "C:\Users\ASUS\Desktop\research_design\assignments\assignment1"
+cd "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design/Assignment"
 
 *Q1
 *(a)
-use "inputs\q1_data\student.dta"
-rename primary_teacher teacher
-merge m:1 teacher using "inputs\q1_data\teacher.dta"
+use student.dta
+merge m:1 teacher using teacher.dta
 drop _merge
-merge m:1 school using "inputs\q1_data\school.dta"
+merge m:1 school using school.dta 
 sum attendance if loc == "South"
 *The mean student attendance for schools located in the "South" is 177.4776 days.
 
 *(b)
 drop _merge
-merge m:1 subject using "inputs\q1_data\subject.dta"
+merge m:1 subject using subject.dta 
 sum tested if level == "High"
 /*Among students enrolled in high school, 44.23495% have a primary teacher who
 teaches a tested subject.*/  
@@ -37,7 +36,7 @@ Total	177.4514
 *Q2
 *(a)
 clear all
-use "inputs\q2_village_pixel.dta"
+use q2_village_pixel.dta
 egen mean_payout = mean(payout), by(pixel)	
 gen pixel_consistent = (payout == mean_payout)
 drop mean_payout
@@ -72,7 +71,7 @@ status across pixels:
 *Q3
 *(a)
 clear all
-use "inputs\q3_proposal_review.dta"
+use q3_proposal_review.dta
 rename Rewiewer1 Reviewer1
 rename Review1Score ReviewerScore1
 rename Reviewer2Score ReviewerScore2
@@ -95,8 +94,10 @@ egen rank = rank(-average_stand_score)
 
 *Q4
 *(a)
-global wd "C:\Users\ASUS\Desktop\research_design\assignments\assignment1"
-global excel_t21 "$wd\inputs\q4_Pakistan_district_table21.xlsx"
+global wd "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design"
+*update the wd global so that it refers to the Box folder filepath on your machine
+
+global excel_t21 "$wd//Assignment/q4_Pakistan_district_table21.xlsx"
 clear
 
 tempfile table21
@@ -141,7 +142,10 @@ sort table
 
 *Q5
 clear all
-use "inputs\q5\q5_Tz_student_roster_html.dta"
+global wd "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design"
+*update the wd global so that it refers to the Box folder filepath on your machine
+
+use "$wd//Assignment/q5_Tz_student_roster_html.dta", clear 
 rename s html
 
 *school and code
