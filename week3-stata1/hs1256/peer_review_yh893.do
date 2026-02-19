@@ -3,7 +3,8 @@
 global class "/Users/serovia/Desktop/assignment__Stata_1_export"
 
 //Question1
-use "$class/q1_data/student.dta",clear
+cd "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment"
+use "teacher.dta" 
 
 rename primary_teacher teacher
 save student_temp, replace
@@ -35,7 +36,8 @@ mean attendance if level=="Middle", over(school_id)
 clear
 
 //Question 2
-use "$class/q2_village_pixel.dta",clear
+use q2_village_pixel.dta , clear 
+
 
 //a.
 bys pixel: egen min_payout = min(payout)
@@ -61,8 +63,9 @@ replace village_type = 3 if pixel_village == 1 & village_pay_consistent == 0
 tab village_type
 clear
 
+
 //Question 3
-use "$class/q3_proposal_review",clear
+use q3_proposal_review,clear
 
 //1.
 gen score1 = Review1Score
@@ -97,7 +100,10 @@ clear
 
 
 // Question 4
-global excel_t21 "$class/q4_Pakistan_district_table21.xlsx"
+
+global wd "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment"
+cd "$wd"
+global excel_t21_Maimoona "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 1 assignment\q4_Pakistan_district_table21.xlsx"
 
 clear
 
@@ -136,56 +142,38 @@ save "districts_18plus.dta", replace
 clear
 
 //Question 5
-filefilter "$class/q5/shl_ps0101114.html" "cleaned_psle.txt", replace
 
-use "$class/q5/q5_Tz_student_roster_html.dta", clear
+use q5_Tz_student_roster_html
 
-file open html using "cleaned_psle.txt", read text
 
-local fulltext "" 
+* 1) School name + code
+gen school_name = regexs(1) if regexm(s, "([A-Z ]+ PRIMARY SCHOOL)")
+gen school_code = regexs(1) if regexm(s, "(PS[0-9]+)")
 
-file read html line
+* 2) Students who took test
+gen students_tested = real(regexs(1)) if regexm(s, "WALIOFANYA MTIHANI *: *([0-9]+)")
 
-while r(eof)==0 {
-    local fulltext `"`fulltext' `line'"'
-    file read html line
-}
-file close html
-display substr(`"`fulltext'"', 1, 500)
+* 3) School average score
+gen avg_score = real(regexs(1)) if regexm(s, "WASTANI WA SHULE *: *([0-9.]+)")
 
-clear
-set obs 1
+* 4) Student group: under 40 vs 40+
+gen group_40plus = .
+replace group_40plus = 0 if regexm(s, "chini ya 40")
+replace group_40plus = 1 if regexm(s, "40") & missing(group_40plus)
 
-gen n_students = .
-gen avg_score = .
-gen group40 = .
-gen rank_council = .
-gen council_total = .
-gen rank_region = .
-gen region_total = .
-gen rank_national = .
-gen national_total = .
-gen school_name = ""
-gen school_code = ""
+* 5) Rankings (rank + total)
+gen rank_council  = real(regexs(1)) if regexm(s, "KIHALMASHAURI: *([0-9]+) kati ya ([0-9]+)")
+gen total_council = real(regexs(2)) if regexm(s, "KIHALMASHAURI: *([0-9]+) kati ya ([0-9]+)")
 
-replace school_name = regexs(1) if regexm(`"`fulltext'"', "> *([A-Z ]+?) - (PS[0-9]+) *<")
-replace school_code = regexs(2) if regexm(`"`fulltext'"', "> *([A-Z ]+?) - (PS[0-9]+) *<")
-replace n_students = real(regexs(1)) if regexm(`"`fulltext'"', "WALIOFANYA MTIHANI *: *([0-9]+)")
+gen rank_region  = real(regexs(1)) if regexm(s, "KIMKOA *: *([0-9]+) kati ya ([0-9]+)")
+gen total_region = real(regexs(2)) if regexm(s, "KIMKOA *: *([0-9]+) kati ya ([0-9]+)")
 
-replace avg_score = real(regexs(1)) if regexm(`"`fulltext'"', "WASTANI WA SHULE *: *([0-9.]+)")
+gen rank_national  = real(regexs(1)) if regexm(s, "KITAIFA *: *([0-9]+) kati ya ([0-9]+)")
+gen total_national = real(regexs(2)) if regexm(s, "KITAIFA *: *([0-9]+) kati ya ([0-9]+)")
 
-replace group40 = 0 if regexm(`"`fulltext'"', "Wanafunzi") & regexm(`"`fulltext'"', "chini ya 40")
-replace group40 = 1 if regexm(`"`fulltext'"', "40 au zaidi")
+list school_name school_code students_tested avg_score group_40plus ///
+     rank_council total_council rank_region total_region rank_national total_national
 
-replace rank_council = real(regexs(1)) if regexm(`"`fulltext'"', "KIHALMASHAURI *: *([0-9]+) kati ya ([0-9]+)")
-replace council_total = real(regexs(2)) if regexm(`"`fulltext'"', "KIHALMASHAURI *: *([0-9]+) kati ya ([0-9]+)")
-
-replace rank_region = real(regexs(1)) if regexm(`"`fulltext'"', "KIMKOA *: *([0-9]+) kati ya ([0-9]+)")
-replace region_total = real(regexs(2)) if regexm(`"`fulltext'"', "KIMKOA *: *([0-9]+) kati ya ([0-9]+)")
-
-replace rank_national = real(regexs(1)) if regexm(`"`fulltext'"', "KITAIFA *: *([0-9]+) kati ya ([0-9]+)")
-replace national_total = real(regexs(2)) if regexm(`"`fulltext'"', "KITAIFA *: *([0-9]+) kati ya ([0-9]+)")
-
-list
-save "school_cleaned.dta", replace
+keep school_name school_code students_tested avg_score group_40plus ///
+rank_council total_council rank_region total_region rank_national total_national
 clear
