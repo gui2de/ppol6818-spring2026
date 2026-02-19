@@ -1,13 +1,22 @@
+
+
+*Create a global for peer review (insert your directory here)
+global mydir "C:\Users\warre\OneDrive\Desktop\Georgetown\SecondSemester\Experimental_Design\Assignments\assignment_ Stata_1"
+cd "$mydir"
+
+
+
 *Q1.a What is the mean student attendance for schools located in the "South"? 
 
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+//cd "C:\ExpDesign\StataAssignment1"
+cd "$mydir/q1_data" // File path in line with canvas file path
 use student.dta
 rename primary_teacher teacher
 sort teacher
 bysort teacher: gen stdnt_teacher_id = _n
 reshape wide grade attendance stdnt_num, i(teacher) j(stdnt_teacher_id)
-merge 1:1 teacher using "C:\ExpDesign\StataAssignment1\teacher.dta"
+merge 1:1 teacher using teacher.dta
 reshape long grade attendance stdnt_num, i(teacher) j(stdnt_teacher_id)
 gen south = 1 if school == "Horace Mann Elementary" | school == "Benjamin Franklin Elementary" | school == "Malala Yousafzai Middle School"
 replace south = 0 if south == .
@@ -23,14 +32,14 @@ sum attendance if south == 1
  
 *Q1.b Among students enrolled in high school, what proportion have a primary teacher who teaches a tested subject, i.e. "tested" = 1? 
  
-clear all
-cd "C:\ExpDesign\StataAssignment1"
+clear all 
+//cd "C:\ExpDesign\StataAssignment1"
 use student.dta
 rename primary_teacher teacher
 sort teacher
 bysort teacher: gen stdnt_teacher_id = _n
 reshape wide grade attendance stdnt_num, i(teacher) j(stdnt_teacher_id)
-merge 1:1 teacher using "C:\ExpDesign\StataAssignment1\teacher.dta"
+merge 1:1 teacher using teacher.dta
 reshape long grade attendance stdnt_num, i(teacher) j(stdnt_teacher_id)
 tab grade
 drop if grade < 9
@@ -68,7 +77,7 @@ tab teacher tested, cell
 
 *Q1.c What is the mean gpa of all students in the district? 
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+// cd "C:\ExpDesign\StataAssignment1"
 use student.dta
 sum stdnt_num
 *4490 stdnt_num observations
@@ -76,7 +85,7 @@ rename primary_teacher teacher
 sort teacher
 bysort teacher: gen stdnt_teacher_id = _n
 reshape wide grade attendance stdnt_num, i(teacher) j(stdnt_teacher_id)
-merge 1:1 teacher using "C:\ExpDesign\StataAssignment1\teacher.dta"
+merge 1:1 teacher using teacher.dta
 reshape long grade attendance stdnt_num, i(teacher) j(stdnt_teacher_id)
 drop grade attendance stdnt_teacher_id subject experience _merge
 drop if stdnt_num == .
@@ -84,7 +93,7 @@ sum stdnt_num
 *still 4490 stdnt_num observations
 bysort school: gen stdnt_school_id = _n
 reshape wide teacher stdnt_num, i(school) j(stdnt_school_id)
-merge 1:1 school using "C:\ExpDesign\StataAssignment1\school.dta"
+merge 1:1 school using school.dta
 reshape long teacher stdnt_num, i(school) j(stdnt_school_id)
 sum gpa
 
@@ -98,19 +107,19 @@ The mean gpa is 3.6 */
 
 *Q1.d What is the mean attendance for each middle school?
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+//cd "C:\ExpDesign\StataAssignment1"
 use student.dta
 rename primary_teacher teacher
 sort teacher
 bysort teacher: gen stdnt_teacher_id = _n
 reshape wide grade attendance stdnt_num, i(teacher) j(stdnt_teacher_id)
-merge 1:1 teacher using "C:\ExpDesign\StataAssignment1\teacher.dta"
+merge 1:1 teacher using teacher.dta
 reshape long grade attendance stdnt_num, i(teacher) j(stdnt_teacher_id)
 drop grade stdnt_teacher_id subject experience _merge teacher
 drop if stdnt_num == .
 bysort school: gen stdnt_school_id = _n
 reshape wide attendance stdnt_num, i(school) j(stdnt_school_id)
-merge 1:1 school using "C:\ExpDesign\StataAssignment1\school.dta"
+merge 1:1 school using school.dta
 reshape long attendance stdnt_num, i(school) j(stdnt_school_id)
 drop if level != "Middle"
 tab school 
@@ -141,7 +150,7 @@ Create a new dummy variable, "pixel_consistent", defined as –
 ● pixel_consistent = 0 if there is any variation in payout status within a pixel */
 
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+cd "$mydir"
 use q2_village_pixel.dta
 tab pixel payout, missing
 ssc install egenmore
@@ -165,7 +174,7 @@ Create a new village-level dummy variable, "pixel_village", defined as:
 ● pixel_village = 1 if households in a village fall within more than one pixel */
  
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+//cd "C:\ExpDesign\StataAssignment1"
 use q2_village_pixel.dta
 bysort village: egen check = nvals(pixel)
 gen pixel_village = 0 if check == 1
@@ -190,7 +199,7 @@ Using this criterion, classify households into the following categories:
 Note: These 3 categories mentioned above are mutually exclusive and exhaustive, i.e. every single observation should fall into one of these categories. Also, the categories may or may not line up with what you created in (a) and (b) so read the instructions closely. */
 
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+//cd "C:\ExpDesign\StataAssignment1"
 use q2_village_pixel.dta
 bysort village: egen check = nvals(pixel)
 gen hh_classification = 1 if check == 1
@@ -222,7 +231,7 @@ b. stand_r2_score
 c. stand_r3_score */
 
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+//cd "C:\ExpDesign\StataAssignment1"
 use q3_proposal_review.dta
 rename Rewiewer1 Reviewer1
 rename Reviewer2Score Review2Score
@@ -237,7 +246,7 @@ foreach x in 1 2 3 {
 
 *q3.2 Compute the average standardized score as "average_stand_score" for each proposal 
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+//cd "C:\ExpDesign\StataAssignment1"
 use q3_proposal_review.dta
 rename Rewiewer1 Reviewer1
 rename Reviewer2Score Review2Score
@@ -256,7 +265,7 @@ a. Rank = 1 corresponds to the highest score
 b. Rank = 128 corresponds to the lowest score */
 
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+//cd "C:\ExpDesign\StataAssignment1"
 use q3_proposal_review.dta
 rename Rewiewer1 Reviewer1
 rename Reviewer2Score Review2Score
@@ -278,7 +287,7 @@ A hint do-file has been provided that includes code to loop through each table. 
 Hint: While the table structure is mostly consistent, there are a small number of minor formatting anomalies. Be sure to inspect your output carefully and adjust your code as needed. */
 
 clear all
-global wd  "C:\ExpDesign\StataAssignment1"
+global wd  "$mydir"
 global excel_t21 "$wd\q4_Pakistan_district_table21"
 clear
 tempfile table21
@@ -589,7 +598,7 @@ In addition to these variables, also capture the school name and school code in 
 Note: This is a school level dataset, and should only contain one row with all the variables. All the school level information is given in the html file provided with the assignment files, which you can open using any browser. The page is in Swahili but it should be fairly straightforward to find the relevant information. You can use google translate if you have trouble finding the relevant parts of the webpage. */
 
 clear all
-cd "C:\ExpDesign\StataAssignment1"
+//cd "C:\ExpDesign\StataAssignment1"
 view browse "shl_ps0101114.html"
 set obs 1
 gen school_name = "ALBEHIJE PRIMARY SCHOOL"
