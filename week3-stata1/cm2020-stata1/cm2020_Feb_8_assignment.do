@@ -4,19 +4,19 @@
 * Author: Kate Morris
 * Date: January 31, 2026
 ***************
+clear all //added a clear all before running the global macro 
+global projdir "C:\Users\aqsaz\Documents\Georgetown\Spring 2026\Experimental Design\Stata\Assignment-Basic\assignment_ Stata 1" //AZ668: changed this cd to global
 
-cd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment/q1_data"
-
-pwd
+cd "$projdir" // AZ66: changed the pwd to cd
 
 
 *** Question 1a: What is the mean student attendance for school located in the South?
 
 *** I tried using temp files for this first but that didn't work, so I began creating files saved to my desktop
 
-clear all
+clear // AZ668: Made it into clear to keep the global macro
 
-use "student.dta", clear
+use "student.dta", clear 
 save "students_temp.dta", replace
 
 
@@ -57,7 +57,7 @@ merge 1:m school using "students_teachers.dta"
 
 tab _merge
 
-/*  Matching result from |
+/*  Matching result from | 									AZ668: Added comment blocks
                   merge |      Freq.     Percent        Cum.
 ------------------------+-----------------------------------
             Matched (3) |      4,490      100.00      100.00
@@ -72,9 +72,9 @@ save "students_teachers_location.dta", replace
 
 summarize attendance if loc == "South"
 
-    Variable |        Obs        Mean    Std. dev.       Min        Max
+/*  Variable |        Obs        Mean    Std. dev.       Min        Max		AZ668: Added comment blocks
 -------------+---------------------------------------------------------
-  attendance |      1,181    177.4776    3.140854        158        180
+  attendance |      1,181    177.4776    3.140854        158        180*/
 
   
  
@@ -82,12 +82,12 @@ summarize attendance if loc == "South"
 *** Question 1b: Among students enrolled in high school, what proportion have a primary teacher who teaches a tested subject, i.e. "tested" = 1?
 
 
-clear all
+// AZ668: removed clear all
 
 use "students_teachers_location.dta", clear
 save "students_teachers_location_temp.dta", replace
 
-merge m:1 subject using "subject_temp.dta"
+merge m:1 subject using "subject.dta" // AZ668: changed file name to "subject.dta"
 
 tab _merge
 drop _merge
@@ -95,12 +95,12 @@ drop _merge
  tab tested if level == "High"
 
  
-  tested |      Freq.     Percent        Cum.
+/*   tested |      Freq.     Percent        Cum.   AZ668: Added comment blocks
 ------------+-----------------------------------
           0 |        769       55.77       55.77
           1 |        610       44.23      100.00
 ------------+-----------------------------------
-      Total |      1,379      100.00
+      Total |      1,379      100.00 */
 
 	  
 *** 44% of high school students have a primary teacher who teaches a tested subject
@@ -111,12 +111,12 @@ drop _merge
 *** Question 1c: What is the mean gpa of all students in the district
 
 
-clear all
+clear // AZ668: Made it into clear to keep the global macro
 
 use "students_teachers_location.dta", clear
 save "students_teachers_location_temp.dta", replace
 
-merge m:1 subject using "subject_temp.dta"
+merge m:1 subject using "subject.dta" // AZ668: changed file name to subject.dta
 
 tab _merge
 
@@ -124,9 +124,9 @@ drop _merge
 
 sum gpa
 
- Variable |        Obs        Mean    Std. dev.       Min        Max
+/*  Variable |        Obs        Mean    Std. dev.       Min        Max AZ668: Added comment blocks
 -------------+---------------------------------------------------------
-         gpa |      4,490     3.60144      .23159   2.974333   3.769334
+         gpa |      4,490     3.60144      .23159   2.974333   3.769334 */
 		 
 
 *** The mean GPA for all students in the district is 3.6
@@ -141,7 +141,7 @@ sum gpa
 tab school level
 
 
-           |              level
+/*                    |              level 							AZ668: Added comment blocks
                school | Element..       High     Middle |     Total
 ----------------------+---------------------------------+----------
 Abraham Lincoln Ele.. |       316          0          0 |       316 
@@ -157,20 +157,20 @@ Norman Borlaug High.. |         0        769          0 |       769
 Rachel Carson Eleme.. |       261          0          0 |       261 
 Robert Smalls Eleme.. |       255          0          0 |       255 
 ----------------------+---------------------------------+----------
-                Total |     2,072      1,379      1,039 |     4,490 
+                Total |     2,072      1,379      1,039 |     4,490 */
 
 save "middle_school_students.dta", replace
 keep if level == "Middle"
 
 tabstat attendance, by(school) stat(mean)
 
-          school |      Mean
+/*        school |      Mean   AZ668: Added comment blocks
 -----------------+----------
 Joseph Darby Mid |  177.4408
 Mahatma Ghandi M |  177.3344
 Malala Yousafzai |  177.5479
 -----------------+----------
-           Total |   177.441
+           Total |   177.441 */
 
 
 
@@ -178,11 +178,11 @@ Malala Yousafzai |  177.5479
 *******************************************************************************
 *** Question 2a. The payout status should be consistent within each pixel. Verify whether this condition holds. Create a new dummy variable, "pixel_consistent," with 1: if all households within a pixel have the same payout and 0 = if there is any variation in payout status within a pixel
 
-clear all
+clear // AZ668: Made it into clear to keep the global macro
 
 *** Picking up work again after a break and closing out Stata
 
-cd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment"
+//AZ66: removed cd because we have the global
 
 use "q2_village_pixel.dta", clear
 save "q2_village_pixel_temp.dta", replace
@@ -213,7 +213,7 @@ Create a new village-level dummy variable, "pixel_village", defined as:
 ● pixel_village = 0 if all households in a village fall within a single pixel
 ● pixel_village = 1 if households in a village fall within more than one pixel */
 
-use "q2_village_pixel_temp.dta", clear
+// AZ668: removed clear
 
 sort village
 
@@ -233,12 +233,12 @@ drop unique_pixels
 
 tab pixel_village
 
-  pixel_village |      Freq.     Percent        Cum.
+/*  pixel_village |      Freq.     Percent        Cum.   AZ668: Added comment blocks
 ----------------+-----------------------------------
    Single pixel |        834       87.06       87.06
 Multiple pixels |        124       12.94      100.00
 ----------------+-----------------------------------
-          Total |        958      100.00
+          Total |        958      100.00 */
 
 
 /* Questions 2c: For this experiment, villages spanning multiple pixels only pose a problem if they also have different payout statuses across pixels. Using this criterion, classify households into the following categories:
@@ -248,9 +248,9 @@ pixels (Create and report a list of all household IDs in these villages) (Value 
 ● Villages that span multiple pixels and have different payout statuses across
 pixels (Value = 3) */
 
-clear all
+// AZ668: removed clear all
 
-use "q2_village_pixel_temp.dta", clear
+// AZ668: removed use file name since we're on the same file
 
 bysort village: egen p_min = min(payout)
 bysort village: egen p_max = max(payout)
@@ -266,14 +266,14 @@ replace village_category = 2 if pixel_village == 1 & p_differs == 1
 
 tab village_category, m
 
-village_cat |
+/*village_cat | 									AZ668: Added comment blocks
       egory |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           0 |        834       87.06       87.06
           1 |         50        5.22       92.28
           2 |         74        7.72      100.00
 ------------+-----------------------------------
-      Total |        958      100.00
+      Total |        958      100.00 */
 
 	  
 drop p_min p_max p_differs
@@ -294,7 +294,7 @@ a. Rank = 1 corresponds to the highest score
 b. Rank = 128 corresponds to the lowest score */
 
 
-clear all
+clear // AZ668: Made it into clear to keep the global macro
 
 use "q3_proposal_review.dta", clear
 save "q3_proposal_review_temp.dta", replace
@@ -404,17 +404,17 @@ Your task is to extract columns 2 through 13 from the first data row ("18 and ab
 A hint do-file has been provided that includes code to loop through each table. You will need to modify or extend this code to ensure that the columns are correctly aligned across districts.
 Hint: While the table structure is mostly consistent, there are a small number of minor formatting anomalies. Be sure to inspect your output carefully and adjust your code as needed.*/
 
-clear all
+clear // AZ668: Made it into clear to keep the global macro
 
-cd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment"
+//AZ668: removed cd as we're using global
 
-import excel "q4_pakistan_district_table21.xlsx", describe
+//AZ668: removed the import as its redundant and being done again in Row 417
 
 *** It looks like some of the "B" columns got switched to "E" or are just missing. Some of the columns also extend to Z, others to AA
 
 *** the table import is very messy as shown by running the code below
 
-import excel "q4_pakistan_district_table21.xlsx", sheet("Table 1") allstring clear
+import excel "q4_pakistan_district_table21.xlsx", sheet("Table 1") allstring clear 
 list A B C in 1/20
 
 
@@ -423,9 +423,9 @@ list A B C in 1/20
 *** Code, using the hint file
 
 
-global wd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment"
+//AZ668: removed global command as it's already specified at the top
 
-global excel_t21 "$wd//q4_Pakistan_district_table21.xlsx"
+global excel_t21 "$projdir/q4_pakistan_district_table21.xlsx" // AZ668: rewrote the file path to match the global at the top
 
 
 
@@ -438,7 +438,7 @@ save `table21', replace emptyok
 
 *Run a loop through all the excel sheets (135) this will take 1-5 mins because it has to import all 135 sheets, one by one
 forvalues i=1/135 {
-	import excel "$excel_t21", sheet("Table `i'") firstrow clear allstring //import
+	import excel "$excel_t21", sheet("Table `i'") firstrow clear allstring //import // AZ668: changed it to match the global excel
 	display as error `i' //display the loop number
 
 	keep if regexm(TABLE21PAKISTANICITIZEN1, "18 AND" )==1 //keep only those rows that have "18 AND"
@@ -484,13 +484,13 @@ save "pakistan_districts_temp.dta", replace
 In addition to these variables, also capture the school name and school code in two different columns.
 Note: This is a school level dataset, and should only contain one row with all the variables. All the school level information is given in the html file provided with the assignment files, which you can open using any browser. The page is in Swahili but it should be fairly straightforward to find the relevant information. You can use google translate if you have trouble finding the relevant parts of the webpage. */
 
-clear all
+clear // AZ668: Made it into clear to keep the global macro
 
-cd "/Users/cam_cew/Desktop/Experimental_design/Feb_8_assignment/q5"
-pwd
+// AZ668: removed cd as we're using global
+// AZ668: removed pwd 
 
 
-use "shl_ps0101114.html", clear
+// AZ66: removed this to be able to run the code
 *** there doesn't seem to be anything in this file, so I'm going to attempt to use the html file... but I am not sure how to import an html file or how to direct Stata to use that instead. 
 
 
