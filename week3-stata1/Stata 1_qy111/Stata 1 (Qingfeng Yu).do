@@ -2,7 +2,9 @@
 
 ***Question 1***
 **Prepare data
-cd "H:\Experimental_Design\stata1"
+cd "C:\ExpDesign\StataAssignment1"
+
+use student.dta
 
 rename primary_teacher teacher
 merge m:1 teacher using "teacher.dta"
@@ -28,6 +30,10 @@ keep if level == "Middle"
 bysort school: summarize attendance
 
 ***Question 2***
+
+clear
+use q2_village_pixel.dta
+
 **a. Yes, this condition holds.
 bysort pixel: egen payout_sd = sd(payout)
 generate pixel_consistent = (payout_sd == 0)
@@ -54,6 +60,10 @@ count
 tab village_category
 
 ***Question 3***
+
+clear
+use q3_proposal_review.dta
+
 **1
 rename Rewiewer1 reviewer1
 rename Reviewer2 reviewer2
@@ -92,8 +102,8 @@ list proposal_id average_stand_score rank in 1/50
 
 ***Question 4***
 *Set the environment
-global wd "H:\Experimental_Design\stata1"
-global excel_t21 "$wd\q4_Pakistan_district_table21.xlsx"
+global wd  "C:\ExpDesign\StataAssignment1"
+global excel_t21 "$wd\q4_Pakistan_district_table21"
 clear
 
 tempfile table21
@@ -144,8 +154,7 @@ clear all
 set more off
 
 * 1) Edit your HTML path
-local f "C:\Users\LENOVO\OneDrive\Experimental Design\Stata 1\shl_ps0101114.html"
-
+local f "C:\ExpDesign\StataAssignment1\shl_ps0101114.html"
 * 2) Safety check
 capture confirm file "`f'"
 if _rc {
