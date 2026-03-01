@@ -60,6 +60,18 @@ order schoolfile schoolcode cand_id gender prem_number name kiswahili english ma
 count
 browse
 
+di "======== Q1 ID CARD STATS ========"
+count                                    // Number of observations
+isid cand_id                             // Check if key uniquely identifies obs
+duplicates report cand_id               // Duplicate check on key
+foreach v in schoolfile schoolcode cand_id gender prem_number name ///
+             kiswahili english maarifa hisabati science uraia average {
+    di "VAR: `v'"
+    count if missing(`v')               // Missing count per variable
+    tab `v' if inrange(_n, 1, 3)        // Preview (optional)
+}
+
+
 ****************Q2****************
 import excel "$wd/q2_CIV_populationdensity.xlsx", firstrow clear
 
@@ -96,7 +108,6 @@ if _rc {
 * Clean department names to match density data
 replace b06_departemen = lower(strtrim(b06_departemen))
 
-
 * Merge (many households to one department)
 merge m:1 b06_departemen using "$wd/density_temp.dta"
 
@@ -110,6 +121,26 @@ drop _merge
 * Verify merge worked
 summ pop_density
 list b06_departemen pop_density in 1/10
+
+* ── Dataset ID Card Stats: Q2 Raw - Section 0 ───────────────────────────
+use "$wd/q2_CIV_Section_0.dta", clear
+di "== Q2 RAW: Section_0 =="
+count
+capture isid hh1 hh2
+foreach v of varlist _all {
+    quietly count if missing(`v')
+    di "Missing in `v': " r(N)
+}
+
+* Dataset ID Card Stats: Q2 Clean (merged) ────────────────────────────
+use "$wd/q2_CIV_Section_0.dta", clear
+* re-run merge steps to restore clean dataset, then:
+di "== Q2 CLEAN =="
+count
+foreach v of varlist _all {
+    quietly count if missing(`v')
+    di "Missing in `v': " r(N)
+}
 
 ****************Q3****************
 use "$wd/q3_GPS Data.dta", clear
@@ -134,6 +165,16 @@ gen enumerator_id = ceil(spatial_rank * 19 / _N)
 
 * Step 5: Verify number of households assigned to each enumerator ──────────
 tab enumerator_id
+
+* ── Dataset ID Card Stats: Q3 Output ────────────────────────────────────
+di "======== Q3 ID CARD STATS ========"
+count
+isid enumerator_id latitude longitude   // No single unique key; combo check
+foreach v in latitude longitude enumerator_id {
+    quietly count if missing(`v')
+    di "Missing in `v': " r(N)
+}
+tab enumerator_id                        // Distribution by enumerator
 
 ****************Q4****************
 clear all
@@ -198,6 +239,26 @@ foreach v of varlist votes_*_10 {
 gen ward_id_10 = _n
 
 list in 1/10
+
+* ── Dataset ID Card Stats: Q4 Raw ──────────────────────────────────────
+* (raw data stats - run before collapse/reshape steps)
+* Best practice: add these right after the forward-fill step (Step 2)
+
+* ── Dataset ID Card Stats: Q4 Clean ────────────────────────────────────
+di "======== Q4 ID CARD STATS ========"
+count
+isid region_10 district_10 constituency_10 ward_10   // Key uniqueness
+foreach v of varlist region_10 district_10 constituency_10 ward_10 ///
+                     ward_id_10 ward_total_votes_10 total_candidates_10 {
+    quietly count if missing(`v')
+    di "Missing in `v': " r(N)
+}
+* Count party vote columns with any non-zero value
+foreach v of varlist votes_*_10 {
+    quietly count if `v' > 0 & !missing(`v')
+    if r(N) > 0 di "`v' has " r(N) " wards with votes"
+}
+
 save "$wd/q4_Tz_election_2010_clean.dta", replace
 
 
@@ -251,6 +312,35 @@ count if  missing(Ward)
 count
 
 drop addr_clean school_code school_name_psle
+
+* ── Dataset ID Card Stats: Q5 Raw - PSLE ───────────────────────────────
+use "$wd/q5_psle_2020_data.dta", clear
+di "== Q5 RAW: psle_2020 =="
+count
+foreach v of varlist _all {
+    quietly count if missing(`v')
+    di "Missing in `v': " r(N)
+}
+
+* ── Dataset ID Card Stats: Q5 Raw - school_location ────────────────────
+use "$wd/q5_school_location.dta", clear
+di "== Q5 RAW: school_location =="
+count
+foreach v of varlist _all {
+    quietly count if missing(`v')
+    di "Missing in `v': " r(N)
+}
+
+* ── Dataset ID Card Stats: Q5 Clean (final merged) ─────────────────────
+use "$wd/q5_psle_with_wards_final.dta", clear
+di "======== Q5 CLEAN ID CARD STATS ========"
+count                                    // Should be 17,329
+count if !missing(Ward)                 // Wards successfully matched
+count if  missing(Ward)                 // Wards still missing
+foreach v of varlist _all {
+    quietly count if missing(`v')
+    di "Missing in `v': " r(N)
+}
 
 save "$wd/q5_psle_with_wards_final.dta", replace
 
