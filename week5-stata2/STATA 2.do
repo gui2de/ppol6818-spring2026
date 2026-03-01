@@ -89,11 +89,11 @@ rename nomcirconscription dept
 
 *Save
 save q2_excel_import.dta, replace
-clear
 
 
 *Step 3) Clean and Merge 
 *------------------------------------------------------------
+clear
 use q2_CIV_Section_0.dta
 
 *Use decode to turn variable from int to string
@@ -109,6 +109,10 @@ drop _merge
 
 
 
+
+
+
+
 *--------------------------------------------------------------------------------
 
 
@@ -116,6 +120,7 @@ clear
 *Question 3*
 use q3_GPS_Data.dta
 
+set seed 4000 /// So we get the same group each time
 
 *Step 1) Create spatial groups: 
 *--------------------------------------------------
@@ -309,12 +314,16 @@ duplicates drop cost ward, force
 
 *Step 5) Finishing Touches 
 *-----------------------------------------------------
-drop ward_num
+drop ward_num candidatename
 sort id
 replace id = _n //Update id variable to reflect current dataset
 
 **Note: There's a variable called votes_other in the template and I have no idea why there is one observation in that variable. The data from the excel document gives no indication as to why it is labeled as other, especially since that both parties running in this district (CCM and CUF) are already accounted for in the other variables. 
 
+
+
+
+*-----------------------------------------------------------------------------
 
 
 
@@ -337,7 +346,7 @@ drop if school_code_address == "n/a"
 duplicates drop school_code_address, force
 replace school_code_address = trim(school_code_address)
 
-save q5_progress2nd.dta
+save q5_progress2nd.dta, replace
 
 clear
 use q5_progress.dta
@@ -345,7 +354,9 @@ replace school_code_address = trim(school_code_address)
 
 merge 1:1 school_code_address using q5_progress2nd.dta
 
-drop if _merge==2
+drop if _merge==2 // These schools did not exist in our master dataset
+drop region_name district_name schoolname //Duplicates
+drop _merge
 
 
 
