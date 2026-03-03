@@ -269,9 +269,6 @@ save "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q5_psle_with_
 *********
 * Bonus *
 *********
-*********************************************************
-* Q6: Tanzania Election 2015-2010 (终极混合匹配版)
-*********************************************************
 clear all
 set more off
 
