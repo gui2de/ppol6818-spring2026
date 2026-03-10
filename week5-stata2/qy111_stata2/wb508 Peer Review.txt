@@ -1,0 +1,19 @@
+Hi Qingfeng,
+
+Overall, great submission! I enjoyed looking through your code and learned quite a bit -- hopefully I will put it to use in STATA 3. In particular, I thought these things were clever:
+
+- Writing code that identifies which variables you used for your ID card
+- For Q2, using collapse (mean) pop_density, by(b06_departemen) in order to delete duplicates
+- For Q2, using capture confirm to check if the observations are strings
+- For Q4 step 6, similar point, I like the use of collapse
+
+A few points for improvement:
+
+- Try being more clear in the comments, especially for Q1 and Q3. At times, it was hard to follow why you were writing certain code. 
+- In Q2, use tab _merge is unnecessary to add in the do file, as the output from the merge command already shows this information.
+- In Q4 step 4, the code is not working for me to turn UN OPPOSED to a 0
+
+Again, good job and I enjoyed reading your code.
+
+Best,
+Warren
