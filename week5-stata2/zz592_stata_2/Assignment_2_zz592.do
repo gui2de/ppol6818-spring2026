@@ -4,7 +4,7 @@
 *Date: 03/01/2026
 **********************************************
 clear all
-global data_dir "/Users/zhongguochimingdijianjian/Desktop/Experiment Design/STATA_2/01_data"
+global data_dir "C:\ExpDesign\StataAssignment2"
 cd "$data_dir"
 ***************************** Question 1 ***************************************
 * 1. Load raw HTML dataset (one row per school)
@@ -90,7 +90,7 @@ count
 list schoolfile cand_id prem_number gender name in 1/10, noobs
 
 * 9. Save dataset
-save "$data_dir/Q1_student_level.dta", replace
+save "$data_dir/Q1_student_level.dta"
 export delimited using "$data_dir/Q1_student_level.csv", replace
 
 ***************************** Question 2 ***************************************
@@ -266,7 +266,7 @@ clear all
 set more off
 
 * 0) Build 2010 lookup table
-
+use ""
 * Clean keys for 2010 election data
 gen region_key   = lower(strtrim(region_10))
 gen district_key = lower(strtrim(district_10))
