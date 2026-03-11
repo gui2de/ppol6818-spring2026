@@ -1,0 +1,2 @@
+Google Sheets: https://docs.google.com/spreadsheets/d/1Ui_QfJWcojKsLZB_jcCv_ly_E6wDPVDc/edit?gid=127937099#gid=127937099
+SurveyCTO Survey: https://gui2de.surveycto.com/collect/wb508_assignment2?caseid=
