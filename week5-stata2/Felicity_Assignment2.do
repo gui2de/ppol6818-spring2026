@@ -1,8 +1,21 @@
 /*Q1: Tanzania Student Data 
 This builds on the bonus from the previous Stata assignment. We downloaded the PSLE data of students from 138 schools in Arusha District in Tanzania (previously we only had data of just 1 school) You can build on your code from the previous assignment to create a student level dataset for these 138 schools. schoolcode, cand_id, gender, prem_number, name, grade variables for: Kiswahili, English, maarifa, hisabati, science, uraia, average */
 clear
-cd "C:\ExpDesign\StataAssignment2"
-use q1_psle_student_raw.dta
+
+
+// add wd codes so it also works on my local(kenshi)
+if c(username) == "felicity" {
+    global wd "/Users/felicity/Desktop/ExpDesign/smthsmth" // feel free to edit your wd correctly(kenshi)
+}
+
+if c(username) == "kkawade" {
+    global wd "/Users/kkawade/GU_Class/ppol6818ex/week_5/02_data"
+}
+
+cd "$wd"
+
+
+use q1_psle_student_raw.dta, clear
 describe
 rename s raw_html
 
@@ -82,7 +95,7 @@ save q1_psle_student_clean.dta
 We have household survey data and population density data of Côte d'Ivoire. Merge departmente-level density data from the excel sheet (CIV_populationdensity.xlsx) into the household data (CIV_Section_O.dta) i.e. add population density column to the CIV_Section_0 dataset. */
 
 clear all
-cd "C:\ExpDesign\StataAssignment2"
+cd "$wd" //using set up working directory (kenshi)
 import excel "q2_CIV_populationdensity", firstrow clear
 rename NOMCIRCONSCRIPTION constituency
 rename SUPERFICIEKM2 area
@@ -130,8 +143,10 @@ save "q2_CIV_Section_clean"
 We have the GPS coordinates for 111 households from a particular village. You are a field manager and your job is to assign these households to 19 enumerators (~6 surveys per enumerator per day) in such a way that each enumerator is assigned 6 households that are close to each other (this would reduce the amount of time they spend walking from one house to another.) Manually assigning them for each village will take you a lot of time. Your job is to write an algorithm that would auto assign each household (i.e. add a column and assign it a value 1-19 which can be used as enumerator ID). Note: Your code should still work if I run it on data from another village. */
 
 clear all
-cd "C:\ExpDesign\StataAssignment2"
-use "Q3_GPS Data"
+
+cd "$wd" //using set up working directory (kenshi)
+
+use q3_GPS_Data.dta, clear
 
 **Make distances sorted by closeness
 sort latitude longitude
@@ -171,13 +186,17 @@ replace enumerator = 19 if count >= 18 * hh_per_enumeratory & count <= 19 * hh_p
 tab enumerator
 drop hh_per_enumeratory
 
+
+twoway scatter lat lon, colorvar(enu) colordiscrete colorrule(phue) // your codes work but maybe not the best clustering solution? (kenshi)
+
+
 save q3_GPS_Data_clean
 
 /*Q4: 2010 Tanzania Election Data cleaning
 2010 election data (Tz_election_2010_raw.xlsx) from Tanzania is not usable in its current format. You have to create a dataset in the wide form, where each row is a unique ward, and votes received by each party are given in separate columns. You can check the following dta file as a template for your output: Tz_elec_template. Your objective is to clean the dataset in such a way that it resembles the format of the template dataset. */
 
 clear all
-cd "C:\ExpDesign\StataAssignment2"
+cd "$wd" //using set up working directory (kenshi)
 import excel "q4_Tz_election_2010_raw", cellrange(A7)
 
 **get rid of extraneous variables
@@ -237,7 +256,7 @@ save "q4_Tz_election_2010_clean"
 PSLE dataset contains data of 17,329 schools. We have the region and district of each school but for our analysis we need the ward information. There is another dataset (q5_school_location) that has the ward information of 19,733 schools. Your job is to identify ward information for 17,329 schools on the PSLE dataset using the q5_school_location.dta. Note: Final dataset should be the PSLE dataset + ward column (i.e. N = 17,329). Hint: You might have to try different methods to get the best results, even then you might have some schools where we can't find ward information. */
 
 clear all
-cd "C:\ExpDesign\StataAssignment2"
+cd "$wd" //using set up working directory (kenshi)
 use "q5_psle_2020_data"
 
 **isolate school code from schoolname observations and save
