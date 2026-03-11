@@ -128,7 +128,7 @@ di as text "Done -> psle2021_student_level.dta / .csv"
 *******************************************************
 
 clear all
-set more off
+set more off 
 
 local hh_dta    "q2_CIV_Section_0.dta"
 local dens_xlsx "q2_CIV_populationdensity.xlsx"
