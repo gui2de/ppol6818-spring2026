@@ -1,9 +1,12 @@
+global wd "/Users/maren/Desktop/Experimental Design & Implementation/Stata 2"
+
 **************
 * Question 1 *
 **************
 clear all
 set more off
-use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q1_psle_student_raw.dta", clear
+//use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q1_psle_student_raw.dta", clear
+use "$wd/01_data/q1_psle_student_raw.dta", clear
 
 * schoolcode
 replace schoolcode = substr(schoolcode, 5, 9)
@@ -42,9 +45,9 @@ replace name = strtrim(name)
 *  subject grades
 foreach subj in Kiswahili English Maarifa Hisabati Science Uraia {
     local lower_subj = strlower("`subj'")
-    gen `lower_subj' = ustrregexs(1) if ustrregexm(seg, "`subj' *- *([A-E])")
+    gen `lower_subj' = ustrregexs(1) if ustrregexm(student_, "`subj' *- *([A-E])")
 }
-gen average = ustrregexs(1) if ustrregexm(seg, "Average Grade *- *([A-E])")
+gen average = ustrregexs(1) if ustrregexm(student_, "Average Grade *- *([A-E])")
 
 * save results
 drop if cand_id == ""
@@ -52,7 +55,7 @@ drop if cand_id == ""
 keep schoolcode cand_id gender prem_number name kiswahili english maarifa hisabati science uraia average
 order schoolcode cand_id gender prem_number name kiswahili english maarifa hisabati science uraia average
 
-save "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q1_psle_student_raw.dta", replace
+//save "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q1_psle_student_raw.dta", replace
 
 list in 1/20
 
@@ -63,7 +66,8 @@ list in 1/20
 clear all
 set more off
 
-import excel "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q2_CIV_populationdensity.xlsx", firstrow clear
+//import excel "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q2_CIV_populationdensity.xlsx", firstrow clear
+import excel "$wd/01_data/q2_CIV_populationdensity.xlsx", firstrow clear
 
 rename NOMCIRCONSCRIPTION dept_str
 rename DENSITE* density
@@ -83,9 +87,13 @@ keep dept_str density
 drop if missing(dept_str)
 duplicates drop dept_str, force
 
-save "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/CIV_density_temp.dta", replace
+save "$wd/01_data/CIV_density_temp.dta", replace
 
-use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q2_CIV_Section_0.dta", clear
+use "$wd/01_data/q2_CIV_Section_0.dta", clear
+
+//save "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/CIV_density_temp.dta", replace
+
+//use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q2_CIV_Section_0.dta", clear
 
 * decode the numeric department variable into a string
 decode b06_departemen, gen(dept_str)
@@ -95,13 +103,16 @@ replace dept_str = strlower(dept_str)
 replace dept_str = strtrim(dept_str)
 
 * merge 
-merge m:1 dept_str using "CIV_density_temp.dta"
+//merge m:1 dept_str using "CIV_density_temp.dta"
+merge m:1 dept_str using "$wd/01_data/CIV_density_temp.dta"
 tab _merge
 drop _merge
-erase "CIV_density_temp.dta"
+//erase "CIV_density_temp.dta"
+erase "$wd/01_data/CIV_density_temp.dta"
+
 
 * save output
-save "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q2_CIV_Section_0_merged.dta", replace
+//save "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q2_CIV_Section_0_merged.dta", replace
 
 
 **************
@@ -109,7 +120,8 @@ save "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q2_CIV_Sectio
 **************
 clear all
 set more off
-use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q3_GPS Data.dta", clear
+//use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q3_GPS Data.dta", clear
+use "$wd/01_data/q3_GPS Data.dta", clear
 
 * sort the households geographically (North to South, then West to East)
 sort latitude longitude
@@ -190,7 +202,8 @@ de
 clear all
 set more off
 
-use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q5_school_location.dta", clear
+//use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q5_school_location.dta", clear
+use "$wd/01_data/q5_school_location.dta", clear
 
 * clean school ID
 gen scode = upper(strtrim(NECTACentreNo))
@@ -220,7 +233,9 @@ preserve
     save `lookup_name'
 restore
 
-use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q5_psle_2020_data.dta", clear
+//use "/Users/gracehuang/Documents/MPP/PPOL6818_mac/Stata 2/01_data/q5_psle_2020_data.dta", clear
+use "$wd/01_data/q5_psle_2020_data.dta", clear
+
 
 * extract the 7-digit school code
 gen scode = upper(ustrregexs(1)) if ustrregexm(school_code_address, "(ps[0-9]{7})")
