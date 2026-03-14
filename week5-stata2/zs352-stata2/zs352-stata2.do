@@ -4,7 +4,8 @@
 clear all
 set more off
 
-local raw_data_path "C:\Users\24547\Desktop\stata2\q1_psle_student_raw.dta"
+local raw_data_path "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design/Assignment/q1_psle_student_raw.dta"
+
 
 tempfile master_data
 save `master_data', emptyok
@@ -85,7 +86,7 @@ browse
 * ---------------------------------------------------------
 clear all
 
-import excel "C:\Users\24547\Desktop\stata2\q2_CIV_populationdensity.xlsx", clear
+import excel "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design/Assignment/q2_CIV_populationdensity.xlsx", clear
 
 rename A merge_id
 rename B superficie
@@ -104,7 +105,7 @@ duplicates drop merge_id, force
 tempfile pop_density
 save `pop_density', replace
 
-use "C:\Users\24547\Desktop\stata2\q2_CIV_Section_0.dta", clear
+use "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design/Assignment/q2_CIV_Section_0.dta", clear
 
 decode b06_departemen, generate(merge_id)
 replace merge_id = lower(trim(merge_id)) 
@@ -125,7 +126,9 @@ save "C:\Users\24547\Desktop\stata2\q2_CIV_Section_0_merged.dta", replace
 * ---------------------------------------------------------
 clear all
 
-use "C:\Users\24547\Desktop\stata2\q3_GPS Data.dta", clear
+cd "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design/Assignment"
+
+use q3_gps.dta
 
 sort latitude longitude
 
@@ -147,16 +150,18 @@ browse
 
 clear all
 
-import excel "C:\Users\24547\Desktop\stata2\q4_Tz_election_2010_raw.xls", clear
 
-drop in 1/5
+cd "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design/Assignment"
 
-rename THEUNITEDREPUBLICOFTANZANIA region_10
-rename B district_10
-rename C constituency_10
-rename D ward_10
-rename H party
-rename I votes
+import excel "q4_Tz_election_2010_raw.xls", sheet("Sheet1") cellrange(A5) firstrow clear
+
+rename REGION region_10
+rename DISTRICT district_10
+rename COSTITUENCY constituency_10
+rename WARD ward_10
+rename CANDIDATENAME cand_name
+rename POLITICALPARTY party
+rename TTLVOTES votes
 
 keep region_10 district_10 constituency_10 ward_10 party votes
 
@@ -201,7 +206,7 @@ browse
 * ---------------------------------------------------------
 clear all
 
-use "C:\Users\24547\Desktop\stata2\q5_school_location.dta", clear
+use "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design/Assignment/q5_school_location.dta", clear
 
 rename NECTACentreNo school_code
 
@@ -216,7 +221,7 @@ tempfile location_dict
 save `location_dict', replace
 
 
-use "C:\Users\24547\Desktop\stata2\q5_psle_2020_data.dta", clear
+use "/Users/yousrahussain/Library/CloudStorage/OneDrive-GeorgetownUniversity/Experimental Design/Assignment/q5_psle_2020_data.dta", clear
 
 gen school_code = ""
 replace school_code = upper(regexs(1)) if regexm(school_code_address, "(ps[0-9]+)")
