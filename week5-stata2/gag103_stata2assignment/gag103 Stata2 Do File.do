@@ -2,7 +2,7 @@
 ***** Gavin Gondalwala *****
 
 // Global working directory:
-global wd "/Users/gavinaligondalwala/Documents/Georgetown/Spring2026/ExperimentalDesign/Stata2/02_data" // Setting global for working directory for peer review
+global wd "C:\Users\maimo\OneDrive\Desktop\Semester 2\Experimental Design & Implement\Stata 2 assignment" // Setting global for working directory for peer review
 
 // Globals for Datasets:
 global psle_raw "$wd/q1_psle_student_raw.dta"
@@ -24,7 +24,7 @@ global q5_location "$wd/q5_school_location.dta"
 
 ***** Question 1 *****
 
-use $psle_raw, clear
+use "$psle_raw", clear
 
 // Cleaning Data to Extract Variables 
 keep s
@@ -65,39 +65,42 @@ keep schoolcode school_id prem_number gender name kiswahili english maarifa hisa
 ***** Question 2 *****
 
 // Importing Excel file:
-tempfile q2_exceltemp
-import excel $q2_excel, firstrow clear
-keep if strpos(department, "DEPARTEMENT")>0
+import excel "$q2_excel", firstrow clear
+describe
+list in 1/10
 
-// Cleaning Excel for Merge
+keep if strpos(NOMCIRCONSCRIPTION, "DEPARTEMENT")>0
+
+gen department = NOMCIRCONSCRIPTION
 replace department = lower(department)
-replace department = regexr(department, "^departement (d'|de|du )?", "") // Removes everything other than the name. Regexr = replace matched text
-replace department = trim(department) // Removes spaces
-save `q2_exceltemp'
+replace department = regexr(department, "^departement (d'|de|du )?", "")
+replace department = trim(department)
+
+save "$wd/q2_excel_clean_temp.dta", replace
 
 // Cleaning Master
-use $q2_section
+use "$q2_section", clear
 describe
 rename b04 district
 rename b05 region
 rename b10 village
 rename b11 neighborhood
-decode b06, generate(department) // Makes a string variable based on labels for merge
+decode b06, generate(department)
 order department, after(b06)
 
 tab mil, missing nol
 tab mil, missing
-rename mil urban // Redefining variable for clarity
+rename mil urban
 replace urban=0 if urban==2
 label define urban_lab 0 "Rural" 1 "Urban"
-label values urban urban_lab 
-replace department="arrah" if department=="arrha" // Addresses a misspelling impacting merge.
+label values urban urban_lab
+replace department="arrah" if department=="arrha"
 
 // Merging
-merge m:1 department using `q2_exceltemp'
+merge m:1 department using "$wd/q2_excel_clean_temp.dta"
 tab _merge
 list department if DENSITEAUKM==.
-compare department DENSITEAUKM // All jointly defined
+compare department DENSITEAUKM
 drop _merge
 rename DENSITEAUKM pop_density
 rename SUPERFICIEKM2 area
@@ -107,75 +110,103 @@ rename POPULATION population
 
 ***** Question 3 *****
 
-use $q3_gps, clear
+use "$q3_gps", clear
 describe
 isid id // 111 unique IDs/HHs
 
 sort latitude longitude // Sorts by latitude then longitude to get homes closest together
 gen enum_id = ceil(_n/6) // Creates groupings of 6 surveys. Adjust 6 for number of surveys you wish each enumerator to give.
-tab enum // 6 for enumerators 1-18, 3 for enumerator 19
+tab enum_id // 6 for enumerators 1-18, 3 for enumerator 19
+
+*/ Maimoonas code for reference
+*cluster drop _all
+*cluster kmeans latitude longitude, k(19) generate(enumerator_id)
+*tab enumerator_id
+*summarize latitude longitude
+*sort enumerator_id
+*browse
+
+*I used k-means clustering on the latitude and longitude coordinates to divide households into 19 geographically compact clusters. Each cluster represents one enumerator's assignment. Because the algorithm uses only GPS coordinates and does not rely on village-specific values, it will work for any other village dataset with latitude and longitude variable
+
 
 *************************************************************
 
 ***** Question 4 *****
 
-import excel $q4_tz_excel, cellrange(A5) firstrow clear
+import excel "$q4_tz_excel", cellrange(A5) firstrow clear
 drop in 1
 drop K
-save $wd/q4_tz.dta, replace
-global q4_tz "$wd/q4_tz.dta"
-use $q4_tz, clear
 
-// Cleaning
-generate male=1 if SEX=="M"
-replace male=0 if G=="F"
+save "$wd/q4_tz.dta", replace
+global q4_tz "$wd/q4_tz.dta"
+
+use "$q4_tz", clear
+
+// Cleaning sex variable
+gen male = 1 if SEX=="M"
+replace male = 0 if G=="F"
 drop SEX G
 order male, after(CANDIDATENAME)
 
-tab ELECTED, missing // 3,331 elected, 4590 missing
-generate elected=1 if ELECTED=="ELECTED"
-replace elected=0 if ELECTED!="ELECTED"
-compare elected ELECTED // 3331 jointly defined
-order elected, after(TTLVOTES)
+// Cleaning elected variable
+tab ELECTED, missing
+gen elected = 1 if ELECTED=="ELECTED"
+replace elected = 0 if ELECTED!="ELECTED"
 drop ELECTED
+order elected, after(TTLVOTES)
 
-tab TTLVOTES // 599 unopposed
-replace TTLVOTES="-998" if TTLVOTES=="UN OPPOSSED" // Coding unopposed as -998
+// Cleaning votes
+tab TTLVOTES
+replace TTLVOTES = "-998" if TTLVOTES=="UN OPPOSSED"
 destring TTLVOTES, replace
-replace TTLVOTES=. if TTLVOTES==-998
+replace TTLVOTES = . if TTLVOTES==-998
 
+// Make variable names lowercase
 foreach var of varlist _all {
     local lowername = lower("`var'")
     rename `var' `lowername'
-} // Makes all variables lowercase
+}
 
-count if ward=="" // 4,588 missing ward values
-replace ward=ward[_n-1] if missing(ward) // Fills missing wards
-
+// Fix typo in constituency variable name
 rename costituency constituency
-count if constituency=="" // 7,732 missing
-replace constituency=constituency[_n-1] if missing(constituency)
 
-count if district=="" // 7,790 missing values
-replace district=district[_n-1] if missing(district)
+// Fill down missing location values
+replace ward = ward[_n-1] if missing(ward)
+replace constituency = constituency[_n-1] if missing(constituency)
+replace district = district[_n-1] if missing(district)
+replace region = region[_n-1] if missing(region)
 
-count if region=="" // 7,900 missing values
-replace region=region[_n-1] if missing(region)
+// Clean political party names
+tab politicalparty, missing
+replace politicalparty = "JAHAZI-ASILIA" if politicalparty=="JAHAZI ASILIA"
+replace politicalparty = regexr(politicalparty, "\s*-\s*", "-")
 
-tab political, missing // 18 political parties, none missing
-replace political="JAHAZI-ASILIA" if political=="JAHAZI ASILIA"
-replace political=regexr(political, "\s*-\s*", "-")
+// Collapse to ward-party level using full geography
+collapse (sum) ttlvotes, by(region district constituency ward politicalparty)
 
-// Reshape
-drop elected
-sum if ward=="NANGANDO" & politicalparty=="CCM" // 1812
-sum ttlvotes if ward=="UTENGULE" & politicalparty=="CCM" // 3108
+// Check duplicates
+duplicates report region district constituency ward politicalparty
 
-collapse (sum) ttlvotes, by(ward politicalparty)
-duplicates report ward political // No duplicates, collapse successful
-replace politicalparty = subinstr(politicalparty, "-", "_", .) // Removes hyphens (not allowed in var names)
+// Make party names safe for reshape
+replace politicalparty = subinstr(politicalparty, "-", "_", .)
+replace politicalparty = subinstr(politicalparty, " ", "_", .)
 
-reshape wide ttlvotes, i(ward) j(political) string
+// Reshape wide using full ward identity
+reshape wide ttlvotes, i(region district constituency ward) j(politicalparty) string
+
+// Create ward id
+egen ward_id_10 = group(region district constituency ward)
+
+// Rename geography variables to match template style
+rename region region_10
+rename district district_10
+rename constituency constituency_10
+rename ward ward_10
+
+// Optional: order ward_id nicely
+order region_10 district_10 constituency_10 ward_10 ward_id_10
+
+save "$wd/q4_tz_clean_corrected.dta", replace
 
 *************************************************************
 
@@ -252,7 +283,60 @@ drop if schoolname==""
 order Ward, after(district_name)
 drop School _merge school_code
 
+*Question 5 - Maimoona (check this)
+****************************************************
 
+* Clean location file for merge
+use "$q5_location", clear
+
+rename NECTACentreNo school_code
+
+replace school_code = upper(trim(school_code))
+replace school_code = itrim(school_code)
+replace school_code = "" if school_code=="N/A"
+
+destring Standard*, replace
+
+gen examinees_standard7 = StandardVIIBoys + StandardVIIGirls, after(StandardVIIGirls)
+
+* Drop schools with no Standard VII examinees
+drop if examinees_standard7==0
+
+* Drop one known duplicate school
+drop if School=="MWILAMVYA ENGLISH MEDIUM"
+
+* Keep only valid school codes for merge
+drop if school_code==""
+
+keep Ward School school_code
+
+* Drop duplicate school codes, keeping first occurrence
+duplicates drop school_code, force
+
+save "$wd/q5_location_clean_final.dta", replace
+
+
+* Clean master PSLE dataset
+use "$q5_psle", clear
+
+gen school_code = ustrregexs(1) if ustrregexm(school_code_address, "_(.*?)\.htm")
+replace school_code = upper(trim(school_code))
+replace school_code = itrim(school_code)
+
+* Merge
+merge 1:1 school_code using "$wd/q5_location_clean_final.dta"
+
+* Keep only PSLE schools
+keep if _merge==1 | _merge==3
+
+order Ward, after(district_name)
+
+drop School _merge school_code
+
+save "$wd/q5_psle_with_ward.dta", replace
+
+*Note for Gavin: I corrected the code so that the merge uses the right school-code variable and runs more reliably. Okay so, I changed the location-file code to use NECTACentreNo instead of NECTA, because that is the actual variable containing the school code. I also added trimming and uppercasing to both datasets so that the school codes match cleanly, even if there are hidden spaces or inconsistent capitalization (makes the job easier). Instead of replacing "n/a" with ".", I converted invalid codes to blank strings and dropped them before merging. I removed unnecessary duplicate-handling steps that used the wrong variable names, and replaced the temporary files with a saved cleaned location file so the code is easier to rerun. Finally, after merging, kept only the PSLE observations using _merge, which preserves the required final sample size and adds the ward variable correctly. This worked but took a me a while to figure out! Hopefully, you can understand it now. 
+*P.S. I kept your original code uptop so you have a reference point - delete it after reviewing
 
 
 
