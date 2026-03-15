@@ -5,10 +5,9 @@
 ***==========================================================================***
 *** Q1: Tanzania Student Data ***
 ***==========================================================================***
-
-global wd "/Users/sunduss/Downloads"
-
-use "$wd/q1_psle_student_raw (1).dta", clear
+clear all // added a clear all to ensure smooth re-runs
+global wd "C:\Users\aqsaz\Documents\Georgetown\Spring 2026\Experimental Design\Stata\Assignment-Stata-2\01_data" // AZ668: changed the wd to mine
+use "$wd/q1_psle_student_raw.dta", clear
 
 * Split HTML on <TR> — each student row becomes a separate variable
 * There are at most ~60 students per school, so split into 70 vars to be safe
@@ -44,7 +43,7 @@ save "$wd/q1_psle_students_clean.dta", replace
 *** Q2: Côte d'Ivoire Population Density ***
 ***==========================================================================***
 
-global wd "/Users/sunduss/Downloads/_1_data_export"
+// AZ668: removed the global command - we just need to insert it once 
 
 import excel "$wd/q2_CIV_populationdensity.xlsx", firstrow clear
 rename NOMCIRCONSCRIPTION nom
@@ -70,7 +69,7 @@ save "$wd/q2_CIV_Section_0_with_density.dta", replace
 *** Q3: Enumerator Assignment based on GPS ***
 ***==========================================================================***
 
-global wd "/Users/sunduss/Downloads"
+// AZ668: removed the global command - we just need to insert it once 
 
 use "$wd/q3_GPS Data.dta", clear
 
@@ -86,7 +85,7 @@ save "$wd/q3_GPS_assigned.dta", replace
 *** Q4: 2010 Tanzania Election Data cleaning ***
 ***==========================================================================***
 
-global wd "/Users/sunduss/Downloads/_1_data_export (1)"
+// AZ668: removed the global command 
 
 import excel "$wd/q4_Tz_election_2010_raw.xls", cellrange(A5) firstrow clear
 
@@ -143,7 +142,7 @@ save "$wd/q4_Tz_election_2010_clean.dta", replace
 *** Q5: Tanzania PSLE data ***
 ***==========================================================================***
 
-global wd "/Users/sunduss/Downloads/_1_data_export (2)"
+// AZ668: removed the global command 
 
 use "$wd/q5_psle_2020_data.dta", clear
 gen school_code = upper(regexs(1)) if regexm(school_code_address, "shl_(ps[0-9]+)\.htm")
@@ -184,6 +183,9 @@ restore
 
 * Note: I could not install reclink2 for some reason so I used matchit instead. 
 
+ssc install matchit // AZ668: needed to install the matchit packet
+ssc install freqindex // AZ66: needed to install freqindex as matchit uses that for running
+
 use `unmatched', clear
 matchit id_master clean_name using `location_fuzzy', idusing(id_using) txtusing(clean_name) sim(bigram) gen(score)
 
@@ -204,7 +206,7 @@ merge m:1 school_code using `location', keep(master match) nogenerate
 merge 1:1 serial using `fuzzy_results', keep(master match) nogenerate
 
 replace ward = ward_fuzzy if ward == "" & ward_fuzzy != ""
-drop ward_fuzzy school_code clean_name
+drop ward_fuzzy school_code // AZ668: removed variable clean_name
 
 save "$wd/q5_psle_2020_with_ward.dta", replace
 
@@ -212,8 +214,8 @@ save "$wd/q5_psle_2020_with_ward.dta", replace
 *** Q6: Tanzania Election data Merging (Bonus Question)
 ***==========================================================================***
 
-global wd "/Users/sunduss/Downloads/_1_data_export (3)"
-
+// AZ668: removed the global command 
+// AZ668: not reviewing this question as I have not done Q6 (bonus question)
 use "$wd/Tz_GIS_2015_2010_intersection.dta", clear
 bysort region_gis_2017 ward_gis_2017 (percentage): keep if _n == _N
 keep region_gis_2017 ward_gis_2017 region_gis_2012 ward_gis_2012 percentage
