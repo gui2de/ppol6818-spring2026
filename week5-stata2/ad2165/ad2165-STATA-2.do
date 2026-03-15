@@ -4,7 +4,7 @@
 
 
 global wd "C:\Github Local\ppol6818-spring2026\week5-stata2"
-cd $wd
+cd `$wd'
 
 
 
@@ -100,11 +100,10 @@ drop _merge
 
 
 
-clear
 
 //Question 3
 
-use q3_GPS_Data.dta
+use "q3_GPS Data.dta", clear
 
 **Use "cluster kmeans" command to create 19 clusters, using the mean of latitude and longitude and longitude as the center.
 cluster kmeans lat lon, k(19) name(cluster_id) //using cluster kmeans  to create spatial groups (side note: this command is amazing and I'm so impressed by it haha). Creating 19 cluters using mean of latitude and longitude to create center points. 
