@@ -16,7 +16,7 @@
 
 
 
-cd "/Users/cam_cew/Desktop/Experimental_design/Stata_assignment_2/01_data"
+cd "/Users/PJ/Documents/Georgetown/MPPSemestre2/ExperimentalDesign/Stata2HW/01_data"
 pwd
 
 
@@ -106,7 +106,7 @@ forvalues i = 1/`nschools' {
     replace prem_no = regexs(1) if regexm(s, ">([0-9]{11})<")
 
     gen sex = ""
-    replace sex = regexs(1) if regexm(s, "CENTER\.>([MF])<")
+	replace sex = ustrregexs(1) if ustrregexm(rec_txt,"PS\d{7}-\d{4}\s+[0-9]{11}\s+([MF])\s+")
 
     gen student_name = ""
     replace student_name = strtrim(regexs(1)) if regexm(s, "<P>([A-Z ]+)</FONT>")
@@ -187,7 +187,7 @@ Merge departement-level population density from `q2_CIV_populationdensity.xlsx` 
 
 
 
-cd "/Users/cam_cew/Desktop/Experimental_design/Stata_assignment_2/01_data/"
+cd "/Users/PJ/Documents/Georgetown/MPPSemestre2/ExperimentalDesign/Stata2HW/01_data"
 clear all
 
 
@@ -326,7 +326,7 @@ clear all
 
 **rename file to include missing _
 
-use "q3_GPS_Data.dta", clear
+use "q3_GPSData.dta", clear
 
 
 * Saving a working copy 
@@ -621,11 +621,24 @@ bysort region_10 district_10 constituency_10 ward_10 party: keep if _n == 1
 drop candidate_name sex sex_num elected_10
 
 *reshape wide
-reshape wide votes, ///
+*reshape wide votes, ///
     i(region_10 district_10 constituency_10 ward_10) ///
     j(party) string
     // Creates: votesCCM, votesCHADEMA, etc.
+	
+	
+*Emilia: Here the line stopped. I'm gonna try and see what's wrong
 
+tab party	//there are spaces and that's why it doesn't reshape
+
+gen party_clean = party
+replace party_clean = subinstr(party_clean, " ", "_", .)
+
+reshape wide votes, ///
+    i(region_10 district_10 constituency_10 ward_10) ///
+    j(party_clean) string
+
+	 reshape error
 *Rename to match template format 
 foreach var of varlist votes* {
     local p = subinstr("`var'", "votes", "", 1)
@@ -1355,6 +1368,39 @@ save "q4_tanz.dta", replace
 
 codebook ward_10
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ********************************************************************************
 
 /*Q5: Tanzania PSLE School Matching
@@ -1477,7 +1523,10 @@ br
 
 ***And then clean up the school_code
 
-replace school_code = "." if school_code == "N/A"
+*replace school_code = "." if school_code == "N/A"
+
+*EMILIA CHANGE
+replace school_code = "" if school_code == "N/A"
 
 count if school_code == ""
 
