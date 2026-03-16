@@ -1,0 +1,212 @@
+-------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/Q1.log
+  log type:  text
+ opened on:   8 Feb 2026, 00:16:02
+
+. 
+. ****************************************************
+. 
+. *Loaf Q3 data
+. use "$data/q3_proposal_review.dta", clear
+
+. 
+. *Fix typos / align naming
+. rename Rewiewer1 Reviewer1
+
+. rename Review1Score Reviewer1Score
+
+. 
+. *Rename score vars to match stub ReviewerScore#
+. rename Reviewer1Score ReviewerScore1
+
+. rename Reviewer2Score ReviewerScore2
+
+. rename Reviewer3Score ReviewerScore3
+
+. 
+. *Keep only needed vars
+. keep proposal_id Reviewer1 Reviewer2 Reviewer3 ///
+>      ReviewerScore1 ReviewerScore2 ReviewerScore3
+
+. 
+. *Reshape wide -> long
+. reshape long Reviewer ReviewerScore, i(proposal_id) j(revpos)
+(j = 1 2 3)
+
+Data                               Wide   ->   Long
+-----------------------------------------------------------------------------
+Number of observations              128   ->   384         
+Number of variables                   7   ->   4           
+j variable (3 values)                     ->   revpos
+xij variables:
+          Reviewer1 Reviewer2 Reviewer3   ->   Reviewer
+ReviewerScore1 ReviewerScore2 ReviewerScore3-> ReviewerScore
+-----------------------------------------------------------------------------
+
+. 
+. rename Reviewer netid
+
+. rename ReviewerScore score
+
+. 
+. *Check
+. list proposal_id revpos netid score in 1/12, sep(0)
+
+     +------------------------------------+
+     | propos~d   revpos    netid   score |
+     |------------------------------------|
+  1. |        1        1   sa1600    5.00 |
+  2. |        1        2    glp38    4.20 |
+  3. |        1        3   ahs103    4.00 |
+  4. |        2        1   ahs103    4.10 |
+  5. |        2        2    glp38    4.00 |
+  6. |        2        3   sa1600    4.20 |
+  7. |        3        1   scb136    4.80 |
+  8. |        3        2    glp38    3.70 |
+  9. |        3        3   ahs103    2.00 |
+ 10. |        4        1   scb136    5.00 |
+ 11. |        4        2   sa1600    4.00 |
+ 12. |        4        3    yc577    2.50 |
+     +------------------------------------+
+
+. 
+. *Reviewer-specific mean and SD of raw scores
+. bys netid: egen reviewer_mean = mean(score)             // for unique net id's take mean across score
+> s
+
+. bys netid: egen reviewer_sd   = sd(score)               // "" take sd accross scores
+
+. 
+. *Sanity checks
+. count if reviewer_sd == 0 & !missing(reviewer_sd)       // check bc sd=0 creates error in z score
+  0
+
+. count if missing(score)
+  0
+
+. 
+. *Standardized (z) score for each review
+. gen double stand_score = (score - reviewer_mean) / reviewer_sd
+
+. 
+. *Rename variables for restructuring
+. keep proposal_id revpos stand_score
+
+. reshape wide stand_score, i(proposal_id) j(revpos)
+(j = 1 2 3)
+
+Data                               Long   ->   Wide
+-----------------------------------------------------------------------------
+Number of observations              384   ->   128         
+Number of variables                   3   ->   4           
+j variable (3 values)            revpos   ->   (dropped)
+xij variables:
+                            stand_score   ->   stand_score1 stand_score2 stand_score3
+-----------------------------------------------------------------------------
+
+. 
+. rename stand_score1 stand_r1_score
+
+. rename stand_score2 stand_r2_score
+
+. rename stand_score3 stand_r3_score
+
+. 
+. *Quick check
+. list proposal_id stand_r1_score stand_r2_score stand_r3_score in 1/10, sep(0)
+
+     +-------------------------------------------------+
+     | propos~d   stand_r1~e   stand_r2~e   stand_r3~e |
+     |-------------------------------------------------|
+  1. |        1    1.1006311    .12847263   -.25346709 |
+  2. |        2     -.124037   -.06423623    .24852957 |
+  3. |        3    .99754024   -.35329952   -2.8420689 |
+  4. |        4    1.2075487     .0355042   -1.2627395 |
+  5. |        5    .00539308    .89930807   -.36751469 |
+  6. |        6   -.89253581    1.3233969    .29941234 |
+  7. |        7   -.64175736    .15750644    1.1317731 |
+  8. |        8     .1904412    .82012961    .38529295 |
+  9. |        9    1.1526695    .57752334   -.25346709 |
+ 10. |       10   -2.6970486    .50769925    1.0408338 |
+     +-------------------------------------------------+
+
+. 
+. *Create var for avg weighted score across reviewers
+. egen average_stand_score = rowmean(stand_r1_score stand_r2_score stand_r3_score)
+
+. 
+. *Create ranking from highest to lowest score
+. egen rank = rank(-average_stand_score)
+
+. sort rank
+
+. 
+. *Quick check
+. list proposal_id average_stand_score rank in 1/10, sep(0)
+
+     +----------------------------+
+     | propos~d   averag~e   rank |
+     |----------------------------|
+  1. |      105   1.095271      1 |
+  2. |      114   1.072452      2 |
+  3. |       65   1.044625      3 |
+  4. |       77   1.008047      4 |
+  5. |       75   .9732648      5 |
+  6. |       84   .9473618      6 |
+  7. |       78   .8316699      7 |
+  8. |       86   .7812538      8 |
+  9. |       33   .7636148      9 |
+ 10. |       46   .7450528     10 |
+     +----------------------------+
+
+. 
+. 
+. 
+. 
+end of do-file
+
+. do "/Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/do/Q3.lsk70.do"
+
+. ****************************************************
+. * PPOL 6818 – Stata Assignment 1
+. * Luke Keller
+. *
+. * Folder structure:
+. * lsk70/
+. * ├── do/        (do-files)
+. * ├── data/      (.dta files)
+. * └── outputs/   (log files, generated outputs)
+. ****************************************************
+. 
+. clear all                                       
+
+. set more off 
+
+. 
+. *Working directory set-up
+. 
+. if c(username) == "lukekeller" {
+.         global wd "/Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70"
+. } 
+
+. 
+. *Subfolder set-up
+. 
+. global do    "$wd/do"
+
+. global data  "$wd/data"    
+
+. global out   "$wd/outputs"
+
+. 
+. cd "$wd"
+/Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70
+
+. 
+. *Create outputs folder if it doesn't alreadt exist
+. capture mkdir "$out"
+
+. 
+. *Start log
+. capture log close

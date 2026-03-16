@@ -1,0 +1,237 @@
+-------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/Q5.log
+  log type:  text
+ opened on:   8 Feb 2026, 16:53:33
+
+. 
+. ****************************************************
+. 
+. *Import html file
+. local htmlfile "data/shl_ps0101114.html"
+
+. 
+. dir "data"
+
+total 2984
+-rw-r--r--@ 1 lukekeller  staff    35344 Feb  7 18:13 q2_village_pixel.dta
+-rw-r--r--@ 1 lukekeller  staff    25387 Feb  7 23:37 q3_proposal_review.dta
+-rw-r--r--@ 1 lukekeller  staff  1326387 Feb  8 01:00 q4_Pakistan_district_table21.xlsx
+-rw-r--r--@ 1 lukekeller  staff    14599 Feb  8 13:57 q5_Tz_student_roster_html.dta
+-rw-r--r--@ 1 lukekeller  staff     3739 Feb  7 14:59 school.dta
+-rw-r--r--@ 1 lukekeller  staff    13105 Feb  8 14:44 shl_ps0101114.html
+-rw-r--r--@ 1 lukekeller  staff    74955 Feb  7 14:58 student.dta
+-rw-r--r--@ 1 lukekeller  staff     2636 Feb  7 14:59 subject.dta
+-rw-r--r--@ 1 lukekeller  staff    14035 Feb  7 14:59 teacher.dta
+
+. 
+. local raw = fileread("`htmlfile'")      // read file as text
+
+. 
+. clear
+
+. set obs 1
+Number of observations (_N) was 0, now 1.
+
+. gen strL page = `"`raw'"'       // puts text into one long row
+
+. 
+. *Quick check
+. display substr(page, 1, 300)
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<HEAD>
+<BODY TEXT="#000080" LINK="#0000ff" VLINK="#800080" BGCOLOR= "LIGHTBLUE">
+<FONT COLOR="#800080"><H2>NATIONAL EXAMINATIONS COUNCIL OF TANZANIA</H2>
+<H1><P ALIGN="LEFT"  > PSLE 2021 EXAMINATION RESULTS</P><
+
+. 
+. *Convert raw HTML into searchable plain text
+. 
+. *Remove all HTML tags like <H1>, <P>, <TABLE>, etc.
+. replace page = ustrregexra(page, "<[^>]+>", " ")
+(1 real change made)
+
+. 
+. *Replace HTML non-breaking spaces
+. replace page = subinstr(page, "&nbsp;", " ", .)
+(0 real changes made)
+
+. 
+. *Convert newlines/tabs into spaces, then collapse repeated spaces
+. replace page = ustrregexra(page, "[\r\n\t]+", " ")
+(1 real change made)
+
+. replace page = ustrregexra(page, "\s+", " ")
+(1 real change made)
+
+. 
+. *Trim leading/trailing spaces
+. replace page = strtrim(page)
+(1 real change made)
+
+. 
+. *Quick check
+. display substr(page, 1, 400)
+NATIONAL EXAMINATIONS COUNCIL OF TANZANIA PSLE 2021 EXAMINATION RESULTS ALBEHIJE PRIMARY SCHOOL - PS010
+> 1114 WALIOFANYA MTIHANI : 16 WASTANI WA SHULE : 217.3750 KUNDI LA SHULE : Wanafunzi chini ya 40 NAFAS
+> I YA SHULE KWENYE KUNDI LAKE KIHALMASHAURI: 22 kati ya 46 NAFASI YA SHULE KWENYE KUNDI LAKE KIMKOA : 
+> 74 kati ya 290 NAFASI YA SHULE KWENYE KUNDI LAKE KITAIFA : 545 kati ya 5664 MADARAJA YA UFAULU 
+
+. 
+. *Create output variables (empty)
+. gen str80 school_name = ""     // school name is text
+(1 missing value generated)
+
+. gen str20 school_code = ""     // code is text
+(1 missing value generated)
+
+. 
+. gen students_tested  = .       // numeric (.) means missing for now
+(1 missing value generated)
+
+. gen school_avg_score = .       // numeric ""
+(1 missing value generated)
+
+. 
+. gen under40 = .               // numeric: 1=under40, 0=40+
+(1 missing value generated)
+
+. 
+. gen council_rank   = .
+(1 missing value generated)
+
+. gen council_total  = .
+(1 missing value generated)
+
+. gen region_rank    = .
+(1 missing value generated)
+
+. gen region_total   = .
+(1 missing value generated)
+
+. gen national_rank  = .
+(1 missing value generated)
+
+. gen national_total = .
+(1 missing value generated)
+
+. 
+. 
+. *Remove school name header
+. replace page = ustrregexra(page, "(?i)\bEXAMINATION\s+RESULTS\b", "")
+(1 real change made)
+
+. replace page = strtrim(page)
+(0 real changes made)
+
+. replace page = ustrregexra(page, "\s+", " ")
+(1 real change made)
+
+. 
+. *Extract school name + code
+. if ustrregexm(page, "([A-Z ]+SCHOOL)\s*-\s*(PS[0-9]{7})") {
+.     replace school_name = strtrim(ustrregexs(1))
+(1 real change made)
+.     replace school_code = strtrim(ustrregexs(2))
+(1 real change made)
+. }
+
+. 
+. list school_name school_code, noobs
+
+  +-------------------------------------+
+  |             school_name   school~de |
+  |-------------------------------------|
+  | ALBEHIJE PRIMARY SCHOOL   PS0101114 |
+  +-------------------------------------+
+
+. 
+. *Extract students tested
+. if ustrregexm(page, "WALIOFANYA\s+MTIHANI\s*:\s*([0-9]+)") {
+.     replace students_tested = real(ustrregexs(1))
+(1 real change made)
+. }
+
+. 
+. *Extract school average score
+. if ustrregexm(page, "WASTANI\s+WA\s+SHULE\s*:\s*([0-9]+(\.[0-9]+)?)") {
+.     replace school_avg_score = real(ustrregexs(1))
+(1 real change made)
+. }
+
+. 
+. *Under-40 group indicator
+. if ustrregexm(page, "Wanafunzi\s+chini\s+ya\s*40") replace under40 = 1
+(1 real change made)
+
+. if ustrregexm(page, "40\s+(na|au)\s+zaidi")      replace under40 = 0
+
+. 
+. *Council ranking
+. if ustrregexm(page, "KIHALMASHAURI\s*:\s*([0-9]+)\s*kati\s+ya\s*([0-9]+)") {
+.     replace council_rank  = real(ustrregexs(1))
+(1 real change made)
+.     replace council_total = real(ustrregexs(2))
+(1 real change made)
+. }
+
+. 
+. *Region ranking
+. if ustrregexm(page, "KIMKOA\s*:\s*([0-9]+)\s*kati\s+ya\s*([0-9]+)") {
+.     replace region_rank  = real(ustrregexs(1))
+(1 real change made)
+.     replace region_total = real(ustrregexs(2))
+(1 real change made)
+. }
+
+. 
+. *National ranking
+. if ustrregexm(page, "KITAIFA\s*:\s*([0-9]+)\s*kati\s+ya\s*([0-9]+)") {
+.     replace national_rank  = real(ustrregexs(1))
+(1 real change made)
+.     replace national_total = real(ustrregexs(2))
+(1 real change made)
+. }
+
+. 
+. *Quick check
+. list school_name school_code students_tested school_avg_score under40 ///
+>      council_rank council_total region_rank region_total national_rank national_total, noobs
+
+  +-------------------------------------------------------------------------------------------+
+  |             school_name | school~de | studen~d | schoo~re | under40 | counci~k | counci~l |
+  | ALBEHIJE PRIMARY SCHOOL | PS0101114 |       16 |  217.375 |       1 |       22 |       46 |
+  |-------------------------------------------------------------------------------------------|
+  |       region~k       |       region~l       |       nation~k       |       nation~l       |
+  |             74       |            290       |            545       |           5664       |
+  +-------------------------------------------------------------------------------------------+
+
+. ****************************************************
+. *Drop any extra vars
+. keep school_name school_code students_tested school_avg_score under40 ///
+>      council_rank council_total region_rank region_total national_rank national_total
+
+. 
+. order school_name school_code students_tested school_avg_score under40 ///
+>       council_rank council_total region_rank region_total national_rank national_total
+
+. 
+. *Export outputs
+. export delimited using "$out/Q5_school_level.csv", replace
+file /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/Q5_school_level.csv saved
+
+. save "$out/Q5_school_level.dta", replace
+file /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/Q5_school_level.dta
+    saved
+
+. 
+. ****************************************************
+. 
+. log close
+      name:  <unnamed>
+       log:  /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/Q5.log
+  log type:  text
+ closed on:   8 Feb 2026, 16:53:33
+-------------------------------------------------------------------------------------------------------
