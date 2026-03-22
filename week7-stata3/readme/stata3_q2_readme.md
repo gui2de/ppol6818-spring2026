@@ -1,6 +1,6 @@
 # Part 2: Sampling noise in an infinite superpopulation
 
-## DGP & Program
+## 1. DGP & Program
 Same setup as [Part.1](week7-stata3/readme/stata3_q1_readme.md), where the true DGP is:
 
 $$
@@ -54,7 +54,7 @@ program define q2_reg, rclass
 
 end
 ```
-## Simulation
+## 2. Simulation
 The simulation here reflects the cases where the sample size is power of 2 or power of 10; there are 26 cases. I repeat each simulation for 500 times. 
 
 ```stata
@@ -85,12 +85,13 @@ foreach v of local samp {
 save "$boxd/output/stata3_q2_simulated.dta", replace
 ```
 
-## Outputs & Interpretation
+## 3. Outputs & Interpretation
 ### *FIGURE. 1* Boxplot for estimated $\beta$ for each sample size, N
 The boxplot below shows the distrubition of estimated $\beta_1$ with different N. 
 
 **Interpretation:**
-- Estimated $\beta$ also converges toward the true $\beta$ of 20, as the sample size gets bigger
+- Estimated $\beta$ also converges toward the true $\beta$ of 20, as the sample size gets bigger.
+- Estimated $\beta$ would vary the most with the smallest sample size of 2. 
 
 ![boxplot2.png](https://github.com/gui2de/ppol6818-spring2026/blob/kk1534_stata3/week7-stata3/output/stata3_q2_boxplot.png?raw=true)
 
@@ -128,12 +129,16 @@ table N, stat(mean betabar) stat(mean sebar) stat(mean ciw) export(stata3_q2_tab
 
 
 ## Part1 vs Part2
+### Why are we able to draw a larger sample size than in Part 1, and why might the sizes of the SEM and confidence intervals be different at the powers of ten than in Part 1?
+In Part 1, I set the **population fixed** as 10,000 households, which means the maximum sample size out of this population would be 10,000. In the other hand, in Part 2, I assume that there is **infinite superpopulation**, so the maximum sample size out of this superpopulation would be theoretically inifinte. Therefore, the true population size which I simulate the sampling out of is different between Part 1 and 2, and the one of Part 2 enables me to sample as large as I want. 
+The sizes of the SEM and CIs might be bigger in Part 2 than in Part 1 for the same reason. Compared to Part 1 only with 10,000 households data set, Part 2 has way more households to sample from, which makes the sampling way more various, noisy, and unique in Part 2. This difference can be seen in figures and tables below. 
+
 ### *FIGURE. 2* Comparison of Estimated $\beta$, Standard Error, and CI width between Part1 and Part2
 The graphs below show Estimated $\beta$, Standard Error, and CI width for both Part1 and Part2. 
 
 **Interpretation:**
-- Since Part1 only has 4 sample sizes, the line only goes the range of the samples.
-- It looks like Part2 has more noises in all the statistics because Part2 has an infinite superpopulation, but the overall trends are the same as Part1; the bigger the sample size is, the less noises there are. 
+- Since Part1 only has 4 sample sizes, the line only goes the range of the samples. This is why the red line (Fixed population) is way smaller than the blue line (Superpopulation).
+- It looks like Part2 overall has more noises in all the statistics because Part2 has an infinite superpopulation, but the overall trends are the same as Part1; the bigger the sample size is, the less noises there are. 
 
 ![linecomp.png](https://github.com/gui2de/ppol6818-spring2026/blob/kk1534_stata3/week7-stata3/output/stata3_q2_linecomp.png?raw=true)
 
