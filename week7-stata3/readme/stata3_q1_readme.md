@@ -151,6 +151,9 @@ save "$boxd/output/stata3_q1_simulated.dta", replace
 ### [FIGURE.1] Boxplot for estimated $\beta$s for each sample size, N
 This boxplot below shows the distrubition of estimated $\beta$s for each variables with different N. 
 
+![stata3_q1_boxplot.png](https://github.com/gui2de/ppol6818-spring2026/edit/kk1534_stata3/week7-stata3/readme/stata3_q1_readme.md#:~:text=stata3_q1_boxplot.-,png,-stata3_q1_line.png)
+![Boxplot](stata3_q1_boxplot.png)
+
 **Interpretation:**
 - The distribution is the widest with N of 10, which makes sense as there would be more noises.
 - As N becomes larger, the noise gets smaller, and eventually the estimated $\beta$ becomes equal to the true $\beta$ with N of 10,000, which also makes sense as the independent value, *consumption*, was calculated using the same 10,000 households variables. 
