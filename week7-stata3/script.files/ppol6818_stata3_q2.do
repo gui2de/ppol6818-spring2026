@@ -193,6 +193,8 @@ rename beta1 beta_10k
 
 merge m:m N using "$boxd/output/stata3_q2_simulated.dta", force
 
+
+preserve
 keep if _merge == 3
 
 twoway ///
@@ -241,6 +243,19 @@ graph combine N_10 N_100 N_1000 N_10000, ///
 	 title("Comparisons of {&beta} distribution between Superpopulation and Fixed Population""N = 10 100 1000 10000")
 
 graph export "$boxd/output/stata3_q2_betadis.png", replace
+
+restore
+
+* beta with CIs
+twoway lpolyci beta N , title("Superpopulation") xscale(log) ///
+	xtitle("Sample size") ytitle("Estimated {&beta}") xlabel(, angle(90))  legend(label(2 "estimated beta")) ///
+	name(super, replace)
 	
+twoway lpolyci beta_ N, title("Fixed population") xscale(log) ///
+	xtitle("Sample size") ytitle("Estimated {&beta}") xlabel(, angle(90)) legend(label(2 "estimated beta")) ///
+	name(fixed, replace)
+	
+graph combine super fixed, title("Estimated {&beta} with 95% CI")
+graph export "$boxd/output/stata3_q2_betaci.png", replace
 	
  
