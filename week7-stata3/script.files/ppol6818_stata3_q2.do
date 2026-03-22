@@ -184,3 +184,63 @@ label var     ciw    "CI Superpop"
 label var N "N"
 
 table N, stat(mean beta_) stat(mean beta) stat(mean se_)   stat(mean se) stat(mean ciw_)  stat(mean ciw) export(q2_table.pdf, as(pdf) replace)
+
+** Distribution of beta for each N
+use "$boxd/output/stata3_q1_simulated.dta", clear
+
+keep N beta1
+rename beta1 beta_10k
+
+merge m:m N using "$boxd/output/stata3_q2_simulated.dta", force
+
+keep if _merge == 3
+
+twoway ///
+    (kdensity beta if N==10, lcolor(red))  ///
+	(kdensity beta_ if N==10, lcolor(blue)),  ///
+	legend(order(1 "Superpop" 2 "Fixed Pop")) ///
+	title("N = 10") ///
+	xtitle("Estimated {&beta}") ytitle("Density") ///
+	xline(20, lcolor(black) lpattern(dot)) ///
+	xlabel(20, add) ///
+	name(N_10, replace)
+	
+twoway ///
+    (kdensity beta if N==100, lcolor(red))  ///
+	(kdensity beta_10k if N==100, lcolor(blue)),  ///
+	legend(order(1 "Superpop" 2 "Fixed Pop")) ///
+	title("N = 100") ///
+	xtitle("Estimated {&beta}") ytitle("Density") ///
+	xline(20, lcolor(black) lpattern(dot)) ///
+	xlabel(20, add) ///
+	name(N_100, replace)
+	
+twoway ///
+    (kdensity beta if N==1000, lcolor(red))  ///
+	(kdensity beta_10k if N==1000, lcolor(blue)),  ///
+	legend(order(1 "Superpop" 2 "Fixed Pop")) ///
+	title("N = 1000") ///
+	xtitle("Estimated {&beta}") ytitle("Density") ///
+	xline(20, lcolor(black) lpattern(dot)) ///
+	xlabel(20, add) ///
+	name(N_1000, replace)
+
+tab beta_10k if N == 10000 // there is only one unique value for estimated beta when N = 10,000, which is 20.00955.
+
+twoway ///
+    (kdensity beta if N==10000, lcolor(red)),  ///
+	legend(order(1 "Superpop" 2 "Fixed Pop")) ///
+	title("N = 10000") ///
+	xtitle("Estimated {&beta}") ytitle("Density") ///
+	xline(20, lcolor(black) lpattern(dot)) ///
+	xline(20.00955, lcolor(blue) lpattern(solid)) ///
+	xlabel(20, add) ///
+	name(N_10000, replace)
+
+graph combine N_10 N_100 N_1000 N_10000, ///
+	 title("Comparisons of {&beta} distribution between Superpopulation and Fixed Population""N = 10 100 1000 10000")
+
+graph export "$boxd/output/stata3_q2_betadis.png", replace
+	
+	
+ 
