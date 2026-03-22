@@ -90,7 +90,9 @@ save "$boxd/output/stata3_q2_simulated.dta", replace
 The boxplot below shows the distrubition of estimated $\beta_1$ with different N. 
 
 **Interpretation:**
-- 
+- Estimated $\beta$ also converges toward the true $\beta$ of 20, as the sample size gets bigger
+
+![boxplot2.png](https://github.com/gui2de/ppol6818-spring2026/blob/kk1534_stata3/week7-stata3/output/stata3_q2_boxplot.png?raw=true)
 
 **Codes:**
 ```stata
