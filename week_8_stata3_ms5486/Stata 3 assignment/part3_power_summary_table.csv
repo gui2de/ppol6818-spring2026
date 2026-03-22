@@ -1,0 +1,4 @@
+scenario,treatment_share,control_share,treatment_n,control_n,total_n
+50/50 assignment,.5,.5,1571,1571,3142
+50/50 assignment with 15% attrition,.5,.5,1849,1849,3697
+30/70 assignment,.30000001,.69999999,1122,2618,3740
