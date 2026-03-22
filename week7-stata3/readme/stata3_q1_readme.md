@@ -19,7 +19,7 @@ The regressors are drawn as follows:
 
 I generated a **fixed population** of $10,000$ households with a fixed seed for reproducibility. 
 
-```{stata}
+```stata
 clear
 
 set seed 68183 //set seed for reproducibility 
@@ -65,7 +65,7 @@ save "$boxd/output/stata3_q1_pop.dta", replace
 ## 2. Define a program & Simulation
 A program below is designed to capture **Estimated $\beta$**, **Standard Error**, **P-value**, and **Lower/higher boundary of Confidence Interval(95% level)** for arbitrary sample size. 
 
-```{stata}
+```stata
 
 capture program drop q1_reg 
 program define q1_reg, rclass
