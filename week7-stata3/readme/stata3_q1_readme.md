@@ -19,6 +19,7 @@ The regressors are drawn as follows:
 
 I generated a **fixed population** of $10,000$ households with a fixed seed for reproducibility. 
 
+**Codes:**
 ```stata
 clear
 
@@ -65,6 +66,7 @@ save "$boxd/output/stata3_q1_pop.dta", replace
 ## 2. Define a program & Simulation
 A program below is designed to capture **Estimated $\beta$**, **Standard Error**, **P-value**, and **Lower/higher boundary of Confidence Interval(95% level)** for arbitrary sample size. 
 
+**Codes:**
 ```stata
 
 capture program drop q1_reg 
@@ -120,7 +122,8 @@ end
 ```
 In this simulation, I simulated **500** times for each cases where N is **10, 100, 1000, and 10000** out of 10000 households. 
 
-```{stata}
+**Codes:**
+```stata
 tempfile simulated
 
 foreach n in 10 100 1000 10000 {
@@ -144,12 +147,11 @@ foreach n in 10 100 1000 10000 {
 }
 
 save "$boxd/output/stata3_q1_simulated.dta", replace
-
 ```
 
 ## 3. Outputs & Interpretation
-### *FIGURE.1* Boxplot for estimated $\beta$'s for each sample size, N
-This boxplot below shows the distrubition of estimated $\beta$'s for each variables with different N. 
+### *FIGURE. 1* Boxplot for estimated $\beta$'s for each sample size, N
+The boxplot below shows the distrubition of estimated $\beta$'s for each variables with different N. 
 
 **Interpretation:**
 - The distribution is the widest with N of 10, which makes sense as there would be more noises.
@@ -157,7 +159,117 @@ This boxplot below shows the distrubition of estimated $\beta$'s for each variab
 
 ![stata3_q1_boxplot.png](https://github.com/gui2de/ppol6818-spring2026/blob/kk1534_stata3/week7-stata3/output/stata3_q1_boxplot.png?raw=true)
 
+**Codes:**
+```stata
+use "$boxd/output/stata3_q1_simulated.dta", clear
 
+gen samp_group = .
+replace samp_group = 1 if N == 10
+replace samp_group = 2 if N == 100
+replace samp_group = 3 if N == 1000
+replace samp_group = 4 if N == 10000
+label define samplab 1 "N = 10" 2 "N = 100" 3 "N = 1,000" 4 "N = 10,000"
+label values samp_group samplab
 
+local vars "mmacc prim high col inc"
+foreach v of local vars {
+	gen ciw_`v' = ub_`v' - lb_`v'
+}
 
+* Boxplot
+graph box beta*, ///
+    over(samp_group) ///
+    title("Sampling Distributions of {&beta} Estimates by Sample Size", size(medlarge) color(black)) ///
+	subtitle("Fixed 10k Population, 500 Simulation") ///
+    ytitle("OLS Estimate of {&beta}{subscript:k}") ///
+	yline(20, lcolor(stblue) lpattern(dash) lwidth(thin)) ///
+	yline(7, lcolor(stred) lpattern(dash) lwidth(thin)) ///
+	yline(10, lcolor(stgreen) lpattern(dash) lwidth(thin)) ///
+	yline(5,lcolor(styellow) lpattern(dash) lwidth(thin)) ///
+	yline(.15, lcolor(purple) lpattern(dash) lwidth(thin)) ///
+	legend(label(1 "{&beta}{subscript:mmacc} : True {&beta} = 20") label(2 "{&beta}{subscript:prim} : True {&beta} = 7") ///
+		label(3 "{&beta}{subscript:high} : True {&beta} = 10") label(4 "{&beta}{subscript:college} : True {&beta} = 5") ///
+		label(5 "{&beta}{subscript:inc} : True {&beta} = .15"))
+
+graph export "$boxd/output/stata3_q1_boxplot.png", replace
+```
+### *FIGURE. 2* Each Standard Errors for different sample size, N
+The graphs below depict how standard errors of each coefficient changes, based on N.
+
+**Interpretation:**
+- Each standard errors is also larger with smaller N, which aligns with what I found in OLS estimates distribution.
+- As N gets larger, the standard errors gets smaller because there would be less noises.
+
+![stata3q1_line.png](https://github.com/gui2de/ppol6818-spring2026/blob/kk1534_stata3/week7-stata3/output/stata3_q1_line.png?raw=true)
+
+**Codes:**
+```stata
+local ses se_mmacc se_prim se_high se_col se_inc
+
+foreach v in `ses' {
+	twoway (line `v' N), ///
+	ytitle("`v'") xtitle("Sample size") ///
+	name(`v', replace) title("`v'")
+} 
+
+graph combine se_mmacc se_prim se_high se_col se_inc, title("S.E. for Different Samples by Each Vars")subtitle("Fixed 10k Population, 500 Simulation")
+
+graph export  "$boxd/output/stata3_q1_line.png", replace
+```
+
+### *FIGURE. 3* Each P-values for different sample size, N
+The graphs below depict how p-values of each coefficient changes, based on N.
+
+**Interpretation:**
+- As N gets larger, the p-values get smaller for the same reasons above.
+
+![pvline.png](https://github.com/gui2de/ppol6818-spring2026/blob/kk1534_stata3/week7-stata3/output/stata3_q1_pvline.png?raw=true)
+
+**Codes:**
+```stata
+local pvs pv_mmacc pv_prim pv_high pv_col pv_inc
+
+foreach v in `pvs' {
+	twoway line `v' N if N <=1000, ///
+	ytitle("`v'") xtitle("Sample size") ///
+	name(`v', replace) title("`v'")
+} 
+
+graph combine pv_mmacc pv_prim pv_high pv_col pv_inc, title("P-value for Different Samples by Each Vars")subtitle("Fixed 10k Population, 500 Simulation")
+
+graph export  "$boxd/output/stata3_q1_pvline.png", replace
+```
+
+### *TABLE. 1*
+The table below consists each **Estimated $\beta$**, **Standard Error**, and **CI width**.
+
+**Interpretation:**
+- Estimated $\beta$'s become closer to the true $\beta$s, as N becomes bigger.
+- Standard errors and CI widths get smaller, as N becomes bigger.
+- Both observations make sense because by having larger  N, we can remove the noises. 
+
+<img width="2000" height="2588" alt="image" src="https://github.com/user-attachments/assets/48f419d6-cdcf-44d3-bbb4-3925ab95717f" />
+
+**Codes:**
+```stata
+preserve //presearve what I have before collapsing 
+
+collapse (mean) betabar1 = beta1 (mean) betabar2 = beta2 (mean) betabar3 = beta3 ///
+		 (mean) betabar4 = beta4 (mean) betabar5 = beta5 ///
+		 (mean) mse1 = se_mmacc (mean) mse2 = se_prim (mean) mse3 = se_high ///
+		 (mean) mse4 = se_col (mean) mse5 = se_inc ///
+		 (mean) cibar1 = ciw_mmacc (mean) cibar2 = ciw_prim (mean) cibar3 = ciw_high ///
+		 (mean) cibar4 = ciw_col (mean) cibar5 = ciw_inc ///
+		 , by(samp_group)
+
+collect clear
+
+table (var) (samp_group), stat(mean betabar* mse* cibar*) nformat(%9.3f)
+
+collect title "Estimated Betas, MSEs, and CIs for Each Vars (Fixed 10k Population, 500 Simulation)"
+
+collect export stata3_q1_table.pdf, as(pdf) replace
+
+restore //restore what I preserved 
+```
 
