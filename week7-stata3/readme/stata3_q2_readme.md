@@ -275,3 +275,24 @@ graph combine N_10 N_100 N_1000 N_10000, ///
 
 graph export "$boxd/output/stata3_q2_betadis.png", replace
 ```
+*** *FIGURE. 5* $\beta_1$ with 95% CI
+The graphs below show the estimated $\beta_1$ with 95%.
+
+**Interpretation:**
+- Even though the superpopulation pauses more randomness in sampling than the fixed population, the overall trend that the standard errors and CIs converge is universal.
+
+<img width="2276" height="1366" alt="image" src="https://github.com/user-attachments/assets/84cb5b29-fa3d-4156-a35c-8bef127df623" />
+
+**Codes:**
+```stata
+twoway lpolyci beta N , title("Superpopulation") xscale(log) ///
+	xtitle("Sample size") ytitle("Estimated {&beta}") xlabel(, angle(90))  legend(label(2 "estimated beta")) ///
+	name(super, replace)
+	
+twoway lpolyci beta_ N, title("Fixed population") xscale(log) ///
+	xtitle("Sample size") ytitle("Estimated {&beta}") xlabel(, angle(90)) legend(label(2 "estimated beta")) ///
+	name(fixed, replace)
+	
+graph combine super fixed, title("Estimated {&beta} with 95% CI")
+graph export "$boxd/output/stata3_q2_betaci.png", replace
+```
