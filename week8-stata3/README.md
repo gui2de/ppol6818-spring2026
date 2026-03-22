@@ -1,6 +1,7 @@
-# Assignment 3: Sampling Noise in a Fixed and Infinite Population
+# Assignment 3 Stata
 **PPOL 6818 — Experimental Design**
-**Ali Hamza | March 2026**
+**Aqsa Zaidi | 22 March 2026**
+
 
 ---
 
