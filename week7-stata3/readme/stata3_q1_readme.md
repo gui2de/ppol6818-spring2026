@@ -1,7 +1,7 @@
 # Part 1: Sampling noise in a fixed population
 
 ## 1. Data Generating Process (DGP)
-In this activity, the outcome of interest is monthly household consumption expenditure (USD). The true DGP is:
+In this activity, the outcome of interest is monthly household consumption expenditure USD, $cons_i$. The true DGP is:
 
 $$
 cons_i = \beta_0 + \beta_1 mmacc_i + \beta_2 prim_i + \beta_3 high_i + \beta_4 col_i + \beta_5 inc_i + \epsilon_i
@@ -118,7 +118,7 @@ program define q1_reg, rclass
 
 end
 ```
-In this simulation, I simulated cases where N is **10, 100, 1000, or 10000** out of 10000 households. 
+In this simulation, I simulated **500** times for each cases where N is **10, 100, 1000, and 10000** out of 10000 households. 
 
 ```{stata}
 tempfile simulated
@@ -147,5 +147,13 @@ save "$boxd/output/stata3_q1_simulated.dta", replace
 
 ```
 
-## Outputs & Interpretation
+## 3. Outputs & Interpretation
+### [FIGURE.1] Boxplot for estimated $\beta$s for each sample size, N
+This boxplot below shows the distrubition of estimated $\beta$s for each variables with different N. 
+
+**Interpretation:**
+- The distribution is the widest with N of 10, which makes sense as there would be more noises.
+- As N becomes larger, the noise gets smaller, and eventually the estimated $\beta$ becomes equal to the true $\beta$ with N of 10,000, which also makes sense as the independent value, *consumption*, was calculated using the same 10,000 households variables. 
+
+
 
