@@ -120,22 +120,13 @@ use "$boxd/output/stata3_q2_simulated.dta", clear
 *boxplot
 graph box beta, over(N,  label(angle(45))) ///
 	title("Sampling Distributions of {&beta} Estimate by Sample Size (True {&beta} = 20)") /// 
-	subtitle("Superpopulation, 500 Simulation")
+	subtitle("Superpopulation, 500 Simulation") ///
 	ytitle("OLS Estimate of {&beta}{subscript:1}") ///
 	yline(20, lcolor(stred) lpattern(dash) lwidth(thin)) ///
 	text(20 0 "20", placement(left))
 
-local ses se_mmacc se_prim se_high se_col se_inc
 
-foreach v in `ses' {
-	twoway line `v' N, ///
-	ytitle("`v'") xtitle("Sample size") ///
-	name(`v', replace) title("`v'")
-} 
-
-graph combine se_mmacc se_prim se_high se_col se_inc
-
-graph export  "$boxd/output/stata3_p1_line.png", replace
+graph export  "$boxd/output/stata3_q2_boxplot.png", replace
 	
 *table
 preserve //presearve what I have before collapsing 
