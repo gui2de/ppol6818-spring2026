@@ -1,6 +1,9 @@
 # ppol6818-spring2026
-Class repo for PPOL-6818 (Experimental Design and Implementation) at McCourt in Spring 2026
 
-We are learning git and github together.
+## az668-survey2
 
+Links for review for Survey 2 Assignment
 
+SurveyCTO - https://gui2de.surveycto.com/collect/survey2?caseid=
+
+Google Sheets - https://docs.google.com/spreadsheets/d/1JlDyNfhIOqsqvmVuDIfDtBRqScEmEaRMkthqQZLo-yI/edit?usp=sharing
