@@ -36,7 +36,7 @@ Sample Size	Mean β	Std. Dev (β)	Mean Std. Error	95% CI (Lower)	95% CI (Upper)
 
 # Part 4
 ## q6
-To detect a 0.2 SD effect with an ICC of 0.3 and 15 students per school, you require a total of 274 schools (137 treatment, 137 control), totaling 4,110 students.
+To detect a 0.2 SD effect with an ICC of 0.3 and 15 students per school, we require a total of 274 schools (137 treatment, 137 control), totaling 4,110 students.
 
 ## q7
-If only 70% of assigned schools adopt the treatment, it requires us to increase sample to approx560 schools to maintain 80% power
+If only 70% of assigned schools adopt the treatment, it requires us to increase sample to approx 560 schools to maintain 80% power.
