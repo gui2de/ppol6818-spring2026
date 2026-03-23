@@ -230,7 +230,7 @@ save "part2_table_results.dta", replace
 * Part 3: Power calculations for individual-level
 *         randomization
 ****************************************************
-cd "C:\Users\ASUS\Desktop\research_design\assignments\stata3\part3"
+cd "C:\Users\余青锋\OneDrive\Experimental Design\Peer Review 2\ppol6818-spring2026\stata3\part3"
 
 clear all
 set more off
@@ -274,46 +274,26 @@ program define part3_sim, rclass
 
     regress y treat
 
-    * Return results
+    * Store pvalue in a local first to avoid r() being overwritten
+    local pval = 2*ttail(e(df_r), abs(_b[treat]/_se[treat]))
+
     return scalar N      = e(N)
-    return scalar pvalue = 2*ttail(e(df_r), abs(_b[treat]/_se[treat]))
-    return scalar reject = (r(pvalue) < 0.05)
+    return scalar pvalue = `pval'
+    return scalar reject = (`pval' < 0.05)
 end
 
 
 ****************************************************
 * Step 3. Scenario A: 50% treated, no attrition
-* Stage 1: coarse search (step 500) to bracket the
-*          80% threshold
-* Stage 2: fine search (step 50) within that bracket
+* Step size 250, reps 200 for speed
+* (~20 iterations total for this scenario)
 ****************************************************
 
-* --- Stage 1: coarse ---
-tempname res_a1
-postfile `res_a1' N power using "part3_a_coarse.dta", replace
-
-forvalues n = 500(500)5000 {
-    quietly simulate reject=r(reject), reps(500): ///
-        part3_sim, n(`n') ptreat(0.5)
-    quietly summarize reject
-    post `res_a1' (`n') (r(mean))
-}
-
-postclose `res_a1'
-
-use "part3_a_coarse.dta", clear
-gen meets80 = (power >= 0.80)
-quietly summarize N if meets80 == 1
-local a_lo = r(min) - 500          // lower bound of bracket
-local a_hi = r(min)                // upper bound of bracket
-display "Coarse bracket for Scenario A: " `a_lo' " to " `a_hi'
-
-* --- Stage 2: fine ---
 tempname res_a
 postfile `res_a' N power using "part3_scenario_a.dta", replace
 
-forvalues n = `a_lo'(50)`a_hi' {
-    quietly simulate reject=r(reject), reps(500): ///
+forvalues n = 250(250)5000 {
+    quietly simulate reject=r(reject), reps(200): ///
         part3_sim, n(`n') ptreat(0.5)
     quietly summarize reject
     post `res_a' (`n') (r(mean))
@@ -330,36 +310,13 @@ display "Scenario A — min N for 80% power (50% treated): " r(min)
 
 ****************************************************
 * Step 4. Scenario B: 50% treated, 15% attrition
-* Same two-stage approach; attrition inflates N so
-* coarse range extended to 6000
 ****************************************************
 
-* --- Stage 1: coarse ---
-tempname res_b1
-postfile `res_b1' N power using "part3_b_coarse.dta", replace
-
-forvalues n = 500(500)6000 {
-    quietly simulate reject=r(reject), reps(500): ///
-        part3_sim, n(`n') ptreat(0.5) attrit(0.15)
-    quietly summarize reject
-    post `res_b1' (`n') (r(mean))
-}
-
-postclose `res_b1'
-
-use "part3_b_coarse.dta", clear
-gen meets80 = (power >= 0.80)
-quietly summarize N if meets80 == 1
-local b_lo = r(min) - 500
-local b_hi = r(min)
-display "Coarse bracket for Scenario B: " `b_lo' " to " `b_hi'
-
-* --- Stage 2: fine ---
 tempname res_b
 postfile `res_b' N power using "part3_scenario_b.dta", replace
 
-forvalues n = `b_lo'(50)`b_hi' {
-    quietly simulate reject=r(reject), reps(500): ///
+forvalues n = 250(250)6000 {
+    quietly simulate reject=r(reject), reps(200): ///
         part3_sim, n(`n') ptreat(0.5) attrit(0.15)
     quietly summarize reject
     post `res_b' (`n') (r(mean))
@@ -376,36 +333,13 @@ display "Scenario B — min N for 80% power (50% treated + 15% attrition): " r(m
 
 ****************************************************
 * Step 5. Scenario C: 30% treated, no attrition
-* Unbalanced design requires more observations;
-* coarse range extended to 7000
 ****************************************************
 
-* --- Stage 1: coarse ---
-tempname res_c1
-postfile `res_c1' N power using "part3_c_coarse.dta", replace
-
-forvalues n = 500(500)7000 {
-    quietly simulate reject=r(reject), reps(500): ///
-        part3_sim, n(`n') ptreat(0.3)
-    quietly summarize reject
-    post `res_c1' (`n') (r(mean))
-}
-
-postclose `res_c1'
-
-use "part3_c_coarse.dta", clear
-gen meets80 = (power >= 0.80)
-quietly summarize N if meets80 == 1
-local c_lo = r(min) - 500
-local c_hi = r(min)
-display "Coarse bracket for Scenario C: " `c_lo' " to " `c_hi'
-
-* --- Stage 2: fine ---
 tempname res_c
 postfile `res_c' N power using "part3_scenario_c.dta", replace
 
-forvalues n = `c_lo'(50)`c_hi' {
-    quietly simulate reject=r(reject), reps(500): ///
+forvalues n = 250(250)7000 {
+    quietly simulate reject=r(reject), reps(200): ///
         part3_sim, n(`n') ptreat(0.3)
     quietly summarize reject
     post `res_c' (`n') (r(mean))
@@ -418,3 +352,144 @@ list N power, noobs sep(0)
 gen meets80 = (power >= 0.80)
 summarize N if meets80 == 1, meanonly
 display "Scenario C — min N for 80% power (30% treated): " r(min)
+
+
+****************************************************
+* Part 4: Power calculations for cluster randomization
+****************************************************
+cd "C:\Users\余青锋\OneDrive\Experimental Design\Peer Review 2\ppol6818-spring2026\stata3\part4"
+
+clear all
+set more off
+
+
+****************************************************
+* Step 1-4. Define a program implementing the DGP:
+* - Y = math score for each student
+* - School-level random effect generates ICC ~ 0.3:
+*   var_school = 0.6, var_student = 1.4 → ICC = 0.6/2.0
+* - Treatment assigned at school level (50/50 split)
+* - tau ~ Uniform(0.15, 0.25): ATE = 0.2 sd
+* - Optional: adopt controls share of treated schools
+*   that actually implement the treatment
+****************************************************
+
+set seed 2024
+capture program drop part4_sim
+program define part4_sim, rclass
+    syntax, clusters(integer) csize(integer) [adopt(real 1)]
+
+    clear
+    set obs `clusters'
+    gen school_id = _n
+
+    * School-level random effect (var = 0.6)
+    gen u_school = rnormal(0, sqrt(0.6))
+
+    * Treatment assigned to first half of schools
+    gen treat_school = (_n <= `clusters' / 2)
+
+    * Expand to student level
+    expand `csize'
+    bysort school_id: gen student_id = _n
+
+    * Student-level random effect (var = 1.4)
+    * ICC = 0.6 / (0.6 + 1.4) = 0.3 ✓
+    gen u_student = rnormal(0, sqrt(1.4))
+
+    * Heterogeneous treatment effect: Uniform(0.15, 0.25)
+    gen tau = runiform(0.15, 0.25)
+
+    * School adoption of treatment
+    gen adopts = 1
+    replace adopts = (runiform() < `adopt') if treat_school == 1
+
+    * Outcome: treatment effect only if school adopts
+    gen y = u_school + u_student + tau * treat_school * adopts
+
+    * ITT regression with cluster-robust SE
+    regress y treat_school, vce(cluster school_id)
+
+    local pval = 2*ttail(e(df_r), abs(_b[treat_school]/_se[treat_school]))
+
+    return scalar pvalue     = `pval'
+    return scalar reject     = (`pval' < 0.05)
+    return scalar N_clusters = `clusters'
+    return scalar csize      = `csize'
+end
+
+
+****************************************************
+* Step 5. Fix clusters = 200, vary cluster size
+* using first 10 powers of 2 (2, 4, 8, ..., 1024)
+* Examine how power changes with cluster size
+****************************************************
+
+tempname res1
+postfile `res1' csize power using "part4_power_by_csize.dta", replace
+
+local csizes 2 4 8 16 32 64 128 256 512 1024
+
+foreach m of local csizes {
+    quietly simulate reject=r(reject), reps(500): ///
+        part4_sim, clusters(200) csize(`m')
+    quietly summarize reject
+    post `res1' (`m') (r(mean))
+}
+
+postclose `res1'
+
+use "part4_power_by_csize.dta", clear
+list csize power, noobs sep(0)
+
+
+****************************************************
+* Step 6. Fix cluster size = 15 students/school
+* Search over number of schools to find minimum
+* required for 80% power (step size = 20)
+****************************************************
+
+tempname res2
+postfile `res2' clusters power using "part4_power_by_clusters.dta", replace
+
+forvalues g = 20(20)600 {
+    quietly simulate reject=r(reject), reps(500): ///
+        part4_sim, clusters(`g') csize(15)
+    quietly summarize reject
+    post `res2' (`g') (r(mean))
+}
+
+postclose `res2'
+
+use "part4_power_by_clusters.dta", clear
+list clusters power, noobs sep(0)
+
+gen meets80 = (power >= 0.80)
+summarize clusters if meets80 == 1, meanonly
+display "Required schools for 80% power (full adoption): " r(min)
+
+
+****************************************************
+* Step 7. Only 70% of treated schools adopt
+* Extend search range to 800 schools to allow for
+* the power loss from partial adoption
+****************************************************
+
+tempname res3
+postfile `res3' clusters power using "part4_power_70adopt.dta", replace
+
+forvalues g = 20(20)800 {
+    quietly simulate reject=r(reject), reps(500): ///
+        part4_sim, clusters(`g') csize(15) adopt(0.7)
+    quietly summarize reject
+    post `res3' (`g') (r(mean))
+}
+
+postclose `res3'
+
+use "part4_power_70adopt.dta", clear
+list clusters power, noobs sep(0)
+
+gen meets80 = (power >= 0.80)
+summarize clusters if meets80 == 1, meanonly
+display "Required schools for 80% power (70% adoption): " r(min)
