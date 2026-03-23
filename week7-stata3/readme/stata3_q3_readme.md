@@ -87,7 +87,7 @@ but, the minimum N that could have a power of higher than 80% is 3101.
 - 3,101 (by simulation) and 3,142 (power calc) are not contradicting each other. The power twomeans answer is the precise theoretical value without randomness. The simulation answer is a noisy estimate of that same value, and with 500 reps the noise is large enough to shift the answer by ~40 households.
 
 
-## Case of attrition 
+## 3. Case of attrition 
 In this section, we think about the case where the attrition rate is 15% instead of 0%. 
 ### Program
 The program is designed as below. I am using 95% confidence level to reject the null ($\beta_{effect}$ = 0).
@@ -144,7 +144,7 @@ postclose `attrition'
 ### Notes
 - The power (simulated) gets higher than 80% between 3800 and 3900. This is not contradicting the power twomean answer of 3697 because there is more noise with this simulation.
 
-## Case of fewer treatement
+## 4. Case of fewer treatement
 In this section, we think about the case where the attrition rate is 15% instead of 0%, as well as the proportion of treatment group is 30% out of total sample size. 
 ### Power calculation
 The power calucation is done below. The minimum sample size to have at least 80% power with attrition rate of 15% and treatement rate of 30% is **4400**.
@@ -177,7 +177,7 @@ postclose `attrition'
 */
 ```
 
-## Conclusion
+## 5. Conclusion
 Below is a table for the minimum sample sizes to have at least a power of 80% in each case. As it mentioned above, the `power twomeans` answers seem to be more precise as they don't have randomness which the other method has.  
 
 | Method | Case 1 (Baseline) | Case 2 (Attrition = 15%) | Case 3 (Attrition = 15% & Treatment = 30%) |
