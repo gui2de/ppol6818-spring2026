@@ -100,8 +100,8 @@ program define powerclus, rclass
 end
 ```
 
-## What cluster size would you recommend out of first 10 powers of 2 and why?
-### Codes and Outcomes
+## What cluster size would we recommend out of first 10 powers of 2 and why?
+### Codes and Outputs
 ```stata
 tempname step5
 postfile `step5' clus_size power using "$boxd/output/stata3_q5.dta", replace
@@ -129,7 +129,76 @@ Cluster size = 512: Power = .902
 Cluster size = 1024: Power = .926
 */
 ```
-I would recommend cluster size of **1024** as it has the highest power. However, it depends on the financial or physical restrictions. To have at least 80% of power, we only need cluster size of **128**.
+### Answer:
+The power gets bigger, as the cluster size gets bigger, which means that having as big size as possible is better to make sure the treatment effect exists. I would recommend cluster size of **1024** as it has the highest power out all the sizes in this simulation. However, it also depends on the financial or physical restrictions. To have at least 80% of power, we only need cluster size of **128**.
+
+## How many schools do we need in your RCT to get 80% to detect 0.2 sd treatment effect with fixed cluster size of 15 per cluster?
+### Codes and Outputs
+```stata
+tempname step6
+postfile `step6' n_clus power using "$boxd/output/stata3_q6.dta", replace
+
+forvalues v = 2000(100)3000 {
+    qui simulate reject_yn = r(reject_yn), reps(500): powerclus, n_clus(`v') s_clus(15) rho(0.3) treat(0.5) adopt(1.0)
+    quietly sum reject_yn
+    local pw = r(mean)
+    post `step6' (`v') (`pw')
+    display as error "Number of school = `v': Power = `pw'"
+}
+
+postclose `step6'
+
+/*
+Number of school = 2000: Power = .784
+Number of school = 2100: Power = .79
+Number of school = 2200: Power = .8159999999999999
+Number of school = 2300: Power = .798
+Number of school = 2400: Power = .866
+Number of school = 2500: Power = .85
+Number of school = 2600: Power = .9
+Number of school = 2700: Power = .896
+Number of school = 2800: Power = .9
+Number of school = 2900: Power = .928
+Number of school = 3000: Power = .914
+*/
+```
+### Answer:
+Based on this simlation, **2200** schools could be enough to have 80% power with cluster size of 15.
+
+## How many schools do you need now to get 80% power with adoption rate of 70%?
+### Codes and Ouputs
+```stata
+tempname step7
+postfile `step7' n_clus power using "$boxd/output/stata3_q7.dta", replace
+
+forvalues v = 3000(100)4000 {
+    qui simulate reject_yn = r(reject_yn), reps(500): powerclus, n_clus(`v') s_clus(15) rho(0.3) treat(0.5) adopt(0.7)
+    quietly sum reject_yn
+    local pw = r(mean)
+    post `step7' (`v') (`pw')
+    display as error "Number of school = `v': Power = `pw'"
+}
+
+postclose `step7'
+
+/*
+Number of school = 3000: Power = .784
+Number of school = 3100: Power = .794
+Number of school = 3200: Power = .8080000000000001
+Number of school = 3300: Power = .856
+Number of school = 3400: Power = .866
+Number of school = 3500: Power = .86
+Number of school = 3600: Power = .868
+Number of school = 3700: Power = .876
+Number of school = 3800: Power = .89
+Number of school = 3900: Power = .898
+Number of school = 4000: Power = .882
+*/
+```
+### Answer:
+With adoption rate of 70%, we need **3200** schools to have 80% power. 
+
+
 
 
 
