@@ -1,3 +1,5 @@
+# Stata3-Qingfeng Yu_qy111
+
 ## Part 1: Sampling Noise in a Fixed Population
 
 ### Data Generating Process
@@ -37,14 +39,7 @@ Several patterns stand out:
 
 ### Table: Precision Metrics by Sample Size
 
-![](part1/part1_table.png)
-
-| Sample Size | Mean $\hat{\beta}$ | SD($\hat{\beta}$) | Mean SEM | Mean CI Width |
-|--------------:|--------------:|--------------:|--------------:|--------------:|
-|          10 |              0.787 |             0.279 |    0.265 |         1.220 |
-|         100 |              0.800 |             0.076 |    0.077 |         0.304 |
-|       1,000 |              0.801 |             0.023 |    0.024 |         0.094 |
-|      10,000 |              0.799 |             0.000 |    0.008 |         0.030 |
+![Part 1 Table](part1/part1_table.png)
 
 Three takeaways:
 
@@ -98,20 +93,7 @@ The figure plots box distributions for every other power of two (4, 16, 64, ...,
 
 ### Table: Precision Metrics by Sample Size
 
-![](part2/part2_table.png)
-
-Selected rows for readability:
-
-| Sample Size | Mean $\hat{\beta}$ | SD($\hat{\beta}$) | Mean SEM | Mean CI Width |
-|--------------:|--------------:|--------------:|--------------:|--------------:|
-|           4 |              0.796 |             0.730 |    0.526 |         4.531 |
-|          16 |              0.786 |             0.208 |    0.200 |         0.856 |
-|          64 |              0.804 |             0.095 |    0.095 |         0.379 |
-|         256 |              0.797 |             0.046 |    0.047 |         0.185 |
-|       1,024 |              0.801 |             0.023 |    0.023 |         0.092 |
-|      10,000 |              0.800 |             0.007 |    0.008 |         0.029 |
-|     100,000 |              0.800 |             0.002 |    0.002 |         0.009 |
-|   1,000,000 |              0.800 |            0.0008 |   0.0008 |         0.003 |
+![Part 2 Table](part2/part2_table.png)
 
 Three patterns stand out:
 
@@ -209,38 +191,37 @@ With the unbalanced assignment, the required sample size is also **N = 3,500**.
 
 **Unbalanced assignment (Scenario C)** also increases the required sample size. With equal group sizes, both arms contribute equally to estimating the treatment effect. When only 30% receive treatment, the smaller treated group becomes the limiting factor, and the variance of the estimator rises. The result is the same required N as Scenario B despite no data loss — the inefficiency of unequal assignment is roughly equivalent in cost to losing 15% of an otherwise balanced sample.
 
-
 ## Part 4: Power Calculations for Cluster Randomization
 
 ### Data Generating Process
 
 The outcome is a student-level math score generated with a two-level random effects structure designed to produce ICC ≈ 0.3:
 
-- School-level random effect: $u_j \sim N(0,\ 0.6)$
-- Student-level random effect: $e_{ij} \sim N(0,\ 1.4)$
-- ICC $= \frac{0.6}{0.6 + 1.4} = 0.30$ ✓
-- Treatment assigned at the school level; schools split evenly between treatment and control
-- Individual treatment effects: $\tau_{ij} \sim \text{Uniform}(0.15,\ 0.25)$, ATE = **0.2 sd**
-- Outcome: $Y_{ij} = u_j + e_{ij} + \tau_{ij} \cdot D_j \cdot \mathbb{1}[\text{adopts}]$
+-   School-level random effect: $u_j \sim N(0,\ 0.6)$
+-   Student-level random effect: $e_{ij} \sim N(0,\ 1.4)$
+-   ICC $= \frac{0.6}{0.6 + 1.4} = 0.30$ ✓
+-   Treatment assigned at the school level; schools split evenly between treatment and control
+-   Individual treatment effects: $\tau_{ij} \sim \text{Uniform}(0.15,\ 0.25)$, ATE = **0.2 sd**
+-   Outcome: $Y_{ij} = u_j + e_{ij} + \tau_{ij} \cdot D_j \cdot \mathbb{1}[\text{adopts}]$
 
 Power is estimated via 500 simulation replications per condition using cluster-robust standard errors.
 
----
+------------------------------------------------------------------------
 
 ### Step 5: Power by Cluster Size (200 Schools Fixed)
 
 | Students/School | Power |
 |----------------:|------:|
-| 2               | 0.224 |
-| 4               | 0.296 |
-| 8               | 0.336 |
-| 16              | 0.390 |
-| 32              | 0.432 |
-| 64              | 0.406 |
-| 128             | 0.466 |
-| 256             | 0.414 |
-| 512             | 0.458 |
-| 1024            | 0.464 |
+|               2 | 0.224 |
+|               4 | 0.296 |
+|               8 | 0.336 |
+|              16 | 0.390 |
+|              32 | 0.432 |
+|              64 | 0.406 |
+|             128 | 0.466 |
+|             256 | 0.414 |
+|             512 | 0.458 |
+|            1024 | 0.464 |
 
 Power increases as cluster size grows from 2 to 32, reaching a local peak of **0.432** at 32 students per school. Beyond that point, power levels off and fluctuates between 0.41 and 0.47, never exceeding 0.50 even at 1,024 students per school.
 
@@ -248,43 +229,43 @@ This plateau is a direct consequence of the high ICC (0.3). When the intra-class
 
 **Recommendation:** A cluster size of **32 students per school** is the practical optimum. Power is near its highest attainable level at this point, and further increases in cluster size provide no meaningful gains while substantially raising data collection costs. Reaching 80% power in this design would require increasing the number of schools, not the cluster size.
 
----
+------------------------------------------------------------------------
 
 ### Step 6: Number of Schools Required for 80% Power (15 Students/School, Full Adoption)
 
-| Schools | Power |
-|--------:|------:|
-| 460     | 0.742 |
-| 500     | 0.740 |
-| 540     | 0.798 |
-| 560     | **0.818** |
-| 580     | 0.830 |
-| 600     | 0.852 |
+| Schools |     Power |
+|--------:|----------:|
+|     460 |     0.742 |
+|     500 |     0.740 |
+|     540 |     0.798 |
+|     560 | **0.818** |
+|     580 |     0.830 |
+|     600 |     0.852 |
 
 With 15 students per school and full treatment adoption, **560 schools** are required to achieve 80% power.
 
----
+------------------------------------------------------------------------
 
 ### Step 7: Number of Schools Required for 80% Power (70% Adoption)
 
 | Schools | Power |
 |--------:|------:|
-| 660     | 0.580 |
-| 700     | 0.602 |
-| 740     | 0.644 |
-| 780     | 0.654 |
-| 800     | 0.688 |
+|     660 | 0.580 |
+|     700 | 0.602 |
+|     740 | 0.644 |
+|     780 | 0.654 |
+|     800 | 0.688 |
 
 When only 70% of treated schools actually adopt the intervention, power does not reach 80% within the search range of 800 schools. The highest observed power at 800 schools is **0.688**, well below the target.
 
 This result illustrates how partial adoption severely undermines the power of cluster-randomized trials. Incomplete adoption reduces the effective treatment contrast between arms — treated schools that do not adopt look like control schools — which dilutes the ITT estimate and dramatically inflates the required sample size. To reach 80% power under 70% adoption, a substantially larger number of schools (likely exceeding 1,000) would be required. In practice, this would make the trial prohibitively expensive, and researchers should either invest in improving implementation fidelity or design the trial around a realistic adoption rate from the outset.
 
----
+------------------------------------------------------------------------
 
 ### Summary
 
 | Question | Condition | Result |
-|----------|-----------|--------|
+|----|----|----|
 | Recommended cluster size | 200 schools fixed | **32 students/school** (power plateaus beyond this) |
 | Min schools for 80% power | 15 students, full adoption | **560 schools** |
-| Min schools for 80% power | 15 students, 70% adoption | **> 800 schools** (not achieved in search range) |
+| Min schools for 80% power | 15 students, 70% adoption | **\> 800 schools** (not achieved in search range) |
