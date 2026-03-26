@@ -1,5 +1,31 @@
 * Stata Assignment 3 
 * Author: Qingya Yang
+* box directory
+
+
+// kenshi: added wd global to run on my local 
+if c(username) == "kkawade" {
+    global boxd "/Users/kkawade/Library/CloudStorage/Box-Box/ppol6818/perev"
+}
+
+// Replace username and path below
+if c(username) == "qy112" { 
+    global boxd  "replace here with your boxfile path"  
+}
+
+* local directory
+if c(username) == "kkawade" {
+    global wd "/Users/kkawade/gu_class/ppol6818/perev"
+}
+
+// Replace username and path below
+if c(username) == "yqy" { 
+    global wd  "D:\yqy\硕士-mpp\第四学期\experimental design\assignment-stata3"  
+}
+
+cd "$boxd"
+
+
 
 ****************************************************
 * Part 1: Sampling noise in a fixed population
@@ -23,7 +49,7 @@ set more off
 set seed 410
 
 * Create fixed population
-set obs 100000
+set obs 10000 //kenshi: our fixed population is 10,000 not 100,000
 
 * Unique ID
 gen id = _n
@@ -36,7 +62,7 @@ gen u = rnormal(0,2)
 gen y = 1 + 2*x + u
 
 * Save fixed population
-cd "D:\yqy\硕士-mpp\第四学期\experimental design\assignment-stata3"
+* cd "D:\yqy\硕士-mpp\第四学期\experimental design\assignment-stata3" //kenshi: I set cd in boxfile
 save "Part1_Q2.dta", replace
 
 ****************************************************
@@ -122,6 +148,25 @@ append using `sim1000'
 append using `sim10000'
 
 save "Part1_Q4.dta", replace
+
+/*kenshi: I like that you did all the simulations individually! I did it with loop commands like this FYI;
+
+```
+tempfile simulation
+
+foreach n in 10 100 1000 10000 {
+	simulate N=r(`n'),,,,,:sample_reg, n(`n')
+	
+	if `n' == 10{
+		save `simulation', replace
+	}
+	else {
+		append using `simulation'
+		save `simulation', replace
+	}
+}
+```
+*/
 
 ****************************************************
 *** 5 ***

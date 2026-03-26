@@ -1,6 +1,29 @@
 ****************************************************
 * Part 3: Power calculations for individual-level randomization
 ****************************************************
+
+// kenshi: added wd global to run on my local 
+if c(username) == "kkawade" {
+    global boxd "/Users/kkawade/Library/CloudStorage/Box-Box/ppol6818/perev"
+}
+
+// Replace username and path below
+if c(username) == "qy112" { 
+    global boxd  "replace here with your boxfile path"  
+}
+
+* local directory
+if c(username) == "kkawade" {
+    global wd "/Users/kkawade/gu_class/ppol6818/perev"
+}
+
+// Replace username and path below
+if c(username) == "yqy" { 
+    global wd  "D:\yqy\硕士-mpp\第四学期\experimental design\assignment-stata3"  
+}
+
+cd "$boxd"
+
 *** 1-3 ***
 ****************************************************
 clear all
