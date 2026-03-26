@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <title>Low Income Communities- 30% or More of Population Under HUD 80% AMI and Under Two Times Federal Poverty Level (2011-2018 ACS) Open Data</title>
+                <onlink>https://apps.deq.virginia.gov/arcgis/rest/services/public/EDMA/MapServer/298</onlink>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>This dataset represents the geospatial extent as polygons and the corresponding attribution for census block groups that meet the definition of low-income communities according to the Virginia 2020 Environmental Justice Act: “Low-income community” definition: “’Low-income community’ means any census block group in which 30 percent or more of the population is composed of people with low income.” The referenced “low income” definition is also provided below: “Low income” definition: “’Low income’ means having an annual household income equal to or less than the greater of (i) an amount equal to 80 percent of the median income of the area in which the household is located, as reported by the Department of Housing and Urban Development, and (ii) 200 percent of the Federal Poverty Level.”Click Here&amp;nbsp;to view Data Fact Sheet.&amp;nbsp;</abstract>
+            <purpose>This data supports the identification of Virginia’s environmental justice communities with additional layers available on the Virginia EJScreen+ Experience Builder for community outreach purposes such as public meetings. It is intended for use by DEQ staff, partner agencies, environmental justice and community leaders, the regulated community, and the public.</purpose>
+        </descript>
+        <keywords>
+            <theme>
+                <themekt>None</themekt>
+                <themekey>Open Data</themekey>
+                <themekey>Environmental Justice</themekey>
+            </theme>
+        </keywords>
+        <accconst>Other Constraints</accconst>
+        <useconst>Terms and conditions.</useconst>
+        <datacred>HUD, US Census, ACS</datacred>
+    </idinfo>
+    <metainfo>
+        <metd>20220602</metd>
+        <metc>
+            <cntinfo>
+                <!--no contact person or organization name available-->
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>
