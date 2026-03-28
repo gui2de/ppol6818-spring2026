@@ -100,5 +100,5 @@ The simulation demonstrates three core lessons:
 3. **Collider bias is severe and underappreciated.** The negative estimates in Models 4 and 5 are striking — controlling for the collider not only fails to discover the true effect, it reverses its sign entirely. In other words, even a large sample size cannot save research projects that have not accounted for the relationships inherent in the chosen variables. 
 
 
-# Part 3: Chloropleth Map
-![Percent of renters by state](model1_plot.png)
+# Part 3: Choropleth Map
+![Percent of renters by state](nh_renters_map.png)
