@@ -62,16 +62,17 @@ replace mmacc = 1 if random_t>`r(p50)'
 *verify treatment => 500 and Control =>500
 tab mmacc
 
+***** Mediator *****
+
+gen balancech = 0.5* mmacc + 0.3*runiform()
+
 ***** Y variable *****
 
 *create outcome variable (Note: also add some treatment effect)
 
-gen cons = rnormal() + 1.5*agent + 0.5*mmacc 
+gen cons = rnormal() + 1.5*agent + 0.3*mmacc 
 *IMPORTANT: Treatment effect size is 0.5. The distribution of betas should be centered around 0.5 when we run the CORRECT model.
 
-***** Mediator *****
-
-gen balancech = 0.5* mmacc + 0.3*runiform()
 
 ***** Collider *****
 
@@ -129,27 +130,27 @@ end
 simulate model1_beta=r(model1_beta) model2_beta=r(model2_beta) modelcon_p = r(modelcon_p) modelcon1_p =r(modelcon1_p) model3_beta=r(model3_beta) model4_beta=r(model4_beta) model5_beta=r(model5_beta)  , reps(500): simreg, n(1000)
 
 * Draw and save each histogram as a named graph (not a file yet)
-twoway histogram model1_beta, xline(0.5, lcolor(red) lpattern(dot)) ///
+twoway histogram model1_beta, xline(0.3, lcolor(red) lpattern(dot)) ///
     title("M1 Restricted") ///
     xtitle("Beta") ///
     name(h1, replace)
 
-twoway histogram model2_beta, xline(0.5, lcolor(red) lpattern(dot)) ///
+twoway histogram model2_beta, xline(0.3, lcolor(red) lpattern(dot)) ///
     title("M2 Confounder controlled") ///
     xtitle("Beta") ///
     name(h2, replace)
 
-twoway histogram model3_beta, xline(0.5, lcolor(red) lpattern(dot)) ///
+twoway histogram model3_beta, xline(0.3, lcolor(red) lpattern(dot)) ///
     title("M3 Mediator controlled") ///
     xtitle("Beta") ///
     name(h3, replace)
 
-twoway histogram model4_beta, xline(0.5, lcolor(red) lpattern(dot)) ///
+twoway histogram model4_beta, xline(0.3, lcolor(red) lpattern(dot)) ///
     title("M4 Collider controlled") ///
     xtitle("Beta") ///
     name(h4, replace)
 
-twoway histogram model5_beta, xline(0.5, lcolor(red) lpattern(dot)) ///
+twoway histogram model5_beta, xline(0.3, lcolor(red) lpattern(dot)) ///
     title("M5 Everything") ///
     xtitle("Beta") ///
     name(h5, replace)
@@ -165,9 +166,8 @@ sum modelcon_ modelcon1
 /*
     Variable |        Obs        Mean    Std. dev.       Min        Max
 -------------+---------------------------------------------------------
-  modelcon_p |        500    1.38e-31    3.01e-30          0   6.73e-29
- modelcon1_p |        500    .0000207    .0001786   2.04e-17   .0029723
-
+  modelcon_p |        500    1.36e-30    3.04e-29          0   6.79e-28
+ modelcon1_p |        500    .0000497    .0004433   9.32e-18    .006816
 */
 
 
@@ -205,9 +205,9 @@ use "$wd/week_10/03_output/stata4_p2_simulation.dta", clear
 
 ** boxplot
 graph box model1 model2 model3 model4 model5, over(n, label(angle(45))) ///
-	title("Sampling Distributions of {&beta} Estimate by Sample Size (True {&beta} = .5)") /// 
+	title("Sampling Distributions of {&beta} Estimate by Sample Size (True {&beta} = .3)") /// 
 	ytitle("OLS Estimate of {&beta}{subscript:1}") ///
-	yline(0.5, lcolor(stred) lpattern(dash) lwidth(thin)) ///
+	yline(0.3, lcolor(stred) lpattern(dash) lwidth(thin)) ///
 	legend(order(                                      ///
         1 "M1 Restricted"                                   ///
         2 "M2 Confounder controlled"       ///
@@ -248,8 +248,8 @@ twoway ///
     title("Mean beta by model across different Sample Size")             ///
     ytitle("Mean coefficient on mm_access")            ///
     xtitle("Sample size")                          ///
-    yline(0.5, lcolor(black) lpattern(dash))   ///
-	ylabel( 0.5)
+    yline(0.3, lcolor(black) lpattern(dash))   ///
+	ylabel( 0.3)
 	
 graph export "$wd/week_10/03_output/stata4_p2_betacomp.png", replace
 
@@ -270,6 +270,7 @@ twoway ///
     ytitle("Standard deviation of beta")             ///
     xtitle("Sample size")                        ///
     ylabel(, grid)
+	
 graph export "$wd/week_10/03_output/stata4_p2_sdcomp.png", replace
 
 
