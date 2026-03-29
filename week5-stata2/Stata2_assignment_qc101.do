@@ -1,10 +1,12 @@
 // QingyueChen - Stata2 assignment 
+
+//AD - All comments by Abhinav Dutt start with AD - at the beginning! 
  
 * Q1
 clear all
 set more off
 
-cd "C:\Users\86186\Desktop\stata2"
+cd "C:\Users\86186\Desktop\stata2" //AD - normally I use a global here for easy execution of my code by someone else but a simple CD command works as well! 
 
 * Load raw HTML dataset
 use "q1_psle_student_raw.dta", clear
@@ -17,7 +19,7 @@ replace schoolcode = subinstr(schoolcode, ".htm", "", .)
 replace s = upper(s)
 
 * Split HTML into table rows
-split s, parse("<TR") gen(row)
+split s, parse("<TR") gen(row) //AD - your comments explaining what each line is doing is very helpful, thank you! 
 drop s row1
 
 gen school_row = _n
@@ -35,13 +37,13 @@ gen cand_id = ""
 replace cand_id = substr(s, pos_ps, 15) if pos_ps > 0
 replace cand_id = subinstr(cand_id, "<", "", .)
 replace cand_id = subinstr(cand_id, ">", "", .)
-replace cand_id = trim(cand_id)
+replace cand_id = trim(cand_id) //AD - this was very clean and the logic was clear to follow! 
 
 * prem_number
 gen prem_number = ""
 gen s_after_id = s
 replace s_after_id = substr(s_after_id, pos_ps + 15, .) if pos_ps > 0
-replace prem_number = regexs(1) if regexm(s_after_id, ">([0-9]{8,})<")
+replace prem_number = regexs(1) if regexm(s_after_id, ">([0-9]{8,})<") //AD - a small comment here explaining your logic would have been helpful! 
 replace prem_number = trim(prem_number)
 drop s_after_id
 
@@ -88,10 +90,10 @@ drop if cand_id == ""
 save "q1_psle_student_level_final.dta", replace
 
 * Verify
-list cand_id prem_number gender name kiswahili english maarifa in 1/20, abbrev(60)
+list cand_id prem_number gender name kiswahili english maarifa in 1/20, abbrev(60) //AD - good job adding a final verification step! 
 count if name==""
 
-
+//AD - everything worked well for Q1, well done! 
 *********************************************
  
 * Q2
@@ -141,12 +143,12 @@ drop _merge
 
 save "q2_CIV_integrated_final.dta", replace
 
-
+//AD - once again, code worked well and it was very efficient! Good job! 
 ****************************************************
 
 * Q3 
 clear all
-set more off
+set more off //AD - I have never used set more off but I just looked into it and it seems very useful wow! 
 
 * Load data
 cd "C:\Users\86186\Desktop\stata2"
@@ -154,7 +156,7 @@ use "q3_GPS Data.dta", clear
 
 local K = 19
 local MAXSIZE = 6
-local MINSIZE = floor(_N/`K')  
+local MINSIZE = floor(_N/`K')  //AD - Hmm I don't think I fully understand why minsize should be _N/K here. Some explanation would have been very helpful! 
 
 * Detect LAT/LON
 local LAT ""
@@ -172,7 +174,7 @@ foreach v in longitude lon LON Longitude x X gps_lon GPS_lon {
 }
 
 if "`LAT'"=="" | "`LON'"=="" {
-    di as error "Cannot find latitude/longitude variables. Please set LAT/LON manually."
+    di as error "Cannot find latitude/longitude variables. Please set LAT/LON manually." //AD - really useful to include this; displaying error message is important and I didn't consider that in my code! 
     exit 198
 }
 
@@ -193,7 +195,7 @@ quietly summarize `LAT', meanonly
 local lat0 = r(mean)
 
 gen double y_m = `LAT' * 110540
-gen double x_m = `LON' * 111320 * cos(`lat0' * _pi/180)
+gen double x_m = `LON' * 111320 * cos(`lat0' * _pi/180) //AD - you have used a very different approach me for this question, compared to me, which is interesting! I'm trying to follow along but some more comments explaining logic would be great! 
 
 * Initial clustering
 capture drop enum_id
@@ -202,7 +204,7 @@ label var enum_id "Enumerator ID (GPS-based, balanced to 5-6)"
 
 * Balancing loop
 tempfile cent mover
-local maxiter = 8000
+local maxiter = 8000 //AD - curious why 8000 was chosen for the max iteration? 
 
 forvalues it = 1/`maxiter' {
 
@@ -260,7 +262,7 @@ forvalues it = 1/`maxiter' {
         replace enum_id = `to' if hhid==`move_hhid'
     }
 
-    * CASE B: underfilled (<MINSIZE) -> pull one IN
+    * CASE B: underfilled (<MINSIZE) -> pull one IN //AD - the breakdown of doing the oversized case and undersized cases separately was very clever and makes a lot of sense! Great idea!
     else if (`min_now' < `MINSIZE') {
 
         quietly levelsof enum_id if `gsize'==`min_now' & `gsize'<`MINSIZE', local(underlist)
@@ -292,6 +294,8 @@ tab enum_id
 
 sort enum_id hhid
 list enum_id `LAT' `LON' hhid in 1/60
+
+//AD - ran the code and everything looked smooth so well done! I still don't understand a lot of the code myself but you have given me new commands to explore so thank you!
 
 save "q3_GPS_Balanced_Final.dta", replace
 
@@ -330,7 +334,7 @@ collapse (sum) votes, by(region_10 district_10 constituency_10 ward_10 party)
 
 * Calculate summary variables for the template
 egen total_candidates = count(party), by(region_10 district_10 constituency_10 ward_10)
-egen ward_total_votes = sum(votes), by(region_10 district_10 constituency_10 ward_10)
+egen ward_total_votes = sum(votes), by(region_10 district_10 constituency_10 ward_10) //AD - really liked the efficient use of egen here! Makes a lot of sense!
 
 * Prepare party names for variable headers
 replace party = subinstr(party, " ", "_", .)
@@ -351,7 +355,7 @@ save "q4_Tz_election_cleaned_final.dta", replace
 
 * Verify output
 list in 1/10
-
+//AD - worked smoothly and was easy to follow your code! Well done!
 *********************************************
 
 * Q5
@@ -377,7 +381,7 @@ save `location_cleaned'
 use "q5_psle_2020_data.dta", clear
 
 * CRITICAL STEP: Extract the NECTA code from the HTML path
-gen necta_code = school_code_address
+gen necta_code = school_code_address //AD - really helpful that you highlighted this as the critical step!
 
 * Remove the prefix and the extension to leave only the code
 replace necta_code = subinstr(necta_code, "shl_", "", .)
@@ -399,7 +403,7 @@ drop _merge necta_code
 save "q5_psle_with_wards_final.dta", replace
 count
 list schoolname ward in 1/20
-
+//AD - Once again, worked smoothly! 
 *********************************************
 
 * Q6
@@ -467,3 +471,5 @@ merge m:1 region_10 district_10 ward_10 using `election_10_std'
 drop if _merge == 2
 tab _merge
 save "Tz_Election_Integrated_Final_Clean.dta", replace
+
+//AD - I didn't attempt this question so I didn't run the code but I read through your code and I really appreciated the detailed comments. Even without running the code, I was able to follow along with the logic! 
