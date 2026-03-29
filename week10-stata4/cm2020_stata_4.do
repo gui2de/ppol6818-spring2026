@@ -3,6 +3,7 @@
 *Class: Gui2de Spring 2026
 *Assignment: Stata 4
 *Date: March 28, 2026
+*Edited: March 29, 2026
 
 ==============================================================================*/
 /*==============================================================================
@@ -90,6 +91,10 @@ tempfile arcgis
 bysort region_gis_2012 district_gis_2012 ward_gis_2012: gen n_children = _N
 
 duplicates drop region_gis_2012 district_gis_2012 ward_gis_2012, force
+
+/*Adding the below in to create a dta file for the Data ID card (March 29) */
+
+save "${path}/cm2020_part1_ward_merge.dta", replace
 
 count if n_children == 2    
 count if n_children >= 3    
@@ -274,6 +279,10 @@ collapse (mean) mean_b1=b1 mean_b2=b2 mean_b3=b3 mean_b4=b4 mean_b5=b5 ///
 * True treatment effect for reference
 gen true_effect = 0.3
 
+/*adding in a saved dta file in order to create a data ID card (in the first iteration I just used temp files) */
+
+save "${path}/cm2020_part2_simulation_results.dta", replace
+
 list sample_size mean_b1 mean_b2 mean_b3 mean_b4 mean_b5 true_effect
 
 
@@ -353,9 +362,9 @@ Census shapefile: https://www.census.gov/geographies/mapping-files/time-series/g
 
 Use 2024 county subdivision shapefile for New Hampshire (cb_2024_33_cousub_500k). Also be sure to unzip and add files to your path file. Getting the directory to go to the right place was a major issue for me.
 
-Note that the years don't add up perfectly, but I think that will have to be okay for the purposes of this assignment because I am running out of time.
+Note that the years don't add up perfectly, but I think that will have to be okay for the purposes of this assignment. In a real world scenario I'd figure out if this was okay or line them up better.
 
-To anyone reviewing this assignment, we were told that this should take us "20 minutes." This took me hours, mostly because of having to track down the right data and clean it. Just for future reference
+To anyone reviewing this assignment, we were told that this should take us "20 minutes." This took me hours, mostly because of having to track down the right data and clean it. Also I've never used shapefiles before, so it was a big learning curve. I would imagine others were in a similar boat. Just thought this might be helpful feedback.
 
 */
 
@@ -398,6 +407,10 @@ save `shapefile'
 
 use `shapefile', clear
 merge 1:1 GEOIDFQ using `census'
+
+/* Adding this below specifically and solely for the purposes of generating something for the Data ID card (March 29)*/
+
+save "${path}/nh_renters_merged.dta", replace
 
 
 /* just a few aren't matched, good enough
@@ -452,5 +465,39 @@ spmap pct_renters using "${path}/nh_cousub_coord.dta", id(id) ///
 	
 	graph export "${path}/nh_renters_map.png", replace
 	
-*** if this were a graph for my job, I'd definitely spend more time perfecting it, but I think I've reached the end of my rope on this assignment. So, I'm going to call it a day. Thanks for reading through
+*** if this were a graph for my job, I'd definitely spend more time perfecting it, but I think it's adequate for the purposes of this assignment. Thanks for reading through!
+
+
+** Jumping back in on March 29 to create the "Data ID cards." 
+
+*** Sharing this because I am hoping that it is helpful feedback, but it took me close to 2 hours to create the Data ID cards because I had to generate and evaluate dta files after mostly using temp files. It was a process trying to figure out which stage of each part would be most appropriate as the dta and then of course a process to evaluate the files themselves
+
+clear all
+
+use "${path}/nh_renters_merged.dta", clear
+codebook GEOIDFQ
+br
+
+use "${path}/Tz_elec_
+br
+
+use "${path}/Tz_elec_10_clean.dta", clear
+codebook ward_id_10
+br
+
+use "${path}/Tz_GIS_2015_2010_intersection.dta", clear
+codebook objectid
+codebook ward_gis_2012 ward_gis_2017
+br
 	
+use "${path}/cm2020_part1_ward_merge.dta", clear
+codebook fid_gis_2012
+br
+
+use "${path}/cm2020_part1_ward_merge.dta", replace"
+describe
+
+
+use "${path}/cm2020_part2_simulation_results.dta", clear
+codebook sample_size
+br
