@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/outputs/Qs.log
+  log type:  text
+ opened on:  19 Mar 2026, 21:51:49
+
+. 
+. ****************************************************
+. *Q1                                                                                             ****
+. ****************************************************
+. 
+. *Check keys*
+. 
+. *Teacher key should be unique in teacher.dta
+. preserve
+
+. use "$data/teacher.dta", clear
+file /Users/lukekeller/Desktop/ppol6818-spring2026/week3-stata1/lsk70/data/teacher.dta not found
+r(601);
+
+end of do-file
+
+r(601);
+
+. exit
