@@ -1,0 +1,2 @@
+survey CTO: https://gui2de.surveycto.com/forms/fm795_survey2/designer.html?view=test&init=1&caseid=
+google form: https://docs.google.com/spreadsheets/d/12VeqEs7GTV-MMNBXQqERvu9QeqrXbQYx/edit?gid=127937099#gid=127937099
