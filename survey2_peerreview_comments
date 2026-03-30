@@ -1,0 +1,5 @@
+- The phone number question is classified as text, i would suggest making it an integer
+- Perhaps consider adding an upper limit constraint to number of people and children in housheold question 
+- Would also suggest adding a consent question 
+- Maybe also add an intro and end note
+- The survey runs smoonthly otherwise, good job! :)
