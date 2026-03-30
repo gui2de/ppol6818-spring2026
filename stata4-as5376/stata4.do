@@ -122,28 +122,28 @@ program define monte_carlo_dgp, rclass
     
     //Construct five different regression models
     
-    * Model 1: Naive model (Biased - omits the confounder)
+    * Model 1: Simple model
     quietly reg outcome_y treatment_var
     return scalar beta1 = _b[treatment_var]
     
-    * Model 2: True model (Unbiased - correctly controls for the confounder)
+    * Model 2: Controlling for confounder
     quietly reg outcome_y treatment_var confounder_var
     return scalar beta2 = _b[treatment_var]
     
-    * Model 3: Mediator included (Biased - blocks the causal pathway)
+    * Model 3: Mediator included
     quietly reg outcome_y treatment_var confounder_var mediator_var
     return scalar beta3 = _b[treatment_var]
     
-    * Model 4: Collider included (Biased - opens a spurious backdoor path)
+    * Model 4: Collider included
     quietly reg outcome_y treatment_var collider_var
     return scalar beta4 = _b[treatment_var]
     
-    * Model 5: All covariates included (Biased - "kitchen sink" approach)
+    * Model 5: All covariates included
     quietly reg outcome_y treatment_var confounder_var mediator_var collider_var
     return scalar beta5 = _b[treatment_var]
 end
 
-* Run the Simulation across different Sample Sizes
+* Run the Simulation across different sample sizes
 local n_values "50 100 250 500 1000 2500"
 local repetitions 200
 
@@ -175,7 +175,7 @@ foreach m in 1 2 3 4 5 {
 * Collapse to one row per sample size for graphing
 bysort n_size: keep if _n == 1
 
-* Figure A: Mean of Beta estimates as N grows (Checking for Bias)
+* Figure A: Mean of Beta estimatess
 twoway ///
     (line mean_b1 n_size, lcolor(red) lpattern(dash)) ///
     (line mean_b2 n_size, lcolor(blue) lwidth(thick)) ///
@@ -191,7 +191,7 @@ twoway ///
     subtitle("True parameter = 0.3 (Solid Black Line)")
 graph export "beta_means_plot.png", replace
 
-* Figure B: Variance of Beta estimates as N grows (Checking for Convergence)
+* Figure B: Variance of Beta estimates
 twoway ///
     (line var_b1 n_size, lcolor(red) lpattern(dash)) ///
     (line var_b2 n_size, lcolor(blue) lwidth(thick)) ///
