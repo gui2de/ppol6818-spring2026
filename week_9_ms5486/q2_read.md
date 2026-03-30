@@ -1,0 +1,11 @@
+I simulated datasets with a binary treatment variable, an outcome variable Y, and three additional covariates: a confounder, a mediator, and a collider. The data generating process was designed so that the true treatment effect on the outcome was 0.3.
+
+The confounder affects both treatment assignment and the outcome, so omitting it creates omitted variable bias. The mediator is caused by treatment and also affects the outcome, so controlling for it blocks part of the treatment effect. The collider is caused by both treatment and an unobserved factor that also affects the outcome, so controlling for it introduces collider bias.
+
+I estimated six regression models at different sample sizes: 100, 250, 500, 1000, 2500, and 5000. For each sample size, I ran 500 simulations and recorded the estimated treatment coefficient. I then summarized the mean estimate, standard deviation, bias relative to the true value of 0.3, and variance.
+
+The results show that the model controlling only for the confounder performs best in recovering the true treatment effect. The treatment-only model remains biased because it omits the confounder. Models that include the mediator do not recover the total treatment effect, because part of the effect runs through the mediator. Models that include the collider are also biased because conditioning on a collider opens a spurious path between treatment and the outcome.
+
+As the sample size increases, the variance of the treatment estimate falls across all models, showing convergence. However, larger sample sizes do not remove bias from incorrectly specified models. This demonstrates that increasing sample size improves precision, but does not fix bias caused by bad controls.
+
+Figure 1 plots the mean estimated treatment effect for each model against sample size, along with the true value of 0.3. Figure 2 plots the variance of the treatment estimate against sample size. Together, the figures show both convergence and persistent bias across specifications.
