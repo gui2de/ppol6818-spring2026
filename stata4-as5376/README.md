@@ -73,9 +73,9 @@ As seen in the **"Mean of Treatment Effect Estimates by Model"** figure (graph2)
 * Model 3 (The green line) tracking the model with the mediator remains unbiased. However, looking at the data table reveals the hidden cost of including this unnecessary post-treatment variable: Model 3 has a significantly higher variance compared to the correct Model 2. 
 
 ### 2. Analysis of Variance
-* For all five models, the variance is highest at small sample sizes (e.g., $N=50$) and rapidly decays toward zero as the sample size approaches $N=2500$. 
+* For all five models, the variance is highest at small sample sizes (e.g., N=50) and rapidly decays toward zero as the sample size approaches N=2500. 
 
-* The most critical takeaway from comparing the two figures is that standard errors shrink regardless of whether the model is specified correctly. Model 1 and Model 5 both have extremely low variance at $N=2500$, meaning they are highly confident in their estimates. However, the Mean plot shows that they are wrong. A large sample size cannot fix structural bias caused by bad controls.
+* The most critical takeaway from comparing the two figures is that standard errors shrink regardless of whether the model is specified correctly. Model 1 and Model 5 both have extremely low variance at N=2500, meaning they are highly confident in their estimates. However, the Mean plot shows that they are wrong. A large sample size cannot fix structural bias caused by bad controls.
 
 
 # Part 3
