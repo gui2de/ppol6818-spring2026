@@ -1,4 +1,15 @@
-cd "C:\Users\ASUS\Desktop\research_design\assignments\stata4"
+cd "/Users/PJ/Documents/Georgetown/MPPSemestre2/ExperimentalDesign/Stata4HW"
+
+
+
+/* REVIEW
+
+I couldn't make the comments in the github website because you didn't upload through a pull request, but your work was great! It literraly ran perfectly on my computer.*/
+
+
+
+
+
 
 * ============================================================
 * Part 1: Fuzzy Matching
