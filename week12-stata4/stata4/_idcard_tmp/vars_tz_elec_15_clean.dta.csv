@@ -1,0 +1,7 @@
+dataset,filepath,varname,vartype,varlabel,nmissing,nunique,is_unique,is_idname
+tz_elec_15_clean.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_elec_15_clean.dta,ward_id_15,float,group(region district ward),0,3944,1,1
+tz_elec_15_clean.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_elec_15_clean.dta,region_15,str13,Region (2015),0,25,0,1
+tz_elec_15_clean.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_elec_15_clean.dta,district_15,str28,District (2015),0,178,0,1
+tz_elec_15_clean.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_elec_15_clean.dta,ward_15,str22,Ward (2015),0,3640,0,1
+tz_elec_15_clean.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_elec_15_clean.dta,total_candidates_15,float,Total Candidates in a Ward,0,12,0,0
+tz_elec_15_clean.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_elec_15_clean.dta,ward_total_votes_15,float,Total Votes in a Ward,0,2788,0,1

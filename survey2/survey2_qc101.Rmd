@@ -1,0 +1,13 @@
+---
+title: "survey2_qc101"
+author: "QingyueChen"
+date: "2026-03-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+survey link: https://gui2de.surveycto.com/collect/qc101_survey2?caseid=
+google sheet link: https://docs.google.com/spreadsheets/d/1TDA9HLP0yF1oww8OhC_ZGDY7nVip-Ksp/edit?gid=127937099#gid=127937099

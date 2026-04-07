@@ -1,0 +1,142 @@
+
+  ___  ____  ____  ____  ____ ®
+ /__    /   ____/   /   ____/      StataNow 18.5
+___/   /   /___/   /   /___/       BE—Basic Edition
+
+ Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
+                                   StataCorp
+                                   4905 Lakeway Drive
+                                   College Station, Texas 77845 USA
+                                   800-782-8272        https://www.stata.com
+                                   979-696-4600        service@stata.com
+
+Stata license: Unlimited-user network, expiring  7 Feb 2027
+Serial number: 301909301133
+  Licensed to: Qingyue Chen
+               Georgetown University
+
+Notes:
+      1. Stata is running in batch mode.
+      2. Unicode is supported; see help unicode_advice.
+
+. do "C:\Users\86186\Desktop\Experimental design\stata4\_extract_idcard_meta.do
+> " 
+
+. clear all
+
+. set more off
+
+. cd "C:\Users\86186\Desktop\Experimental design\stata4"
+C:\Users\86186\Desktop\Experimental design\stata4
+
+. 
+. capture mkdir "_idcard_tmp"
+
+. 
+. tempfile summary
+
+. postfile shandle str128 dataset str260 filepath long nobs int nvars using "`s
+> ummary'", replace
+(file C:\Users\86186\AppData\Local\Temp\ST_7fbc_000001.tmp not found)
+
+. 
+. local flist : dir "C:\Users\86186\Desktop\Experimental design\stata4\part1" f
+> iles "*.dta"
+
+. 
+. foreach fn of local flist {
+  2.     local f = "C:\Users\86186\Desktop\Experimental design\stata4\part1\\`f
+> n'"
+  3.     quietly use "`f'", clear
+  4.     local nobs = _N
+  5.     ds
+  6.     local allvars `r(varlist)'
+  7.     local nvars : word count `allvars'
+  8. 
+.     tempfile vard
+  9.     postfile vhandle str128 dataset str260 filepath str128 varname str24 v
+> artype str244 varlabel long nmissing long nunique byte is_unique byte is_idna
+> me using "`vard'", replace
+ 10. 
+.     foreach v of varlist _all {
+ 11.         local typ : type `v'
+ 12.         local lab : variable label `v'
+ 13.         quietly count if missing(`v')
+ 14.         local nmiss = r(N)
+ 15.         tempvar t
+ 16.         quietly egen `t' = tag(`v')
+ 17.         quietly count if `t'
+ 18.         local nuniq = r(N)
+ 19.         local uniq = (`nuniq'==`nobs' & `nmiss'==0)
+ 20.         local isid = regexm(lower("`v'"), "(^id$|_id$|id_|^code$|_code$|^g
+> id$|^uid$|district|region|ward|poll|station|voter|constituency)")
+ 21. 
+.         post vhandle ("`fn'") ("`f'") ("`v'") ("`typ'") (`"`lab'"') (`nmiss')
+>  (`nuniq') (`uniq') (`isid')
+ 22.     }
+ 23.     postclose vhandle
+ 24. 
+.     use "`vard'", clear
+ 25.     export delimited using "C:\Users\86186\Desktop\Experimental design\sta
+> ta4\_idcard_tmp\vars_`fn'.csv", replace
+ 26. 
+.     post shandle ("`fn'") ("`f'") (`nobs') (`nvars')
+ 27. }
+serial        constituency  candidate     total_cand~s  percentage~s
+region        ward          gender        votes
+district      ward_id       party         ward_total
+(file C:\Users\86186\AppData\Local\Temp\ST_7fbc_000002.tmp not found)
+(file C:\Users\86186\Desktop\Experimental
+    design\stata4\_idcard_tmp\vars_tanzania_election_2015_raw.dta.csv not
+    found)
+file C:\Users\86186\Desktop\Experimental design\stata4\_idcard_tmp\vars_tanzani
+> a_election_2015_raw.dta.csv saved
+ward_id_10    district_10   total_can~10
+region_10     ward_10       ward_tota~10
+(file C:\Users\86186\AppData\Local\Temp\ST_7fbc_000003.tmp not found)
+(file C:\Users\86186\Desktop\Experimental
+    design\stata4\_idcard_tmp\vars_tz_elec_10_clean.dta.csv not found)
+file C:\Users\86186\Desktop\Experimental design\stata4\_idcard_tmp\vars_tz_elec
+> _10_clean.dta.csv saved
+ward_id_15    district_15   total_can~15
+region_15     ward_15       ward_tota~15
+(file C:\Users\86186\AppData\Local\Temp\ST_7fbc_000004.tmp not found)
+(file C:\Users\86186\Desktop\Experimental
+    design\stata4\_idcard_tmp\vars_tz_elec_15_clean.dta.csv not found)
+file C:\Users\86186\Desktop\Experimental design\stata4\_idcard_tmp\vars_tz_elec
+> _15_clean.dta.csv saved
+objectid      distric~2017  region_~2012  area
+fid_gis_2017  ward_gi~2017  distric~2012  percentage
+region_~2017  fid_gis_2012  ward_gi~2012
+(file C:\Users\86186\AppData\Local\Temp\ST_7fbc_000005.tmp not found)
+(file C:\Users\86186\Desktop\Experimental
+    design\stata4\_idcard_tmp\vars_tz_gis_2015_2010_intersection.dta.csv not
+    found)
+file C:\Users\86186\Desktop\Experimental design\stata4\_idcard_tmp\vars_tz_gis_
+> 2015_2010_intersection.dta.csv saved
+ward_id_10    total_can~10  region_15     ward_tota~15  parent_key
+region_10     ward_tota~10  district_15   _merge        child_key
+district_10   key           ward_15       match_type
+ward_10       ward_id_15    total_can~15  percentage
+(file C:\Users\86186\AppData\Local\Temp\ST_7fbc_000006.tmp not found)
+(file C:\Users\86186\Desktop\Experimental
+    design\stata4\_idcard_tmp\vars_tz_parent_mapping_final.dta.csv not found)
+file C:\Users\86186\Desktop\Experimental design\stata4\_idcard_tmp\vars_tz_pare
+> nt_mapping_final.dta.csv saved
+
+. 
+. postclose shandle
+
+. use "`summary'", clear
+
+. export delimited using "C:\Users\86186\Desktop\Experimental design\stata4\_id
+> card_tmp\summary.csv", replace
+(file C:\Users\86186\Desktop\Experimental
+    design\stata4\_idcard_tmp\summary.csv not found)
+file C:\Users\86186\Desktop\Experimental design\stata4\_idcard_tmp\summary.csv 
+> saved
+
+. 
+. exit
+
+end of do-file
