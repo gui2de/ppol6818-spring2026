@@ -1,0 +1,12 @@
+dataset,filepath,varname,vartype,varlabel,nmissing,nunique,is_unique,is_idname
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,objectid,int,OBJECTID,0,3834,1,0
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,fid_gis_2017,int,FID,0,3834,1,1
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,region_gis_2017,str13,Region,0,25,0,1
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,district_gis_2017,str25,District,0,178,0,1
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,ward_gis_2017,str21,Ward,0,3544,0,1
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,fid_gis_2012,int,FID_1,0,3276,0,1
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,region_gis_2012,str13,NAME_1,0,25,0,1
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,district_gis_2012,str28,NAME_2,0,160,0,1
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,ward_gis_2012,str20,NAME_3,0,3061,0,1
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,area,double,AREA,0,3834,1,0
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,percentage,double,PERCENTAGE,0,3834,1,0

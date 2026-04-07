@@ -1,0 +1,6 @@
+dataset,filepath,nobs,nvars
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,10712,13
+tz_elec_10_clean.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_elec_10_clean.dta,3333,6
+tz_elec_15_clean.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_elec_15_clean.dta,3944,6
+tz_gis_2015_2010_intersection.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_gis_2015_2010_intersection.dta,3834,11
+tz_parent_mapping_final.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tz_parent_mapping_final.dta,3776,18

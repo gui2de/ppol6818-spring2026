@@ -1,0 +1,14 @@
+dataset,filepath,varname,vartype,varlabel,nmissing,nunique,is_unique,is_idname
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,serial,int,Serial,0,10712,1,0
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,region,str13,Region,0,25,0,1
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,district,str28,District,0,178,0,1
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,constituency,str25,Constituency,0,214,0,1
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,ward,str22,Ward,0,3643,0,1
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,ward_id,float,group(region district ward),0,3944,0,1
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,candidate,str80,Candidate Name,0,10711,0,0
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,gender,str8,Gender,2,2,0,0
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,party,str16,Party,0,22,0,0
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,total_candidates,float,Total Candidates in a Ward,0,12,0,0
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,votes,int,Votes,0,3436,0,0
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,ward_total,float,Total Votes in a Ward,0,2788,0,1
+tanzania_election_2015_raw.dta,C:\Users\86186\Desktop\Experimental design\stata4\part1\tanzania_election_2015_raw.dta,percentage_votes,float,Percentage of Votes Won,0,10546,0,0
