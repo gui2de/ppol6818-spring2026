@@ -9,7 +9,8 @@
 clear all
 set more off
 
-cd "/Users/zhongguochimingdijianjian/Desktop/Experiment Design/Stata_4"
+global data_dir "/Users/zhongguochimingdijianjian/Desktop/Experiment Design/Stata_4"
+cd "$data_dir"
 
 
 *1: Clean 2015 election data
@@ -258,7 +259,8 @@ clear all
 set more off
 set seed 12345
 
-cd "/Users/zhongguochimingdijianjian/Desktop/Experiment Design/Stata_4"
+global data_dir "/Users/zhongguochimingdijianjian/Desktop/Experiment Design/Stata_4"
+cd "$data_dir"
 
 
 capture program drop mysim
@@ -397,7 +399,8 @@ export delimited using "table_bias.csv", replace
 clear all
 set more off
 
-cd "/Users/zhongguochimingdijianjian/Desktop/Experiment Design/Stata_4"
+global data_dir "/Users/zhongguochimingdijianjian/Desktop/Experiment Design/Stata_4"
+cd "$data_dir"
 
 cap which spmap
 if _rc ssc install spmap
