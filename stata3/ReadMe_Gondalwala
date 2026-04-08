@@ -1,0 +1,28 @@
+*************************************************************
+	
+# Author: Gavin Gondalwala
+# Date: 17 March 2026
+# Assignment: Stata 3
+		
+*************************************************************
+
+# Part 1
+
+<iframe src="/Users/gavinaligondalwala/GitHub/ppol6818-spring2026/stata3/part1_table_finalpdf.pdf" width="100%" height="600px" style="border: none;"></iframe>
+
+<img src="/Users/gavinaligondalwala/GitHub/ppol6818-spring2026/stata3/q1_beta_distribution_hbox.jpg" width="300" height="300">
+
+As N gets larger, SEM decreases and confidence intervals become more narrow. In short, estimates become more and more accurate the larger the sample. 
+
+As simulations run, the beta estimates become more and more accurate. The results show that the width of the confidence intervals begins to narrow, and the betas become more accurate to the "true" slope from the data gathering equation of 3. By using the command " bysort n_val: sum b " we see that the beta at n=10 is 2.999827, but when n=10000 beta is  3.000289.
+
+# Part 2
+<iframe src="/Users/gavinaligondalwala/GitHub/ppol6818-spring2026/stata3/part2_table_pdf.pdf" width="100%" height="600px" style="border: none;"></iframe>
+
+<img src="/Users/gavinaligondalwala/GitHub/ppol6818-spring2026/stata3/q2_beta_distribution.jpg" width="300" height="300">
+
+Similarly to Part 1, as N gets larger SEM decreases and confidence intervals become more narrow. We are able to draw a larger sample size since it is an argument to our program, instead of working with a fixed set as we did in part 1. One reason they may be different than in part 1 is because a different random sample was taken from the data than before.
+
+<iframe src="/Users/gavinaligondalwala/GitHub/ppol6818-spring2026/stata3/part2.2_table_pdf.pdf" width="100%" height="600px" style="border: none;"></iframe>
+
+While I could not find a MEANINGFUL way to visualize them together due to the nature of the visualization becoming much more narrow for part 2, the attached comparison table reflects how estimates become more accurate with higher sample sizes.
