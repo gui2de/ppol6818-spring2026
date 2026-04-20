@@ -1,0 +1,210 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\warre\OneDrive\Desktop\Georgetown\SecondSemester\Experimental_Design\Assignments\assignments_survey_3\survey_3_log.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}19 Apr 2026, 20:33:48
+
+{com}. do "C:\Users\warre\AppData\Local\Temp\STD255c_00001o.tmp"
+{txt}
+{com}. * Check 1: Duplicate Respondent IDs
+. duplicates tag respondent_id, generate(dup_flag)
+
+{p 0 4}{txt}Duplicates in terms of {res} respondent_id{p_end}
+{txt}
+{com}. list respondent_id dup_flag if dup_flag > 0, sepby(respondent_id)
+{txt}
+     {c TLC}{hline 10}{c -}{hline 10}{c TRC}
+     {c |} {res}respon~d   dup_flag {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 10. {c |} {res}      10          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 16. {c |} {res}      16          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 19. {c |} {res}      19          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 38. {c |} {res}      38          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 46. {c |} {res}      46          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 56. {c |} {res}      56          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 57. {c |} {res}      57          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 67. {c |} {res}      67          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 70. {c |} {res}      70          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 79. {c |} {res}      79          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 80. {c |} {res}      80          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+ 93. {c |} {res}      93          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+116. {c |} {res}     116          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+117. {c |} {res}     117          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+144. {c |} {res}     144          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+146. {c |} {res}     146          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+152. {c |} {res}     152          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+163. {c |} {res}     163          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+167. {c |} {res}     167          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+178. {c |} {res}     178          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+181. {c |} {res}      16          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+182. {c |} {res}      79          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+183. {c |} {res}     163          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+184. {c |} {res}     178          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+185. {c |} {res}      57          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+186. {c |} {res}      46          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+187. {c |} {res}     146          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+188. {c |} {res}      19          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+189. {c |} {res}      67          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+190. {c |} {res}     167          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+191. {c |} {res}      80          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+192. {c |} {res}     144          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+193. {c |} {res}     117          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+194. {c |} {res}      70          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+195. {c |} {res}      56          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+196. {c |} {res}     116          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+197. {c |} {res}      38          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+198. {c |} {res}      10          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+199. {c |} {res}      93          1 {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c RT}
+200. {c |} {res}     152          1 {txt}{c |}
+     {c BLC}{hline 10}{c -}{hline 10}{c BRC}
+
+{com}. 
+. 
+. 
+. 
+. * Check 2: Income and Hours Consistency Check
+. * Consistency in hours worked 
+. lookfor hour
+
+{txt}Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+{hline}
+{p 0 48}{res}{bind:hours_worked_~k}{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Hours worked per week{p_end}
+{txt}
+{com}. codebook hours
+
+{txt}{hline}
+{res}hours_worked_per_week{right:Hours worked per week}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}11.9{txt},{res}165.5{txt}]{col 55}Units: {res}.1
+{col 10}{txt}Unique values: {res}166{col 51}{txt}Missing .: {res}0{txt}/{res}200
+
+{txt}{col 19}Mean: {res}{ralign 7:47.0075}
+{txt}{col 14}Std. dev.: {res}{ralign 7:27.4854}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:24.85}{ralign 10:   33.25}{ralign 10:    41.5}{ralign 10:    50.3}{ralign 10:   63.55}
+{txt}
+{com}. 
+. preserve
+{txt}
+{com}. 
+. gen hourser = (hours_worked > 50)
+{txt}
+{com}. keep if hourser == 1
+{txt}(149 observations deleted)
+
+{com}. 
+. //save "$user/03_outcome/survey_data_hourserror.dta", replace
+. 
+. restore
+{txt}
+{com}. 
+. * Consistency in income
+. 
+. preserve 
+{txt}
+{com}. 
+. gen incomeerr = (biwk_income < 0 )
+{txt}
+{com}. keep if incomeerr == 1
+{txt}(195 observations deleted)
+
+{com}. 
+. //save "$user/03_outcome/survey_data_incomeerror.dta", replace
+. 
+. restore
+{txt}
+{com}. 
+. 
+. 
+. * Check 3: Budget Constraint Check
+. lookfor expenditure
+
+{txt}Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+{hline}
+{p 0 48}{res}{bind:food_spend_yn  }{txt}{bind: double  }{bind:%10.0g    }{space 1}{txt}food_spend_yn7{p_end}
+{p 0 48}{space 44}{bind:  }{res}{res}Any food expenditure in past 2 weeks (0=No, 1=Yes){p_end}
+{p 0 48}{bind:food_spend_2wk }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Total food expenditure in past 2 weeks (Rp){p_end}
+{p 0 48}{bind:telecom_spend~n}{txt}{bind: double  }{bind:%10.0g    }{space 1}{txt}telecom_spend_yn8{p_end}
+{p 0 48}{space 44}{bind:  }{res}{res}Any telecommunications expenditure (0=No, 1=Yes){p_end}
+{p 0 48}{bind:cleaning_spen~k}{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Cleaning materials expenditure in past 2 weeks (Rp){p_end}
+{p 0 48}{bind:energy_spend_yn}{txt}{bind: double  }{bind:%10.0g    }{space 1}{txt}energy_spend_yn12{p_end}
+{p 0 48}{space 44}{bind:  }{res}{res}Any energy expenditure in past 2 weeks (0=No, 1=Yes){p_end}
+{p 0 48}{bind:energy_spend_~k}{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Energy expenditure in past 2 weeks (Rp){p_end}
+{p 0 48}{bind:edu_spend_yn   }{txt}{bind: double  }{bind:%10.0g    }{space 1}{txt}edu_spend_yn13{p_end}
+{p 0 48}{space 44}{bind:  }{res}{res}Any education expenditure in past 2 weeks (0=No, 1=Yes){p_end}
+{p 0 48}{bind:edu_spend_2wk  }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Education expenditure in past 2 weeks (Rp){p_end}
+{p 0 48}{bind:total_spend_2~t}{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Self-reported total expenditure in past 2 weeks (Rp){p_end}
+{txt}
+{com}. 
+. gen residual = bonus_received_2wk+ other_benefit_amt_2wk - food_spend_2wk- phone_bill_biwk - broadband_cost_biwk - tv_subscription_biwk - transport_cost_2wk - fuel_cost_2wk - vehicle_tax_2wk - car_insurance_2wk - cleaning_spend_2wk - utility_bill_biwk - energy_spend_2wk - edu_spend_2wk - student_loan_payment_2wk + tuition_grant_received_2wk - personal_care_spend_2wk - alcohol_cig_spend_2wk - nonessential_clothing_2wk - extracurricular_spend_2wk - religious_spend_2wk - private_hc_spend_2wk - total_health_spend_2wk - rent_or_mortgage_biwk - utility_bill_biwk_housing + biwk_income - home_insurance_2wk + remittances + current_savings - net_borrowing +asset_sales
+{txt}
+{com}. 
+. gen inflow = bonus_received_2wk + other_benefit_amt_2wk + tuition_grant_received_2wk + biwk_income + remittances + current_savings
+{txt}
+{com}. 
+. gen flag_residual = 1 if residual < 0.3*inflow & residual < 0
+{txt}(163 missing values generated)
+
+{com}. replace flag_residual = 0 if flag_residual ==.
+{txt}(163 real changes made)
+
+{com}. 
+. 
+. //save "$user/03_outcome/survey_data_morespendthanincome.dta", replace
+. 
+{txt}end of do-file
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\warre\OneDrive\Desktop\Georgetown\SecondSemester\Experimental_Design\Assignments\assignments_survey_3\survey_3_log.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}19 Apr 2026, 20:34:02
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
