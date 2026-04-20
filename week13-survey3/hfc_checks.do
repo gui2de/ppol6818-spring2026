@@ -7,7 +7,6 @@
     2. Internal consistency: women surveyed vs B2b roster
     3. Enumerator-level treatment-control outcome gap
     4. Reference period (interview date) consistency
-
 ==============================================================================*/
 
 clear all
