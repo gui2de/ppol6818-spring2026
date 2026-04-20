@@ -8,14 +8,13 @@
     3. Enumerator-level treatment-control outcome gap
     4. Reference period (interview date) consistency
 
-  Author: Yubing Han | April 2026
 ==============================================================================*/
 
 clear all
 set more off
 set seed 20260418
 
-local outdir "/Users/serovia/Downloads"   // <-- change to your path
+local outdir "/Users/serovia/Downloads" 
 
 /*==============================================================================
   PART 1: DATA SIMULATION (DGP)
